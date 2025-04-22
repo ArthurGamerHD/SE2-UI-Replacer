@@ -1,0 +1,39 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:news="clr-namespace:Keen.Game2.Client.UI.Menu.News;assembly=Game2.Client"
+             xmlns:menu="clr-namespace:Keen.Game2.Client.UI.Menu;assembly=Game2.Client"
+             xmlns:mainMenu1="clr-namespace:Keen.Game2.Client.UI.Menu.MainMenu;assembly=Game2.Client"
+             mc:Ignorable="d" d:DesignWidth="1920" d:DesignHeight="1080"
+             x:CompileBindings="False"
+             x:DataType="mainMenu1:MainMenuScreenViewModel"
+             x:Class="UI_Revamp.Screens.Menu.MainMenuScreen">
+    
+    <Grid ColumnDefinitions="* 1920 *" RowDefinitions="*">
+        <Grid Grid.Column="1">
+            <menu:GameMenu  DataContext="{Binding}"/>
+            
+            <Grid Width="760" RowDefinitions="* Auto" 
+                  HorizontalAlignment="Right" 
+                  Margin="{StaticResource Margin-Extra-Large}">
+
+                <Image Name="PART_HighlightPresenter"
+                       VerticalAlignment="Bottom"
+                       Grid.RowSpan="2"
+                       Margin="0,0,0,-32"
+                       Source="{DynamicResource MenuAvaloniaConfiguration_MenuHighlight}"
+                       Grid.Row="0" />
+
+                <news:News Name="PART_NewsPresenter"
+                           Command="{Binding OpenURL}"
+                           Grid.Row="1"
+                           Width="702"
+                           Height="270"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center" />
+            </Grid>
+        </Grid>
+    </Grid>
+    
+</UserControl>

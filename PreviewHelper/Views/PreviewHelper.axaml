@@ -1,0 +1,12 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:menu="clr-namespace:UI_Revamp.Screens.Menu;assembly=UI-Revamp"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" 
+        x:Class="PreviewHelper.Views.PreviewHelper"
+        Title="PreviewHelper">
+    <StackPanel>
+        <TextBlock Text="This is a preview helper, the only reason this screen exists is so avalonia can preview this project" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    </StackPanel>
+</Window>

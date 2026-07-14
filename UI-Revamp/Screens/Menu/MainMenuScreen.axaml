@@ -10,10 +10,10 @@
              x:DataType="mainMenu1:MainMenuScreenViewModel"
              x:Class="UI_Revamp.Screens.Menu.MainMenuScreen">
     
+
     <Grid ColumnDefinitions="* 1920 *" RowDefinitions="*">
         <Grid Grid.Column="1">
             <menu:GameMenu  DataContext="{Binding}"/>
-            
             <Grid Width="760" RowDefinitions="* Auto" 
                   HorizontalAlignment="Right" 
                   Margin="{StaticResource Margin-Extra-Large}">
@@ -26,6 +26,7 @@
                        Grid.Row="0" />
 
                 <news:News Name="PART_NewsPresenter"
+                           DataContext="{Binding NewsViewModel}"
                            Command="{Binding OpenURL}"
                            Grid.Row="1"
                            Width="702"

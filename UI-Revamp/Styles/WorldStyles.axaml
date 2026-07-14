@@ -6,7 +6,7 @@
             <!-- Add Controls for Previewer Here -->
         </Border>
     </Design.PreviewWith>
-
+    
     <StyleInclude Source="avares://UI-Revamp/Styles/CoreStyles.axaml"></StyleInclude>
     <!-- Add Styles Here -->
 </Styles>

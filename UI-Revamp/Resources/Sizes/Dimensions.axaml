@@ -1,0 +1,35 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=System.Runtime">
+
+
+    <system:Double x:Key="Dimensions-Extra-Small-Horizontal">56</system:Double>
+    <system:Double x:Key="Dimensions-Extra-Small">32</system:Double>
+    
+    <system:Double x:Key="Dimensions-Small-Horizontal">112</system:Double>
+    <system:Double x:Key="Dimensions-Small-Vertical">32</system:Double>
+    
+    <system:Double x:Key="Dimensions-Horizontal">180</system:Double>
+    <system:Double x:Key="Dimensions-Vertical">36</system:Double>
+    
+    <system:Double x:Key="Dimensions-Large-Horizontal">200</system:Double>
+    <system:Double x:Key="Dimensions-Large-Vertical">48</system:Double>
+    
+    <system:Double x:Key="Dimensions-Grid-Controls-Buttons">36</system:Double>
+    
+    <system:Double x:Key="Dimensions-Grid-Controls-Vertical">40</system:Double>
+    
+    <system:Double x:Key="Dimensions-TabItem">60</system:Double>
+
+    <system:Double x:Key="Dimensions-InputWrapper-SeparatorSize">14</system:Double>
+
+    <CornerRadius x:Key="Radius-Small">1.5</CornerRadius>
+    <CornerRadius x:Key="Radius-SmallMedium">3</CornerRadius>
+    <CornerRadius x:Key="Radius-Medium">5</CornerRadius>
+    <CornerRadius x:Key="Radius-Medium-Bottom">0 0 5 5</CornerRadius>
+    <CornerRadius x:Key="Radius-Medium-Top">5 5 0 0</CornerRadius>
+    <CornerRadius x:Key="Radius-Large">7</CornerRadius>
+    <CornerRadius x:Key="Radius-ExtraLarge">9</CornerRadius>
+
+
+</ResourceDictionary>

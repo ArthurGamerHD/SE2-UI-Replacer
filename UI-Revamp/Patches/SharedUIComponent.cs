@@ -5,14 +5,14 @@ using SE2PluginLoader;
 
 namespace UI_Revamp.Patches;
 
-[HarmonyPatch(typeof(SharedUIComponent))]
-[HarmonyPatch("PostInit")]
+[HarmonyPatch(typeof(SharedUIComponent), nameof(SharedUIComponent.PostInit))]
 public class SharedUiComponentPatches  
 {
     [HarmonyPostfix]
-    public static void Postfix(SharedUIComponent instance)
+    // ReSharper disable once InconsistentNaming
+    public static void Postfix(SharedUIComponent __instance)
     {
-        Plugin.SharedUi = instance;
+        Plugin.SharedUi = __instance;
         Log.Default.Info($"[{Plugin.PluginId}] SharedUI captured");
     }
 }

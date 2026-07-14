@@ -1,6 +1,7 @@
 ﻿using Avalonia;
 using System;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using HarmonyLib;
 using PreviewHelper.PreviewPatches;
 
@@ -20,9 +21,14 @@ sealed class Program
     {
         var harmony = new Harmony("PreviewPatches");
 
-        harmony.PatchAll(Assembly.GetExecutingAssembly());
-        ManualPatches.ApplyPatch(harmony);
-        
+        var assembly = Assembly.GetExecutingAssembly();
+
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        {
+            harmony.PatchAll(assembly);
+            ManualPatches.ApplyPatch(harmony);
+        }
+
         return AppBuilder.Configure<App>()
             .UsePlatformDetect()
             .LogToTrace();

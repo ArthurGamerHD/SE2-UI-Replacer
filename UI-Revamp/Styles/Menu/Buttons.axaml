@@ -1,9 +1,95 @@
 <Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:beveledBorder="clr-namespace:Keen.VRage.UI.Shared.Controls.BeveledBorder;assembly=VRage.UI.Shared"
+        xmlns:utilities="clr-namespace:Keen.VRage.UI.AvaloniaInterface.Utilities;assembly=VRage.UI"
+        x:CompileBindings="False">
     <Design.PreviewWith>
-        <Button Margin="20" Classes="Menu"/>
+        <Button Margin="20" Classes="Menu" />
     </Design.PreviewWith>
-
+    
     <Style Selector="Button.Menu">
+        <Setter Property="Width" Value="320" />
+        <Setter Property="Height" Value="67" />
+        <Setter Property="FontSize" Value="{StaticResource Text-Size-MediumVariant1}" />
+        <Setter Property="Background" Value="{StaticResource Menu-Button-Background}" />
+        <Setter Property="BorderBrush" Value="{StaticResource Button-Stroke}" />
+        <Setter Property="Foreground" Value="{StaticResource Button-Text}" />
+        <Setter Property="CornerRadius" Value="{StaticResource Radius-Medium}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Tag" Value="{Binding Tag}" />
+
+        <Style Selector="^ Image#PART_IconImage">
+            <Setter Property="Opacity" Value="1" />
+        </Style>
+
+        <Style Selector="^:disabled Image#PART_IconImage">
+            <Setter Property="Opacity" Value="{StaticResource Disabled-Opacity}" />
+        </Style>
+
+        <Style Selector="^[Tag=disabled] Image#PART_IconImage">
+            <Setter Property="Opacity" Value="{StaticResource Disabled-Opacity}" />
+        </Style>
+
+        <Setter Property="Template">
+            <ControlTemplate>
+                <beveledBorder:BeveledBorder Name="PART_Border"
+                                             MinHeight="60"
+                                             ClampDirection="Horizontal"
+                                             BorderThickness="{TemplateBinding BorderThickness}"
+                                             Background="{TemplateBinding Background}"
+                                             BorderBrush="{TemplateBinding BorderBrush}"
+                                             Bevel="{TemplateBinding CornerRadius}">
+                    <Viewbox Stretch="Uniform"
+                             MaxWidth="300"
+                             StretchDirection="DownOnly"
+                             HorizontalAlignment="Stretch"
+                             VerticalAlignment="Stretch">
+                        <ContentPresenter Name="PART_ContentPresenter"
+                                          Foreground="{TemplateBinding Foreground}"
+                                          FontSize="{TemplateBinding FontSize}"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Padding="{TemplateBinding Padding}"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          RecognizesAccessKey="True"
+                                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+                    </Viewbox>
+                </beveledBorder:BeveledBorder>
+            </ControlTemplate>
+        </Setter>
+        
+        
+        <!-- Focus -->
+        <Style Selector="^:focus, ^:pointerover, ^:flyout-open">
+            <Style Selector="^ /template/ beveledBorder|BeveledBorder#PART_Border">
+                <Setter Property="Background" Value="{StaticResource Menu-Button-Background-Focus}" />
+            </Style>
+        </Style>
+
+        <!-- Active -->
+        <Style Selector="^:pressed">
+            <Style Selector="^ /template/ beveledBorder|BeveledBorder#PART_Border">
+                <Setter Property="Background" Value="{StaticResource Menu-Button-Background-Active}" />
+            </Style>
+            <Style Selector="^ /template/ Border#PART_Background">
+                <Setter Property="Background" Value="Transparent" />
+            </Style>
+        </Style>
+
+        <!-- Disabled -->
+        <Style Selector="^:disabled">
+            <Style Selector="^ /template/ beveledBorder|BeveledBorder#PART_Border">
+                <Setter Property="Background" Value="{StaticResource Menu-Button-Background-Disabled}" />
+            </Style>
+        </Style>
+        
+        <!-- Disabled via Tag -->
+        <Style Selector="^[Tag=disabled]">
+            <Style Selector="^ /template/ beveledBorder|BeveledBorder#PART_Border">
+                <Setter Property="Background" Value="{StaticResource Menu-Button-Background-Disabled}" />
+            </Style>
+        </Style>
     </Style>
 </Styles>

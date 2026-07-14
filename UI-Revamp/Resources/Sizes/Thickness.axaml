@@ -1,0 +1,15 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=System.Runtime">
+    
+    <Thickness x:Key="Thickness-Extra-Small">1</Thickness>
+
+    <Thickness x:Key="Thickness-Small">2</Thickness>
+
+    <Thickness x:Key="Thickness-Medium">4</Thickness>
+
+    <Thickness x:Key="Thickness-Large">6</Thickness>
+
+    <Thickness x:Key="Thickness-Extra-Large">8</Thickness>
+
+</ResourceDictionary>

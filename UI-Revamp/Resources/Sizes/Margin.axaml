@@ -1,0 +1,35 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Thickness x:Key="Margin-Extra-Small">2 2</Thickness>
+    <Thickness x:Key="Margin-Extra-Small-Horizontal">2 0</Thickness>
+    <Thickness x:Key="Margin-Extra-Small-Vertical">0 2</Thickness>
+    
+    <Thickness x:Key="Margin-Small">4 4</Thickness>
+    <Thickness x:Key="Margin-Small-Vertical">0 4</Thickness>
+    <Thickness x:Key="Margin-Small-Horizontal">4 0</Thickness>
+    
+    <Thickness x:Key="Margin-Medium">8 8</Thickness>
+    <Thickness x:Key="Margin-Medium-Vertical">0 8</Thickness>
+    <Thickness x:Key="Margin-Medium-Horizontal">8 0</Thickness>
+    
+    <Thickness x:Key="Margin-Large">16 16</Thickness>
+    <Thickness x:Key="Margin-Large-Vertical">0 16</Thickness>
+    <Thickness x:Key="Margin-Large-Horizontal">16 0</Thickness>
+    
+    <Thickness x:Key="Margin-Extra-Large">32 32</Thickness>
+    <Thickness x:Key="Margin-Extra-Large-Horizontal">32 0</Thickness>
+    <Thickness x:Key="Margin-Extra-Large-Vertical">0 32</Thickness>
+    
+    <Thickness x:Key="Margin-Extra-Large-Bottom">0 0 0 32</Thickness>
+    
+    <Thickness x:Key="Margin-Menu-Vertical">0 96</Thickness>
+    
+    <Thickness x:Key="Margin-Back-Icon">15 0</Thickness>
+    
+    <Thickness x:Key="Margin-Dialog-Content">32 32 32 32</Thickness>
+    
+    <!-- This is approved shadow margin, so use this everywhere you need a shadow-->
+    <Thickness x:Key="Margin-Shadow">2 2 0 0</Thickness>
+    
+</ResourceDictionary>

@@ -1,0 +1,29 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceInclude Source="avares://UI-Revamp/Resources/Colors/Colors.axaml" />
+    </ResourceDictionary.MergedDictionaries>
+    
+    <!-- Menu Button Background -->
+    <SolidColorBrush x:Key="Menu-Button-Background" Color="{StaticResource BackgroundDarkAlpha95}" />
+    <SolidColorBrush x:Key="Menu-Button-Background-Focus" Color="{StaticResource BackgroundDarkAlpha95}" />
+    <SolidColorBrush x:Key="Menu-Button-Background-Disabled" Color="{StaticResource BackgroundDarkAlpha95}" />
+    <SolidColorBrush x:Key="Menu-Button-Background-Active" Color="{StaticResource HighlightAlpha95}" />
+    
+    <!-- Button Stroke-->
+    <SolidColorBrush x:Key="Button-Stroke" Color="{StaticResource Primary}" />
+    <SolidColorBrush x:Key="Button-Stroke-Focus" Color="{StaticResource Primary}" />
+    <SolidColorBrush x:Key="Button-Stroke-Disabled" Color="{StaticResource Secondary}" />
+    <SolidColorBrush x:Key="Button-Stroke-Active" Color="{StaticResource Black}" />
+
+    <!-- Button Text-->
+    <SolidColorBrush x:Key="Button-Text" Color="{StaticResource HighContrast}" />
+    <SolidColorBrush x:Key="Button-Text-Focus" Color="{StaticResource HighContrast}" />
+    <SolidColorBrush x:Key="Button-Text-Disabled" Color="{StaticResource Secondary}" />
+    <SolidColorBrush x:Key="Button-Text-Active" Color="{StaticResource Black}" />
+
+
+    
+</ResourceDictionary>

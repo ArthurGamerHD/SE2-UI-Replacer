@@ -5,8 +5,8 @@ using System.Reflection;
 using System.Text.Json;
 using HarmonyLib;
 using Keen.Game2.Client.UI.Library;
-using Keen.Game2.Game.Plugins;
 using Keen.VRage.Core;
+using Keen.VRage.Core.Plugins;
 using Keen.VRage.Library.Diagnostics;
 using Keen.VRage.Library.Utils;
 using Keen.VRage.UI.EngineComponents;
@@ -66,11 +66,4 @@ public class Plugin : IPlugin
 
     public static SharedUIComponent? SharedUi { get; internal set; }
     public static UIEngineComponent? UiEngineComponent { get; internal set; }
-
-    // ReSharper disable once InconsistentNaming
-    public static void PostInit_PostFix(SharedUIComponent __instance)
-    {
-        SharedUi = __instance;
-        Log.Default.Info($"[{PluginId}] SharedUI captured");
-    }
 }

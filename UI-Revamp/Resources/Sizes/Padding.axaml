@@ -1,0 +1,13 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <Thickness x:Key="Padding-Extra-Small">4 2</Thickness>
+    <Thickness x:Key="Padding-Extra-Small-Vertical">0 2</Thickness>
+    <Thickness x:Key="Padding-Small">8 4</Thickness>
+    <Thickness x:Key="Padding-Medium">12 4</Thickness>
+    <Thickness x:Key="Padding-Large">40 4</Thickness>
+    <Thickness x:Key="Padding-Extra-Large">60 4</Thickness>
+    
+    <Thickness x:Key="Padding-Vertical-Scroll">0 0 20 0</Thickness>
+
+</ResourceDictionary>

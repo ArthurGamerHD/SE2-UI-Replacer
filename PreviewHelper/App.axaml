@@ -4,38 +4,6 @@
              RequestedThemeVariant="Default">
     <Application.Styles>
         <FluentTheme />
-        
-        <!-- Replica of Space Engineers 2 "CoreStyles" -->
-        <StyleInclude Source="avares://Game2.Client/UI/Library/Styles/SharedStyles.axaml"/>
-        <StyleInclude Source="avares://Game2.Client/UI/Library/Controls/LabelledControls/LabelledControlStyles.axaml"/>
-        <StyleInclude Source="avares://Game2.Client/UI/Menu/Styles/MainMenuStyles.axaml"/>
-        <StyleInclude Source="avares://Game2.Client/UI/Menu/LoadMenu/LoadMenuStyles.axaml"/>
-        <!--
-private static void GetCoreStyles(BufferReference<Uri> pathOut)
-{
-pathOut.Add(new Uri("avares://Game2.Client/UI/Library/Styles/SharedStyles.axaml"));
-pathOut.Add(new Uri("avares://Game2.Client/UI/Library/Controls/LabelledControls/LabelledControlStyles.axaml"));
-pathOut.Add(new Uri("avares://Game2.Client/UI/Menu/Styles/MainMenuStyles.axaml"));
-pathOut.Add(new Uri("avares://Game2.Client/UI/Menu/LoadMenu/LoadMenuStyles.axaml"));
-}
-        -->
-        
-
-        <!-- Replica of Space Engineers 2 "WorldStyles" -->
-        <StyleInclude Source="avares://Game2.Client/UI/TerminalScreen/ControlPanel/Styles/ControlPanelStyles.axaml"/>
-        <StyleInclude Source="avares://Game2.Client/UI/TerminalScreen/GScreen/Styles/GScreenStyles.axaml"/>
-        <StyleInclude Source="avares://Game2.Client/UI/HUD/Styles/HUDStyles.axaml"/>
-        <StyleInclude Source="avares://Game2.Client/UI/HUD/Toolbar/Styles/ToolbarStyles.axaml"/>
-        <!--
-private static void GetInWorldStyles(BufferReference<Uri> pathOut)
-{
-pathOut.Add(new Uri("avares://Game2.Client/UI/TerminalScreen/ControlPanel/Styles/ControlPanelStyles.axaml"));
-pathOut.Add(new Uri("avares://Game2.Client/UI/TerminalScreen/GScreen/Styles/GScreenStyles.axaml"));
-pathOut.Add(new Uri("avares://Game2.Client/UI/HUD/Styles/HUDStyles.axaml"));
-pathOut.Add(new Uri("avares://Game2.Client/UI/HUD/Toolbar/Styles/ToolbarStyles.axaml"));
-}
-        -->
-        
     </Application.Styles>
     
 </Application>

@@ -4,3 +4,6 @@ obj/
 riderModule.iml
 /_ReSharper.Caches/
 /.idea
+Directory.Build.local.props
+/SE2.Source
+/Avalonia Playground

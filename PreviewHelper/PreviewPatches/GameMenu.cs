@@ -47,7 +47,7 @@ public class GameMenuPatches
             SimpleCommand.DelegateCommand? saveGameCommand = action != null ? SimpleCommand.Create(action) : null;
             Button button = new Button();
             button.Classes.Add("Menu");
-            button.Content = (LocKey)name;
+            button.Content = (LocKey.FromString(name));
             button.Command = saveGameCommand;
             return button;
         }

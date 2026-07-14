@@ -1,6 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+    <Import Project="$(MSBuildThisFileDirectory)../Directory.Build.local.props" Condition="Exists('$(MSBuildThisFileDirectory)../Directory.Build.local.props')" />
+
     <PropertyGroup>
-        <TargetFramework>net8.0</TargetFramework>
+        <TargetFramework>net9.0</TargetFramework>
         <Nullable>enable</Nullable>
         <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
         <ApplicationManifest>app.manifest</ApplicationManifest>
@@ -12,6 +14,7 @@
         <AvaloniaResource Include="Assets\**"/>
     </ItemGroup>
 
+
     <ItemGroup>
         <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
         <PackageReference Include="Avalonia" Version="11.0.10" />
@@ -21,497 +24,505 @@
 
     <ItemGroup>
         <Reference Include="Avalonia">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Avalonia.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Avalonia.dll</HintPath>
         </Reference>
         <Reference Include="Avalonia.Base">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Avalonia.Base.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Avalonia.Base.dll</HintPath>
         </Reference>
         <Reference Include="Avalonia.Controls">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Avalonia.Controls.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Avalonia.Controls.dll</HintPath>
         </Reference>
         <Reference Include="Avalonia.Controls.ColorPicker">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Avalonia.Controls.ColorPicker.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Avalonia.Controls.ColorPicker.dll</HintPath>
         </Reference>
         <Reference Include="Avalonia.Controls.DataGrid">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Avalonia.Controls.DataGrid.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Avalonia.Controls.DataGrid.dll</HintPath>
         </Reference>
         <Reference Include="Avalonia.Controls.ItemsRepeater">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Avalonia.Controls.ItemsRepeater.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Avalonia.Controls.ItemsRepeater.dll</HintPath>
         </Reference>
         <Reference Include="Avalonia.DesignerSupport">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Avalonia.DesignerSupport.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Avalonia.DesignerSupport.dll</HintPath>
         </Reference>
         <Reference Include="Avalonia.Diagnostics">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Avalonia.Diagnostics.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Avalonia.Diagnostics.dll</HintPath>
         </Reference>
         <Reference Include="Avalonia.Dialogs">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Avalonia.Dialogs.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Avalonia.Dialogs.dll</HintPath>
         </Reference>
         <Reference Include="Avalonia.Headless">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Avalonia.Headless.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Avalonia.Headless.dll</HintPath>
         </Reference>
         <Reference Include="Avalonia.Markup">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Avalonia.Markup.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Avalonia.Markup.dll</HintPath>
         </Reference>
         <Reference Include="Avalonia.Markup.Xaml">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Avalonia.Markup.Xaml.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Avalonia.Markup.Xaml.dll</HintPath>
         </Reference>
         <Reference Include="Avalonia.Markup.Xaml.Loader">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Avalonia.Markup.Xaml.Loader.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Avalonia.Markup.Xaml.Loader.dll</HintPath>
         </Reference>
         <Reference Include="Avalonia.Metal">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Avalonia.Metal.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Avalonia.Metal.dll</HintPath>
         </Reference>
         <Reference Include="Avalonia.MicroCom">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Avalonia.MicroCom.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Avalonia.MicroCom.dll</HintPath>
         </Reference>
         <Reference Include="Avalonia.OpenGL">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Avalonia.OpenGL.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Avalonia.OpenGL.dll</HintPath>
         </Reference>
         <Reference Include="Avalonia.ReactiveUI">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Avalonia.ReactiveUI.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Avalonia.ReactiveUI.dll</HintPath>
         </Reference>
         <Reference Include="Avalonia.Remote.Protocol">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Avalonia.Remote.Protocol.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Avalonia.Remote.Protocol.dll</HintPath>
         </Reference>
         <Reference Include="Avalonia.Skia">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Avalonia.Skia.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Avalonia.Skia.dll</HintPath>
         </Reference>
         <Reference Include="Avalonia.Themes.Fluent">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Avalonia.Themes.Fluent.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Avalonia.Themes.Fluent.dll</HintPath>
         </Reference>
         <Reference Include="Avalonia.Themes.Simple">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Avalonia.Themes.Simple.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Avalonia.Themes.Simple.dll</HintPath>
         </Reference>
         <Reference Include="AvaloniaColorPicker">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\AvaloniaColorPicker.dll</HintPath>
+            <HintPath>$(SE2Game2Path)AvaloniaColorPicker.dll</HintPath>
         </Reference>
         <Reference Include="CommandLine">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\CommandLine.dll</HintPath>
+            <HintPath>$(SE2Game2Path)CommandLine.dll</HintPath>
         </Reference>
         <Reference Include="CppSharp.Runtime">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\CppSharp.Runtime.dll</HintPath>
+            <HintPath>$(SE2Game2Path)CppSharp.Runtime.dll</HintPath>
         </Reference>
         <Reference Include="CsvHelper">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\CsvHelper.dll</HintPath>
+            <HintPath>$(SE2Game2Path)CsvHelper.dll</HintPath>
         </Reference>
         <Reference Include="DocsByReflection">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\DocsByReflection.dll</HintPath>
+            <HintPath>$(SE2Game2Path)DocsByReflection.dll</HintPath>
         </Reference>
         <Reference Include="DynamicData">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\DynamicData.dll</HintPath>
+            <HintPath>$(SE2Game2Path)DynamicData.dll</HintPath>
         </Reference>
         <Reference Include="Elasticsearch.Net">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Elasticsearch.Net.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Elasticsearch.Net.dll</HintPath>
         </Reference>
         <Reference Include="EOSSDK">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\EOSSDK.dll</HintPath>
+            <HintPath>$(SE2Game2Path)EOSSDK.dll</HintPath>
         </Reference>
         <Reference Include="FluentAvalonia">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\FluentAvalonia.dll</HintPath>
+            <HintPath>$(SE2Game2Path)FluentAvalonia.dll</HintPath>
         </Reference>
         <Reference Include="Game2.AutoTests">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Game2.AutoTests.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Game2.AutoTests.dll</HintPath>
         </Reference>
         <Reference Include="Game2.Client">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Game2.Client.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Game2.Client.dll</HintPath>
         </Reference>
         <Reference Include="Game2.ContentBuilder">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Game2.ContentBuilder.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Game2.ContentBuilder.dll</HintPath>
         </Reference>
         <Reference Include="Game2.Game">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Game2.Game.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Game2.Game.dll</HintPath>
         </Reference>
         <Reference Include="Game2.Plugin.Editor">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Game2.Plugin.Editor.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Game2.Plugin.Editor.dll</HintPath>
         </Reference>
         <Reference Include="Game2.Simulation">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Game2.Simulation.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Game2.Simulation.dll</HintPath>
         </Reference>
         <Reference Include="geometry4Sharp">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\geometry4Sharp.dll</HintPath>
+            <HintPath>$(SE2Game2Path)geometry4Sharp.dll</HintPath>
         </Reference>
         <Reference Include="HarfBuzzSharp">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\HarfBuzzSharp.dll</HintPath>
+            <HintPath>$(SE2Game2Path)HarfBuzzSharp.dll</HintPath>
         </Reference>
         <Reference Include="HotAvalonia">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\HotAvalonia.dll</HintPath>
+            <HintPath>$(SE2Game2Path)HotAvalonia.dll</HintPath>
         </Reference>
         <Reference Include="Humanizer">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Humanizer.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Humanizer.dll</HintPath>
         </Reference>
         <Reference Include="IndexRange">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\IndexRange.dll</HintPath>
+            <HintPath>$(SE2Game2Path)IndexRange.dll</HintPath>
         </Reference>
         <Reference Include="Jamarino.IntervalTree">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Jamarino.IntervalTree.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Jamarino.IntervalTree.dll</HintPath>
         </Reference>
         <Reference Include="MicroCom.Runtime">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\MicroCom.Runtime.dll</HintPath>
+            <HintPath>$(SE2Game2Path)MicroCom.Runtime.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.Bcl.AsyncInterfaces">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.CodeAnalysis">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Microsoft.CodeAnalysis.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Microsoft.CodeAnalysis.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.CodeAnalysis.CSharp">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Microsoft.CodeAnalysis.CSharp.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Microsoft.CodeAnalysis.CSharp.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.CodeAnalysis.CSharp.Scripting">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Microsoft.CodeAnalysis.CSharp.Scripting.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Microsoft.CodeAnalysis.CSharp.Scripting.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.CodeAnalysis.CSharp.Workspaces">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Microsoft.CodeAnalysis.CSharp.Workspaces.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Microsoft.CodeAnalysis.CSharp.Workspaces.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.CodeAnalysis.Scripting">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Microsoft.CodeAnalysis.Scripting.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Microsoft.CodeAnalysis.Scripting.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.CodeAnalysis.VisualBasic">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Microsoft.CodeAnalysis.VisualBasic.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Microsoft.CodeAnalysis.VisualBasic.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.CodeAnalysis.VisualBasic.Workspaces">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Microsoft.CodeAnalysis.VisualBasic.Workspaces.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Microsoft.CodeAnalysis.VisualBasic.Workspaces.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.CodeAnalysis.Workspaces">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Microsoft.CodeAnalysis.Workspaces.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Microsoft.CodeAnalysis.Workspaces.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.DotNet.PlatformAbstractions">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Microsoft.DotNet.PlatformAbstractions.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Microsoft.DotNet.PlatformAbstractions.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.Extensions.Configuration">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Microsoft.Extensions.Configuration.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Microsoft.Extensions.Configuration.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.Extensions.Configuration.Abstractions">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.Extensions.Configuration.Binder">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Microsoft.Extensions.Configuration.Binder.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Microsoft.Extensions.Configuration.Binder.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.Extensions.DependencyInjection">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Microsoft.Extensions.DependencyInjection.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Microsoft.Extensions.DependencyInjection.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.Extensions.DependencyModel">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Microsoft.Extensions.DependencyModel.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Microsoft.Extensions.DependencyModel.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.Extensions.Logging">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Microsoft.Extensions.Logging.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Microsoft.Extensions.Logging.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.Extensions.Logging.Abstractions">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.Extensions.Logging.Configuration">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Microsoft.Extensions.Logging.Configuration.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Microsoft.Extensions.Logging.Configuration.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.Extensions.Logging.Console">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Microsoft.Extensions.Logging.Console.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Microsoft.Extensions.Logging.Console.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.Extensions.Options">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Microsoft.Extensions.Options.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Microsoft.Extensions.Options.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.Extensions.Options.ConfigurationExtensions">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Microsoft.Extensions.Options.ConfigurationExtensions.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Microsoft.Extensions.Options.ConfigurationExtensions.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.Extensions.Primitives">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Microsoft.Extensions.Primitives.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Microsoft.Extensions.Primitives.dll</HintPath>
         </Reference>
         <Reference Include="Nest">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Nest.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Nest.dll</HintPath>
         </Reference>
         <Reference Include="NoAlloq">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\NoAlloq.dll</HintPath>
+            <HintPath>$(SE2Game2Path)NoAlloq.dll</HintPath>
         </Reference>
         <Reference Include="OpenCvSharp">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\OpenCvSharp.dll</HintPath>
+            <HintPath>$(SE2Game2Path)OpenCvSharp.dll</HintPath>
         </Reference>
         <Reference Include="ReactiveUI">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\ReactiveUI.dll</HintPath>
+            <HintPath>$(SE2Game2Path)ReactiveUI.dll</HintPath>
         </Reference>
         <Reference Include="RestSharp">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\RestSharp.dll</HintPath>
+            <HintPath>$(SE2Game2Path)RestSharp.dll</HintPath>
         </Reference>
         <Reference Include="Scriban">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Scriban.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Scriban.dll</HintPath>
         </Reference>
         <Reference Include="SharpDX">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\SharpDX.dll</HintPath>
+            <HintPath>$(SE2Game2Path)SharpDX.dll</HintPath>
         </Reference>
         <Reference Include="SharpDX.Desktop">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\SharpDX.Desktop.dll</HintPath>
+            <HintPath>$(SE2Game2Path)SharpDX.Desktop.dll</HintPath>
         </Reference>
         <Reference Include="SharpDX.DirectInput">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\SharpDX.DirectInput.dll</HintPath>
+            <HintPath>$(SE2Game2Path)SharpDX.DirectInput.dll</HintPath>
         </Reference>
         <Reference Include="SharpDX.XInput">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\SharpDX.XInput.dll</HintPath>
+            <HintPath>$(SE2Game2Path)SharpDX.XInput.dll</HintPath>
         </Reference>
         <Reference Include="SharpGen.Runtime">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\SharpGen.Runtime.dll</HintPath>
+            <HintPath>$(SE2Game2Path)SharpGen.Runtime.dll</HintPath>
         </Reference>
         <Reference Include="SharpGen.Runtime.COM">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\SharpGen.Runtime.COM.dll</HintPath>
+            <HintPath>$(SE2Game2Path)SharpGen.Runtime.COM.dll</HintPath>
         </Reference>
         <Reference Include="Silk.NET.Assimp">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Silk.NET.Assimp.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Silk.NET.Assimp.dll</HintPath>
         </Reference>
         <Reference Include="Silk.NET.Core">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Silk.NET.Core.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Silk.NET.Core.dll</HintPath>
         </Reference>
         <Reference Include="Silk.NET.Maths">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Silk.NET.Maths.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Silk.NET.Maths.dll</HintPath>
         </Reference>
         <Reference Include="SixLabors.ImageSharp">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\SixLabors.ImageSharp.dll</HintPath>
+            <HintPath>$(SE2Game2Path)SixLabors.ImageSharp.dll</HintPath>
         </Reference>
         <Reference Include="SkiaSharp">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\SkiaSharp.dll</HintPath>
+            <HintPath>$(SE2Game2Path)SkiaSharp.dll</HintPath>
         </Reference>
         <Reference Include="SpaceEngineers2">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\SpaceEngineers2.dll</HintPath>
+            <HintPath>$(SE2Game2Path)SpaceEngineers2.dll</HintPath>
         </Reference>
         <Reference Include="Splat">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Splat.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Splat.dll</HintPath>
         </Reference>
         <Reference Include="Steamworks.NET">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Steamworks.NET.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Steamworks.NET.dll</HintPath>
         </Reference>
         <Reference Include="System.CodeDom">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\System.CodeDom.dll</HintPath>
+            <HintPath>$(SE2Game2Path)System.CodeDom.dll</HintPath>
         </Reference>
         <Reference Include="System.Composition.AttributedModel">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\System.Composition.AttributedModel.dll</HintPath>
+            <HintPath>$(SE2Game2Path)System.Composition.AttributedModel.dll</HintPath>
         </Reference>
         <Reference Include="System.Composition.Convention">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\System.Composition.Convention.dll</HintPath>
+            <HintPath>$(SE2Game2Path)System.Composition.Convention.dll</HintPath>
         </Reference>
         <Reference Include="System.Composition.Hosting">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\System.Composition.Hosting.dll</HintPath>
+            <HintPath>$(SE2Game2Path)System.Composition.Hosting.dll</HintPath>
         </Reference>
         <Reference Include="System.Composition.Runtime">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\System.Composition.Runtime.dll</HintPath>
+            <HintPath>$(SE2Game2Path)System.Composition.Runtime.dll</HintPath>
         </Reference>
         <Reference Include="System.Composition.TypedParts">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\System.Composition.TypedParts.dll</HintPath>
+            <HintPath>$(SE2Game2Path)System.Composition.TypedParts.dll</HintPath>
         </Reference>
         <Reference Include="System.IO.Hashing">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\System.IO.Hashing.dll</HintPath>
+            <HintPath>$(SE2Game2Path)System.IO.Hashing.dll</HintPath>
         </Reference>
         <Reference Include="System.IO.Pipelines">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\System.IO.Pipelines.dll</HintPath>
+            <HintPath>$(SE2Game2Path)System.IO.Pipelines.dll</HintPath>
         </Reference>
         <Reference Include="System.Management">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\System.Management.dll</HintPath>
+            <HintPath>$(SE2Game2Path)System.Management.dll</HintPath>
         </Reference>
         <Reference Include="System.Reactive">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\System.Reactive.dll</HintPath>
+            <HintPath>$(SE2Game2Path)System.Reactive.dll</HintPath>
         </Reference>
         <Reference Include="TeamCity.ServiceMessages">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\TeamCity.ServiceMessages.dll</HintPath>
+            <HintPath>$(SE2Game2Path)TeamCity.ServiceMessages.dll</HintPath>
         </Reference>
         <Reference Include="TraceTool">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\TraceTool.dll</HintPath>
+            <HintPath>$(SE2Game2Path)TraceTool.dll</HintPath>
         </Reference>
         <Reference Include="Unchase.Satsuma.Adapters">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Unchase.Satsuma.Adapters.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Unchase.Satsuma.Adapters.dll</HintPath>
         </Reference>
         <Reference Include="Unchase.Satsuma.Algorithms">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Unchase.Satsuma.Algorithms.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Unchase.Satsuma.Algorithms.dll</HintPath>
         </Reference>
         <Reference Include="Unchase.Satsuma.Core">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Unchase.Satsuma.Core.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Unchase.Satsuma.Core.dll</HintPath>
         </Reference>
         <Reference Include="Vortice.Direct3D12">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Vortice.Direct3D12.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Vortice.Direct3D12.dll</HintPath>
         </Reference>
         <Reference Include="Vortice.DirectX">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Vortice.DirectX.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Vortice.DirectX.dll</HintPath>
         </Reference>
         <Reference Include="Vortice.Dxc">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Vortice.Dxc.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Vortice.Dxc.dll</HintPath>
         </Reference>
         <Reference Include="Vortice.DXGI">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Vortice.DXGI.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Vortice.DXGI.dll</HintPath>
         </Reference>
         <Reference Include="Vortice.Mathematics">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Vortice.Mathematics.dll</HintPath>
+            <HintPath>$(SE2Game2Path)Vortice.Mathematics.dll</HintPath>
         </Reference>
         <Reference Include="VRage.AI">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.AI.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.AI.dll</HintPath>
         </Reference>
         <Reference Include="VRage.Animation">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.Animation.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.Animation.dll</HintPath>
         </Reference>
         <Reference Include="VRage.Animation.Client">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.Animation.Client.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.Animation.Client.dll</HintPath>
         </Reference>
         <Reference Include="VRage.Audio">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.Audio.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.Audio.dll</HintPath>
         </Reference>
         <Reference Include="VRage.AutoTest">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.AutoTest.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.AutoTest.dll</HintPath>
         </Reference>
         <Reference Include="VRage.Client">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.Client.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.Client.dll</HintPath>
         </Reference>
         <Reference Include="VRage.CodeAnalysis">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.CodeAnalysis.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.CodeAnalysis.dll</HintPath>
         </Reference>
         <Reference Include="VRage.CodeGuard.Analyzers">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.CodeGuard.Analyzers.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.CodeGuard.Analyzers.dll</HintPath>
         </Reference>
         <Reference Include="VRage.ContentPipeline">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.ContentPipeline.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.ContentPipeline.dll</HintPath>
         </Reference>
         <Reference Include="VRage.ContentPipeline.Animations">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.ContentPipeline.Animations.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.ContentPipeline.Animations.dll</HintPath>
         </Reference>
         <Reference Include="VRage.ContentPipeline.ArmorBlockModel">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.ContentPipeline.ArmorBlockModel.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.ContentPipeline.ArmorBlockModel.dll</HintPath>
         </Reference>
         <Reference Include="VRage.ContentPipeline.ArmorBlockSide">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.ContentPipeline.ArmorBlockSide.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.ContentPipeline.ArmorBlockSide.dll</HintPath>
         </Reference>
         <Reference Include="VRage.ContentPipeline.Audio">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.ContentPipeline.Audio.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.ContentPipeline.Audio.dll</HintPath>
         </Reference>
         <Reference Include="VRage.ContentPipeline.Builder">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.ContentPipeline.Builder.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.ContentPipeline.Builder.dll</HintPath>
         </Reference>
         <Reference Include="VRage.ContentPipeline.Builder.Plugin">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.ContentPipeline.Builder.Plugin.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.ContentPipeline.Builder.Plugin.dll</HintPath>
         </Reference>
         <Reference Include="VRage.ContentPipeline.Game">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.ContentPipeline.Game.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.ContentPipeline.Game.dll</HintPath>
         </Reference>
         <Reference Include="VRage.ContentPipeline.Models">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.ContentPipeline.Models.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.ContentPipeline.Models.dll</HintPath>
         </Reference>
         <Reference Include="VRage.ContentPipeline.ModelsBase">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.ContentPipeline.ModelsBase.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.ContentPipeline.ModelsBase.dll</HintPath>
         </Reference>
         <Reference Include="VRage.ContentPipeline.ModelsValidation">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.ContentPipeline.ModelsValidation.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.ContentPipeline.ModelsValidation.dll</HintPath>
         </Reference>
         <Reference Include="VRage.ContentPipeline.ModelVoxels">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.ContentPipeline.ModelVoxels.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.ContentPipeline.ModelVoxels.dll</HintPath>
         </Reference>
         <Reference Include="VRage.ContentPipeline.SlugFont">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.ContentPipeline.SlugFont.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.ContentPipeline.SlugFont.dll</HintPath>
         </Reference>
         <Reference Include="VRage.ContentPipeline.SlugSVG">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.ContentPipeline.SlugSVG.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.ContentPipeline.SlugSVG.dll</HintPath>
         </Reference>
         <Reference Include="VRage.ContentPipeline.Textures">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.ContentPipeline.Textures.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.ContentPipeline.Textures.dll</HintPath>
         </Reference>
         <Reference Include="VRage.Core">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.Core.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.Core.dll</HintPath>
         </Reference>
         <Reference Include="VRage.Core.Editor">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.Core.Editor.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.Core.Editor.dll</HintPath>
         </Reference>
         <Reference Include="VRage.Core.Game">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.Core.Game.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.Core.Game.dll</HintPath>
         </Reference>
         <Reference Include="VRage.Core.Game.Editor">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.Core.Game.Editor.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.Core.Game.Editor.dll</HintPath>
         </Reference>
         <Reference Include="VRage.DCS">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.DCS.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.DCS.dll</HintPath>
         </Reference>
         <Reference Include="VRage.DCS.Generator">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.DCS.Generator.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.DCS.Generator.dll</HintPath>
         </Reference>
         <Reference Include="VRage.DCS.Samples">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.DCS.Samples.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.DCS.Samples.dll</HintPath>
         </Reference>
         <Reference Include="VRage.EOS">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.EOS.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.EOS.dll</HintPath>
         </Reference>
         <Reference Include="VRage.Game">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.Game.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.Game.dll</HintPath>
         </Reference>
         <Reference Include="VRage.Game.Client">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.Game.Client.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.Game.Client.dll</HintPath>
         </Reference>
         <Reference Include="VRage.Game.Editor">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.Game.Editor.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.Game.Editor.dll</HintPath>
         </Reference>
         <Reference Include="VRage.Input">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.Input.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.Input.dll</HintPath>
         </Reference>
         <Reference Include="VRage.Library">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.Library.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.Library.dll</HintPath>
         </Reference>
         <Reference Include="VRage.Mod.Io">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.Mod.Io.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.Mod.Io.dll</HintPath>
         </Reference>
         <Reference Include="VRage.Multiplayer">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.Multiplayer.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.Multiplayer.dll</HintPath>
         </Reference>
         <Reference Include="VRage.Physics">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.Physics.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.Physics.dll</HintPath>
         </Reference>
         <Reference Include="VRage.Physics.Client">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.Physics.Client.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.Physics.Client.dll</HintPath>
         </Reference>
         <Reference Include="VRage.Platform.Windows">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.Platform.Windows.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.Platform.Windows.dll</HintPath>
         </Reference>
         <Reference Include="VRage.Plugin.Editor">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.Plugin.Editor.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.Plugin.Editor.dll</HintPath>
         </Reference>
         <Reference Include="VRage.Render">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.Render.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.Render.dll</HintPath>
         </Reference>
         <Reference Include="VRage.Render.Editor">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.Render.Editor.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.Render.Editor.dll</HintPath>
         </Reference>
         <Reference Include="VRage.Render12">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.Render12.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.Render12.dll</HintPath>
         </Reference>
         <Reference Include="VRage.Sample">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.Sample.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.Sample.dll</HintPath>
         </Reference>
         <Reference Include="VRage.Scripting">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.Scripting.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.Scripting.dll</HintPath>
         </Reference>
         <Reference Include="VRage.ShaderBuilder">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.ShaderBuilder.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.ShaderBuilder.dll</HintPath>
         </Reference>
         <Reference Include="VRage.Steam">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.Steam.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.Steam.dll</HintPath>
         </Reference>
         <Reference Include="VRage.Testing">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.Testing.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.Testing.dll</HintPath>
         </Reference>
         <Reference Include="VRage.UI">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.UI.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.UI.dll</HintPath>
         </Reference>
         <Reference Include="VRage.UI.Shared">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.UI.Shared.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.UI.Shared.dll</HintPath>
         </Reference>
         <Reference Include="VRage.Voxels">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.Voxels.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.Voxels.dll</HintPath>
         </Reference>
         <Reference Include="VRage.Voxels.Client">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.Voxels.Client.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.Voxels.Client.dll</HintPath>
         </Reference>
         <Reference Include="VRage.Voxels.Editor">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.Voxels.Editor.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.Voxels.Editor.dll</HintPath>
         </Reference>
         <Reference Include="VRage.Water">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.Water.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.Water.dll</HintPath>
         </Reference>
         <Reference Include="VRage.Water.Client">
-            <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.Water.Client.dll</HintPath>
+            <HintPath>$(SE2Game2Path)VRage.Water.Client.dll</HintPath>
         </Reference>
     </ItemGroup>
 
-    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-      <Exec Command="xcopy /Y &quot;$(TargetDir)$(TargetName).dll&quot; &quot;C:\Users\Arthur\AppData\Roaming\SpaceEngineers2\Plugins&quot;" />
+    <Target Name="CopyDll" AfterTargets="PostBuildEvent">
+        <PropertyGroup>
+            <SourceDll>$(TargetDir)$(TargetName).dll</SourceDll>
+            <DestinationFolder>$(SE2PluginsPath)</DestinationFolder>
+        </PropertyGroup>
+
+        <Copy
+                SourceFiles="$(SourceDll)"
+                DestinationFolder="$(DestinationFolder)"
+                SkipUnchangedFiles="false" />
     </Target>
 </Project>

@@ -1,13 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+    <Import Project="$(MSBuildThisFileDirectory)../Directory.Build.local.props" Condition="Exists('$(MSBuildThisFileDirectory)../Directory.Build.local.props')" />
+
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net8.0</TargetFramework>
+        <TargetFramework>net9.0</TargetFramework>
         <Nullable>enable</Nullable>
         <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
         <ApplicationManifest>app.manifest</ApplicationManifest>
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
     </PropertyGroup>
-
+    
     <ItemGroup>
         <AvaloniaResource Include="Assets\**"/>
     </ItemGroup>
@@ -26,16 +28,20 @@
 
     <ItemGroup>
       <Reference Include="Avalonia.Controls.ColorPicker">
-        <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Avalonia.Controls.ColorPicker.dll</HintPath>
+        <HintPath>$(SE2Game2Path)Avalonia.Controls.ColorPicker.dll</HintPath>
       </Reference>
       <Reference Include="Game2.Client">
-        <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\Game2.Client.dll</HintPath>
+        <HintPath>$(SE2Game2Path)Game2.Client.dll</HintPath>
       </Reference>
       <Reference Include="VRage.Library">
-        <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.Library.dll</HintPath>
+        <HintPath>$(SE2Game2Path)VRage.Library.dll</HintPath>
       </Reference>
       <Reference Include="VRage.UI.Shared">
-        <HintPath>F:\SteamLibrary\steamapps\common\SpaceEngineers2\Game2\VRage.UI.Shared.dll</HintPath>
+        <HintPath>$(SE2Game2Path)VRage.UI.Shared.dll</HintPath>
       </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <UpToDateCheckInput Remove="Assets\avalonia-logo.ico" />
     </ItemGroup>
 </Project>

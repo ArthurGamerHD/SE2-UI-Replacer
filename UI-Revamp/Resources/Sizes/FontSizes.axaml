@@ -1,0 +1,26 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=System.Runtime">
+    
+    <system:Double x:Key="Text-Size-Header">72</system:Double>
+    <system:Double x:Key="Text-Size-MediumVariant5">48</system:Double>
+    <system:Double x:Key="Text-Size-MediumVariant4">42</system:Double>
+    <system:Double x:Key="Text-Size-MediumVariant3">34</system:Double>
+    <system:Double x:Key="Text-Size-MediumVariant2">32</system:Double>
+    <system:Double x:Key="Text-Size-MediumVariant1">30</system:Double>
+    <system:Double x:Key="Text-Size-MediumVariant">28</system:Double>
+    <system:Double x:Key="Text-Size-MediumVariant0">26</system:Double>
+    <system:Double x:Key="Text-Size-SmallVariant1">22</system:Double>
+    <system:Double x:Key="Text-Size-SmallVariant">20</system:Double>
+    
+    <system:Double x:Key="Text-Size-SmallVariant2">18</system:Double>    
+    <system:Double x:Key="Text-Size-Extra-SmallVariant2">14</system:Double>
+
+
+    <system:Double x:Key="Text-Size-ExtraLarge">60</system:Double>
+    <system:Double x:Key="Text-Size-Large">46</system:Double>
+    <system:Double x:Key="Text-Size-Medium">24</system:Double>
+    <system:Double x:Key="Text-Size-Small">16</system:Double>
+    <system:Double x:Key="Text-Size-Extra-Small">12</system:Double>
+    
+</ResourceDictionary>

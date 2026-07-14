@@ -16,3 +16,16 @@ public class UiEngineComponentPatches
         Log.Default.Info($"[{Plugin.PluginId}] UIEngineComponent captured");
     }
 }
+
+#if DEBUG
+[HarmonyPatch(typeof(UIEngineComponent))]
+[HarmonyPatch("UIManagerTick")]
+public class NativeDevToolsMessagePumpPatch
+{
+    [HarmonyPostfix]
+    public static void Postfix()
+    {
+        NativeDevToolsWindowContext.PumpWin32Messages();
+    }
+}
+#endif

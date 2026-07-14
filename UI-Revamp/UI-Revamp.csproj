@@ -18,6 +18,8 @@
     <ItemGroup>
         <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
         <PackageReference Include="Avalonia" Version="11.0.10" />
+        <PackageReference Include="Avalonia.Desktop" Version="11.0.10" Condition="'$(Configuration)' == 'Debug'" />
+        <PackageReference Include="SkiaSharp.NativeAssets.Win32" Version="2.88.7" Condition="'$(Configuration)' == 'Debug'" />
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1"/>
         <PackageReference Include="Lib.Harmony" Version="2.3.6" />
     </ItemGroup>
@@ -73,9 +75,6 @@
         </Reference>
         <Reference Include="Avalonia.ReactiveUI">
             <HintPath>$(SE2Game2Path)Avalonia.ReactiveUI.dll</HintPath>
-        </Reference>
-        <Reference Include="Avalonia.Remote.Protocol">
-            <HintPath>$(SE2Game2Path)Avalonia.Remote.Protocol.dll</HintPath>
         </Reference>
         <Reference Include="Avalonia.Skia">
             <HintPath>$(SE2Game2Path)Avalonia.Skia.dll</HintPath>
@@ -514,14 +513,45 @@
         </Reference>
     </ItemGroup>
 
+    <Target Name="CopyDebugNativeDevToolsDesktopAssemblies" BeforeTargets="CopyDll" Condition="'$(Configuration)' == 'Debug'">
+        <ItemGroup>
+            <NativeDevToolsDesktopAssembly Include="$(NuGetPackageRoot)avalonia.win32/11.0.10/lib/net6.0/Avalonia.Win32.dll" />
+            <NativeDevToolsDesktopAssembly Include="$(NuGetPackageRoot)avalonia/11.0.10/lib/net6.0/Avalonia.MicroCom.dll" />
+            <NativeDevToolsDesktopAssembly Include="$(NuGetPackageRoot)avalonia/11.0.10/lib/net6.0/Avalonia.Metal.dll" />
+            <NativeDevToolsDesktopAssembly Include="$(NuGetPackageRoot)avalonia.skia/11.0.10/lib/net6.0/Avalonia.Skia.dll" />
+            <NativeDevToolsDesktopAssembly Include="$(NuGetPackageRoot)avalonia/11.0.10/lib/net6.0/Avalonia.OpenGL.dll" />
+            <NativeDevToolsDesktopAssembly Include="$(NuGetPackageRoot)skiasharp/2.88.7/lib/net6.0/SkiaSharp.dll" />
+            <NativeDevToolsDesktopAssembly Include="$(NuGetPackageRoot)skiasharp.nativeassets.win32/2.88.7/runtimes/win-x64/native/libSkiaSharp.dll" />
+        </ItemGroup>
+
+        <Copy
+                SourceFiles="@(NativeDevToolsDesktopAssembly)"
+                DestinationFolder="$(OutDir)"
+                SkipUnchangedFiles="true" />
+    </Target>
+
+    <Target Name="PatchDebugNativeDevToolsSkiaAbi" AfterTargets="CopyDebugNativeDevToolsDesktopAssemblies" BeforeTargets="CopyDll" Condition="'$(Configuration)' == 'Debug'">
+        <Exec Command="dotnet run --project &quot;$(MSBuildThisFileDirectory)..\Tools\AvaloniaSkiaKeenAbiPatch\AvaloniaSkiaKeenAbiPatch.csproj&quot; -- &quot;$(TargetDir)Avalonia.Skia.dll&quot; &quot;$(SE2Game2Path)Avalonia.Base.dll&quot;" />
+    </Target>
+
     <Target Name="CopyDll" AfterTargets="PostBuildEvent">
         <PropertyGroup>
             <SourceDll>$(TargetDir)$(TargetName).dll</SourceDll>
             <DestinationFolder>$(SE2PluginsPath)</DestinationFolder>
         </PropertyGroup>
+        <ItemGroup>
+            <PluginCopyFile Include="$(SourceDll)" />
+            <PluginCopyFile Include="$(TargetDir)Avalonia.Win32.dll" Condition="'$(Configuration)' == 'Debug'" />
+            <PluginCopyFile Include="$(TargetDir)Avalonia.MicroCom.dll" Condition="'$(Configuration)' == 'Debug'" />
+            <PluginCopyFile Include="$(TargetDir)Avalonia.Metal.dll" Condition="'$(Configuration)' == 'Debug'" />
+            <PluginCopyFile Include="$(TargetDir)Avalonia.Skia.dll" Condition="'$(Configuration)' == 'Debug'" />
+            <PluginCopyFile Include="$(TargetDir)Avalonia.OpenGL.dll" Condition="'$(Configuration)' == 'Debug'" />
+            <PluginCopyFile Include="$(TargetDir)SkiaSharp.dll" Condition="'$(Configuration)' == 'Debug'" />
+            <PluginCopyFile Include="$(TargetDir)libSkiaSharp.dll" Condition="'$(Configuration)' == 'Debug'" />
+        </ItemGroup>
 
         <Copy
-                SourceFiles="$(SourceDll)"
+                SourceFiles="@(PluginCopyFile)"
                 DestinationFolder="$(DestinationFolder)"
                 SkipUnchangedFiles="false" />
     </Target>

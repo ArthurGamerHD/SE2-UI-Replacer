@@ -8,6 +8,13 @@
         <ApplicationManifest>app.manifest</ApplicationManifest>
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
         <RootNamespace>UI_Revamp</RootNamespace>
+        <Configurations>Debug;Release;ExportPlugin</Configurations>
+        <Platforms>AnyCPU</Platforms>
+        <SE2PluginName>UI-Revamp</SE2PluginName>
+        <Version>1.0.0</Version>
+        <SE2InstallPath Condition="'$(SE2InstallPath)' == ''">C:\Program Files (x86)\Steam\steamapps\common\SpaceEngineers2\</SE2InstallPath>
+        <SE2Game2Path Condition="'$(SE2Game2Path)' == ''">$(SE2InstallPath)Game2\</SE2Game2Path>
+        <SE2PluginsPath Condition="'$(SE2PluginsPath)' == ''">$(SE2InstallPath)SpaceEngineers2\Plugins\</SE2PluginsPath>
     </PropertyGroup>
 
     <ItemGroup>
@@ -554,5 +561,44 @@
                 SourceFiles="@(PluginCopyFile)"
                 DestinationFolder="$(DestinationFolder)"
                 SkipUnchangedFiles="false" />
+    </Target>
+
+    <Target Name="ExportPluginDll" AfterTargets="Build" Condition="'$(Configuration)' == 'ExportPlugin'">
+        <ItemGroup>
+            <PluginExportFile Include="$(TargetDir)$(TargetName).dll" />
+            <PluginExportFile Include="$(SE2Game2Path)0Harmony.dll" />
+            <SE2Executable Include="$(SE2Game2Path)SpaceEngineers2.dll" />
+        </ItemGroup>
+
+        <GetAssemblyIdentity AssemblyFiles="@(SE2Executable)">
+            <Output TaskParameter="Assemblies" ItemName="SE2ExecutableAssembly" />
+        </GetAssemblyIdentity>
+
+        <PropertyGroup>
+            <SE2Version>%(SE2ExecutableAssembly.Version)</SE2Version>
+            <PluginZipStagingDir>$(TargetDir)zip\$(SE2PluginName)\</PluginZipStagingDir>
+            <PluginZipPath>$(TargetDir)$(SE2PluginName)-$(Version)-Se2-$(SE2Version).zip</PluginZipPath>
+        </PropertyGroup>
+        <ItemGroup>
+            <ExistingPluginZip Include="$(TargetDir)$(SE2PluginName)-*.zip" />
+        </ItemGroup>
+
+        <MakeDir Directories="$(SE2PluginsPath)" />
+        <Copy
+                SourceFiles="@(PluginExportFile)"
+                DestinationFolder="$(SE2PluginsPath)"
+                SkipUnchangedFiles="false" />
+
+        <RemoveDir Directories="$(PluginZipStagingDir)" />
+        <MakeDir Directories="$(PluginZipStagingDir)" />
+        <Copy
+                SourceFiles="@(PluginExportFile)"
+                DestinationFolder="$(PluginZipStagingDir)"
+                SkipUnchangedFiles="false" />
+        <Delete Files="@(ExistingPluginZip)" />
+        <ZipDirectory
+                SourceDirectory="$(PluginZipStagingDir)"
+                DestinationFile="$(PluginZipPath)"
+                Overwrite="true" />
     </Target>
 </Project>

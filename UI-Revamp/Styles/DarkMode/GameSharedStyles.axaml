@@ -1,0 +1,26 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:CompileBindings="False">
+    <Styles.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="avares://UI-Revamp/Styles/DarkMode/GameSharedResources.axaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Styles.Resources>
+
+    <StyleInclude Source="avares://Game2.Client/UI/Library/Styles/Avalonia/AvaloniaControlStyles.axaml" />
+    <StyleInclude Source="avares://Game2.Client/UI/Styles/Legacy/Game2Styles.axaml" />
+
+    <StyleInclude Source="avares://Game2.Client/UI/Library/Styles/BeveledBorder.axaml" />
+    <StyleInclude Source="avares://Game2.Client/UI/Library/Controls/PCUControl/PCUView.axaml" />
+    <StyleInclude Source="avares://Game2.Client/UI/Library/Controls/RadialMenu/RadialMenu.axaml" />
+    <StyleInclude Source="avares://Game2.Client/UI/Library/Controls/RadialMenu/RadialSlice.axaml" />
+    <StyleInclude Source="avares://Game2.Client/UI/Library/Controls/ShadowedTextBlock.axaml" />
+    <StyleInclude Source="avares://Game2.Client/UI/Library/Controls/ScrollableBar.axaml" />
+    <StyleInclude Source="avares://Game2.Client/UI/Shared/SystemNotification/SystemMessageView.axaml" />
+    <StyleInclude Source="avares://Game2.Client/UI/Shared/UGC/UGCItem.axaml" />
+    <StyleInclude Source="avares://Game2.Client/UI/Shared/UGC/UGCPreviewItem.axaml" />
+    <StyleInclude Source="avares://Game2.Client/UI/Shared/UGC/UGCBrowser.axaml" />
+    <StyleInclude Source="avares://Game2.Client/UI/Shared/UGCStyles.axaml" />
+</Styles>

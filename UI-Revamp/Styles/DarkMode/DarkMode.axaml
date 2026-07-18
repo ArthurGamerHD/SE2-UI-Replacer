@@ -1,17 +1,16 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        x:Class="UI_Revamp.Styles.CoreStyles">
-    <Design.PreviewWith>
-        <Border Padding="20">
-            <Button Classes="Menu"/>
-        </Border>
-    </Design.PreviewWith>
-
+        x:CompileBindings="False">
     <Styles.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceInclude Source="avares://UI-Revamp/Resources/SharedResources.axaml" />
+                <ResourceInclude Source="avares://UI-Revamp/Styles/DarkMode/Palette.axaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Styles.Resources>
+
+    <StyleInclude Source="avares://UI-Revamp/Styles/DarkMode/Button.axaml" />
+    <StyleInclude Source="avares://UI-Revamp/Styles/DarkMode/WorkshopTier1RadioButton.axaml" />
+    <StyleInclude Source="avares://UI-Revamp/Styles/DarkMode/TabItem.axaml" />
 </Styles>

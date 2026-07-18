@@ -1,6 +1,11 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        x:Class="SE2PluginLoader.Styles.WorldStyles">
+        xmlns:controlHints="clr-namespace:Keen.Game2.Client.UI.Library.Controls.ControlHints;assembly=Game2.Client"
+        xmlns:flight="clr-namespace:Keen.Game2.Client.UI.HUD.Flight;assembly=Game2.Client"
+        xmlns:mission="clr-namespace:Keen.Game2.Client.UI.Shared.Mission.ColonizationNotification;assembly=Game2.Client"
+        xmlns:notifications="clr-namespace:Keen.Game2.Client.UI.HUD.Notification;assembly=Game2.Client"
+        xmlns:toolTips="clr-namespace:Keen.Game2.Client.UI.ToolTips;assembly=Game2.Client"
+        x:Class="UI_Revamp.Styles.WorldStyles">
     <Design.PreviewWith>
         <Border Padding="20">
             <!-- Add Controls for Previewer Here -->
@@ -8,5 +13,25 @@
     </Design.PreviewWith>
     
     <StyleInclude Source="avares://UI-Revamp/Styles/CoreStyles.axaml"></StyleInclude>
-    <!-- Add Styles Here -->
+
+    <Style Selector="mission|ColonizationNotificationView">
+        <Setter Property="IsVisible" Value="{DynamicResource UIRevamp_ShowColonizationNotification}" />
+    </Style>
+
+    <Style Selector="ContentControl#PART_MissionObjectives">
+        <Setter Property="IsVisible" Value="{DynamicResource UIRevamp_ShowMissionObjectives}" />
+    </Style>
+
+    <Style Selector="toolTips|DynamicTooltipView">
+        <Setter Property="IsVisible" Value="{DynamicResource UIRevamp_ShowTips}" />
+    </Style>
+
+    <Style Selector="controlHints|ControlHints">
+        <Setter Property="IsVisible" Value="{DynamicResource UIRevamp_ShowControlHints}" />
+    </Style>
+
+    <Style Selector="notifications|HUDNotificationCollectionView">
+        <Setter Property="IsVisible" Value="{DynamicResource UIRevamp_ShowCollectedItems}" />
+    </Style>
+
 </Styles>

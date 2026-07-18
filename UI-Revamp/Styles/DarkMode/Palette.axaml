@@ -1,0 +1,178 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceInclude Source="avares://UI-Revamp/Resources/SharedResources.axaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <SolidColorBrush x:Key="Border-Background" Color="{StaticResource Background}" />
+    <SolidColorBrush x:Key="Border-Brush" Color="{StaticResource Secondary}" />
+    <SolidColorBrush x:Key="Border-Brush-Active" Color="{StaticResource HighContrast}" />
+    <SolidColorBrush x:Key="Decorative-Border-Brush" Color="#535353" />
+
+    <SolidColorBrush x:Key="Button-Background" Color="{StaticResource Background}" />
+    <SolidColorBrush x:Key="Button-Background-Focus" Color="{StaticResource Background}" />
+    <SolidColorBrush x:Key="Button-Background-Disabled" Color="{StaticResource PassiveDark}" />
+    <SolidColorBrush x:Key="Button-Background-Active" Color="{StaticResource Highlight}" />
+    <SolidColorBrush x:Key="Menu-Button-Background" Color="{StaticResource BackgroundDark}" />
+    <SolidColorBrush x:Key="Menu-Button-Background-Focus" Color="{StaticResource BackgroundDark}" />
+    <SolidColorBrush x:Key="Menu-Button-Background-Disabled" Color="{StaticResource BackgroundDark}" />
+    <SolidColorBrush x:Key="Menu-Button-Background-Active" Color="{StaticResource Highlight}" />
+    <SolidColorBrush x:Key="Button-Stroke" Color="{StaticResource Secondary}" />
+    <SolidColorBrush x:Key="Button-Stroke-Focus" Color="{StaticResource Highlight}" />
+    <SolidColorBrush x:Key="Button-Stroke-Disabled" Color="{StaticResource Background}" />
+    <SolidColorBrush x:Key="Button-Stroke-Active" Color="{StaticResource Highlight}" />
+    <SolidColorBrush x:Key="Button-Text" Color="{StaticResource HighContrast}" />
+    <SolidColorBrush x:Key="Button-Text-Focus" Color="{StaticResource HighContrast}" />
+    <SolidColorBrush x:Key="Button-Text-Disabled" Color="{StaticResource Secondary}" />
+    <SolidColorBrush x:Key="Button-Text-Active" Color="{StaticResource Black}" />
+
+    <SolidColorBrush x:Key="ListboxItem-Background" Color="Transparent" />
+    <SolidColorBrush x:Key="ListboxItem-Background-Focus" Color="{StaticResource Passive}" />
+    <SolidColorBrush x:Key="ListboxItem-Background-Disabled" Color="Transparent" />
+    <SolidColorBrush x:Key="ListboxItem-Background-Active" Color="{StaticResource Highlight}" />
+    <SolidColorBrush x:Key="ListboxItem-Text" Color="{StaticResource HighContrast}" />
+    <SolidColorBrush x:Key="ListboxItem-Text-Focus" Color="{StaticResource HighContrast}" />
+    <SolidColorBrush x:Key="ListboxItem-Text-Disabled" Color="{StaticResource Secondary}" />
+    <SolidColorBrush x:Key="ListboxItem-Text-Active" Color="{StaticResource Black}" />
+
+    <SolidColorBrush x:Key="Popup-Background" Color="{StaticResource Passive}" />
+    <SolidColorBrush x:Key="Popup-Border-Brush" Color="{StaticResource Primary}" />
+
+    <SolidColorBrush x:Key="PreciseControl-Background" Color="{StaticResource Background}" />
+    <SolidColorBrush x:Key="PreciseControl-Background-Focus" Color="{StaticResource Background}" />
+    <SolidColorBrush x:Key="PreciseControl-Background-Disabled" Color="{StaticResource PassiveDark}" />
+    <SolidColorBrush x:Key="PreciseControl-Background-Active" Color="{StaticResource Highlight}" />
+    <SolidColorBrush x:Key="PreciseControl-Stroke" Color="{StaticResource Secondary}" />
+    <SolidColorBrush x:Key="PreciseControl-Stroke-Focus" Color="{StaticResource Highlight}" />
+    <SolidColorBrush x:Key="PreciseControl-Stroke-Disabled" Color="{StaticResource Background}" />
+    <SolidColorBrush x:Key="PreciseControl-Stroke-Active" Color="{StaticResource Secondary}" />
+    <SolidColorBrush x:Key="PreciseControl-Text" Color="{StaticResource HighContrast}" />
+    <SolidColorBrush x:Key="PreciseControl-Text-Focus" Color="{StaticResource HighContrast}" />
+    <SolidColorBrush x:Key="PreciseControl-Text-Disabled" Color="{StaticResource Secondary}" />
+    <SolidColorBrush x:Key="PreciseControl-Text-Active" Color="{StaticResource Black}" />
+
+    <SolidColorBrush x:Key="Tab-Background" Color="{StaticResource BackgroundDark}" />
+    <SolidColorBrush x:Key="Tab-Background-Focus" Color="{StaticResource BackgroundDark}" />
+    <SolidColorBrush x:Key="Tab-Background-Disabled" Color="{StaticResource BackgroundDark}" />
+    <SolidColorBrush x:Key="Tab-Background-Active" Color="{StaticResource BackgroundDark}" />
+    <SolidColorBrush x:Key="Tab-Stroke" Color="{StaticResource Secondary}" />
+    <SolidColorBrush x:Key="Tab-Stroke-Focus" Color="{StaticResource Highlight}" />
+    <SolidColorBrush x:Key="Tab-Stroke-Disabled" Color="{StaticResource Background}" />
+    <SolidColorBrush x:Key="Tab-Stroke-Active" Color="{StaticResource Highlight}" />
+    <SolidColorBrush x:Key="Tab-Text" Color="{StaticResource Primary}" />
+    <SolidColorBrush x:Key="Tab-Text-Focus" Color="{StaticResource HighContrast}" />
+    <SolidColorBrush x:Key="Tab-Text-Disabled" Color="{StaticResource Secondary}" />
+    <SolidColorBrush x:Key="Tab-Text-Active" Color="{StaticResource Primary}" />
+
+    <SolidColorBrush x:Key="TextBox-Background" Color="{StaticResource Background}" />
+    <SolidColorBrush x:Key="TextBox-Background-Focus" Color="{StaticResource Background}" />
+    <SolidColorBrush x:Key="TextBox-Background-Disabled" Color="{StaticResource PassiveDark}" />
+    <SolidColorBrush x:Key="TextBox-Background-Active" Color="{StaticResource Highlight}" />
+    <SolidColorBrush x:Key="TextBox-Stroke" Color="{StaticResource Secondary}" />
+    <SolidColorBrush x:Key="TextBox-Stroke-Focus" Color="{StaticResource Highlight}" />
+    <SolidColorBrush x:Key="TextBox-Stroke-Disabled" Color="{StaticResource Background}" />
+    <SolidColorBrush x:Key="TextBox-Stroke-Active" Color="{StaticResource Highlight}" />
+    <SolidColorBrush x:Key="TextBox-Text" Color="{StaticResource Primary}" />
+    <SolidColorBrush x:Key="TextBox-Text-Focus" Color="{StaticResource Primary}" />
+    <SolidColorBrush x:Key="TextBox-Text-Disabled" Color="{StaticResource Secondary}" />
+    <SolidColorBrush x:Key="TextBox-Text-Active" Color="{StaticResource Black}" />
+
+    <SolidColorBrush x:Key="ToggleSwitch-Background" Color="{StaticResource Background}" />
+    <SolidColorBrush x:Key="ToggleSwitch-Background-Focus" Color="{StaticResource Highlight}" />
+    <SolidColorBrush x:Key="ToggleSwitch-Background-Disabled" Color="{StaticResource PassiveDark}" />
+    <SolidColorBrush x:Key="ToggleSwitch-Background-Active" Color="{StaticResource Primary}" />
+    <SolidColorBrush x:Key="ToggleSwitch-Stroke" Color="{StaticResource Secondary}" />
+    <SolidColorBrush x:Key="ToggleSwitch-Stroke-Focus" Color="{StaticResource Highlight}" />
+    <SolidColorBrush x:Key="ToggleSwitch-Stroke-Disabled" Color="{StaticResource Background}" />
+    <SolidColorBrush x:Key="ToggleSwitch-Stroke-Active" Color="{StaticResource Highlight}" />
+    <SolidColorBrush x:Key="ToggleSwitch-Text" Color="{StaticResource HighContrast}" />
+    <SolidColorBrush x:Key="ToggleSwitch-Text-Focus" Color="{StaticResource Black}" />
+    <SolidColorBrush x:Key="ToggleSwitch-Text-Disabled" Color="{StaticResource Secondary}" />
+    <SolidColorBrush x:Key="ToggleSwitch-Text-Active" Color="{StaticResource HighContrast}" />
+
+    <SolidColorBrush x:Key="CheckBoxCheckGlyphForeground" Color="{StaticResource HighContrast}" />
+    <SolidColorBrush x:Key="CheckBoxForegroundUnchecked" Color="{StaticResource Highlight}" />
+    <SolidColorBrush x:Key="CheckBoxForegroundChecked" Color="{StaticResource Highlight}" />
+    <SolidColorBrush x:Key="CheckBoxBackground" Color="{StaticResource Background}" />
+    <SolidColorBrush x:Key="CheckBoxBorder" Color="{StaticResource Secondary}" />
+    <SolidColorBrush x:Key="CheckBoxBorderHover" Color="{StaticResource Highlight}" />
+    <SolidColorBrush x:Key="CheckBoxBorderPressed" Color="{StaticResource Highlight}" />
+
+    <SolidColorBrush x:Key="TextBlockHyperlinkActive" Color="{StaticResource Highlight}" />
+
+    <!-- Pink probe resources for controls that do not consume the SE2 Background/Tab/Button palette. -->
+    <SolidColorBrush x:Key="Decoration-Brush" Color="{StaticResource Background}" />
+    <SolidColorBrush x:Key="Decoration-Brush-Light" Color="{StaticResource Background}" />
+    <SolidColorBrush x:Key="Decoration-Brush-Lightest" Color="{StaticResource Background}" />
+    <SolidColorBrush x:Key="Backlight-Bleeding-Brush-Left" Color="{StaticResource Background}" />
+    <SolidColorBrush x:Key="Backlight-Bleeding-Brush-Right" Color="{StaticResource Background}" />
+    <SolidColorBrush x:Key="Backlight-Bleeding-Brush-Top" Color="{StaticResource Background}" />
+    <SolidColorBrush x:Key="Backlight-Bleeding-Brush-Bottom" Color="{StaticResource Background}" />
+    <SolidColorBrush x:Key="Container-Static-Background" Color="{StaticResource Background}" />
+    <SolidColorBrush x:Key="Highlight-Stroke" Color="{StaticResource Highlight}" />
+
+    <SolidColorBrush x:Key="ControlFillColorTransparentBrush" Color="#00FF4FD8" />
+    <SolidColorBrush x:Key="ControlFillColorDefaultBrush" Color="{StaticResource Background}" />
+    <SolidColorBrush x:Key="ControlFillColorSecondaryBrush" Color="{StaticResource Background}" />
+    <SolidColorBrush x:Key="ControlFillColorTertiaryBrush" Color="{StaticResource Background}" />
+    <SolidColorBrush x:Key="ControlFillColorDisabledBrush" Color="{StaticResource Disabled}" />
+    <SolidColorBrush x:Key="ControlStrongFillColorDefaultBrush" Color="{StaticResource Highlight}" />
+    <SolidColorBrush x:Key="ControlStrongFillColorDisabledBrush" Color="{StaticResource Disabled}" />
+    <SolidColorBrush x:Key="ControlStrokeColorDefaultBrush" Color="{StaticResource Highlight}" />
+    <SolidColorBrush x:Key="ControlStrongStrokeColorDefaultBrush" Color="{StaticResource Highlight}" />
+    <SolidColorBrush x:Key="ControlStrongStrokeColorDisabledBrush" Color="{StaticResource Disabled}" />
+    <SolidColorBrush x:Key="ControlElevationBorderBrush" Color="{StaticResource Highlight}" />
+    <SolidColorBrush x:Key="AccentControlElevationBorderBrush" Color="{StaticResource Highlight}" />
+    <SolidColorBrush x:Key="SubtleFillColorTransparentBrush" Color="{StaticResource Background}" />
+    <SolidColorBrush x:Key="SubtleFillColorSecondaryBrush" Color="{StaticResource Background}" />
+    <SolidColorBrush x:Key="SubtleFillColorTertiaryBrush" Color="{StaticResource Background}" />
+    <SolidColorBrush x:Key="SubtleFillColorDisabledBrush" Color="{StaticResource Disabled}" />
+    <SolidColorBrush x:Key="LayerFillColorDefaultBrush" Color="{StaticResource Background}" />
+    <SolidColorBrush x:Key="LayerFillColorAltBrush" Color="{StaticResource Background}" />
+    <SolidColorBrush x:Key="SolidBackgroundFillColorBaseBrush" Color="{StaticResource Background}" />
+    <SolidColorBrush x:Key="SolidBackgroundFillColorSecondaryBrush" Color="{StaticResource Background}" />
+    <SolidColorBrush x:Key="AcrylicInAppFillColorDefaultBrush" Color="{StaticResource Background}" />
+    <SolidColorBrush x:Key="AcrylicBackgroundFillColorDefaultBrush" Color="{StaticResource Background}" />
+    <SolidColorBrush x:Key="SmokeFillColorDefaultBrush" Color="{StaticResource Background}" />
+    <SolidColorBrush x:Key="SurfaceStrokeColorDefaultBrush" Color="{StaticResource Highlight}" />
+    <SolidColorBrush x:Key="SurfaceStrokeColorFlyoutBrush" Color="{StaticResource Highlight}" />
+    <SolidColorBrush x:Key="AccentFillColorDefaultBrush" Color="{StaticResource Highlight}" />
+    <SolidColorBrush x:Key="AccentFillColorSecondaryBrush" Color="{StaticResource Highlight}" />
+    <SolidColorBrush x:Key="AccentFillColorTertiaryBrush" Color="{StaticResource Highlight}" />
+    <SolidColorBrush x:Key="AccentFillColorDisabledBrush" Color="{StaticResource Disabled}" />
+
+    <SolidColorBrush x:Key="ScrollBarBackground" Color="{StaticResource Background}" />
+    <SolidColorBrush x:Key="ScrollBarBackgroundPointerOver" Color="{StaticResource Background}" />
+    <SolidColorBrush x:Key="ScrollBarBackgroundDisabled" Color="{StaticResource Disabled}" />
+    <SolidColorBrush x:Key="ScrollBarForeground" Color="{StaticResource Highlight}" />
+    <SolidColorBrush x:Key="ScrollBarBorderBrush" Color="{StaticResource Highlight}" />
+    <SolidColorBrush x:Key="ScrollBarBorderBrushPointerOver" Color="{StaticResource Highlight}" />
+    <SolidColorBrush x:Key="ScrollBarBorderBrushDisabled" Color="{StaticResource Disabled}" />
+    <SolidColorBrush x:Key="ScrollBarButtonBackground" Color="{StaticResource Background}" />
+    <SolidColorBrush x:Key="ScrollBarButtonBackgroundPointerOver" Color="{StaticResource Background}" />
+    <SolidColorBrush x:Key="ScrollBarButtonBackgroundPressed" Color="{StaticResource Highlight}" />
+    <SolidColorBrush x:Key="ScrollBarButtonBackgroundDisabled" Color="{StaticResource Disabled}" />
+    <SolidColorBrush x:Key="ScrollBarButtonBorderBrush" Color="{StaticResource Highlight}" />
+    <SolidColorBrush x:Key="ScrollBarButtonBorderBrushPointerOver" Color="{StaticResource Highlight}" />
+    <SolidColorBrush x:Key="ScrollBarButtonBorderBrushPressed" Color="{StaticResource Highlight}" />
+    <SolidColorBrush x:Key="ScrollBarButtonBorderBrushDisabled" Color="{StaticResource Disabled}" />
+    <SolidColorBrush x:Key="ScrollBarButtonArrowForeground" Color="{StaticResource HighContrast}" />
+    <SolidColorBrush x:Key="ScrollBarButtonArrowForegroundPointerOver" Color="{StaticResource HighContrast}" />
+    <SolidColorBrush x:Key="ScrollBarButtonArrowForegroundPressed" Color="{StaticResource Black}" />
+    <SolidColorBrush x:Key="ScrollBarButtonArrowForegroundDisabled" Color="{StaticResource Disabled}" />
+    <SolidColorBrush x:Key="ScrollBarThumbFill" Color="{StaticResource Highlight}" />
+    <SolidColorBrush x:Key="ScrollBarThumbFillPointerOver" Color="{StaticResource Highlight}" />
+    <SolidColorBrush x:Key="ScrollBarThumbFillPressed" Color="{StaticResource Highlight}" />
+    <SolidColorBrush x:Key="ScrollBarThumbFillDisabled" Color="{StaticResource Disabled}" />
+    <SolidColorBrush x:Key="ScrollBarThumbBorderBrush" Color="{StaticResource HighContrast}" />
+    <SolidColorBrush x:Key="ScrollBarTrackFill" Color="{StaticResource Background}" />
+    <SolidColorBrush x:Key="ScrollBarTrackFillPointerOver" Color="{StaticResource Background}" />
+    <SolidColorBrush x:Key="ScrollBarTrackFillDisabled" Color="{StaticResource Disabled}" />
+    <SolidColorBrush x:Key="ScrollBarTrackStroke" Color="{StaticResource Highlight}" />
+    <SolidColorBrush x:Key="ScrollBarTrackStrokePointerOver" Color="{StaticResource Highlight}" />
+    <SolidColorBrush x:Key="ScrollBarTrackStrokeDisabled" Color="{StaticResource Disabled}" />
+    <SolidColorBrush x:Key="ScrollBarThumbBackground" Color="{StaticResource Highlight}" />
+    <SolidColorBrush x:Key="ScrollBarPanningThumbBackground" Color="{StaticResource Highlight}" />
+    <SolidColorBrush x:Key="ScrollBarPanningThumbBackgroundDisabled" Color="{StaticResource Disabled}" />
+    <SolidColorBrush x:Key="ScrollViewerScrollBarSeparatorBackground" Color="{StaticResource Background}" />
+</ResourceDictionary>

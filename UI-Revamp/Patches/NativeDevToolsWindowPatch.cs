@@ -14,7 +14,6 @@ using Avalonia.Platform;
 using Avalonia.Threading;
 using HarmonyLib;
 using Keen.VRage.Library.Diagnostics;
-using SE2PluginLoader;
 using SkiaSharp;
 
 namespace UI_Revamp.Patches;

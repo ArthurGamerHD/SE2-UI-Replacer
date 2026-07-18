@@ -1,0 +1,180 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:contentControls="clr-namespace:Keen.Game2.Client.UI.Library.Controls.ContentControls;assembly=Game2.Client"
+             xmlns:options="clr-namespace:UI_Revamp.Screens.Options"
+             xmlns:description="clr-namespace:Keen.Game2.Client.UI.Library.Controls.Description;assembly=Game2.Client"
+             xmlns:localization="clr-namespace:Keen.VRage.UI.Localization;assembly=VRage.UI"
+             mc:Ignorable="d"
+             x:CompileBindings="False"
+             x:Class="UI_Revamp.Screens.Options.CustomGuiSettingsSection">
+    <UserControl.Styles>
+        <Style Selector="ToggleSwitch.ui-revamp-template-switch">
+            <Style.Resources>
+                <DataTemplate x:Key="UIRevamp_ToggleSwitchTextTemplate">
+                    <TextBlock Text="{Binding}"
+                               FontSize="{StaticResource Text-Size-Medium}"
+                               FontWeight="Light" />
+                </DataTemplate>
+            </Style.Resources>
+
+            <Style Selector="^ /template/ ContentPresenter#PART_LeftContentPresenter">
+                <Setter Property="ContentTemplate" Value="{StaticResource UIRevamp_ToggleSwitchTextTemplate}" />
+            </Style>
+
+            <Style Selector="^ /template/ ContentPresenter#PART_RightContentPresenter">
+                <Setter Property="ContentTemplate" Value="{StaticResource UIRevamp_ToggleSwitchTextTemplate}" />
+            </Style>
+            <Setter Property="OnContent">On</Setter>
+            <Setter Property="OffContent">Off</Setter>
+        </Style>
+
+        <Style Selector="contentControls|SliderControl.ui-revamp-percentage-slider">
+            <Setter Property="FormatString" Value="P0" />
+        </Style>
+
+    </UserControl.Styles>
+
+    <StackPanel>
+        <Separator Height="25" Background="Transparent" />
+        <Separator Height="1" Background="{StaticResource Secondary}" />
+        <TextBlock HorizontalAlignment="Center" Margin="20" Classes="SubTitle">UI Revamp Plugin</TextBlock>
+
+        <contentControls:DescriptionControl DescriptionKey="Convert *some* UI elements to use a Dark-Mode color scheme&#x0a;&#x0a;This setting requires game restart">
+            <contentControls:DescriptionControl.Content>
+                <Grid ColumnDefinitions="1*,15,516" Margin="{StaticResource Margin-Medium}">
+                    <TextBlock HorizontalAlignment="Right" Classes="OptionSubTitle">Use Dark Mode (WIP)</TextBlock>
+                    <Grid Grid.Column="2" ColumnDefinitions="*">
+                        <ToggleSwitch Classes="Large ui-revamp-template-switch" HorizontalAlignment="Stretch"
+                                      Name="PART_CustomButton"
+                                      IsChecked="{Binding UseDarkMode, Mode=TwoWay}" />
+                    </Grid>
+                </Grid>
+            </contentControls:DescriptionControl.Content>
+        </contentControls:DescriptionControl>
+
+        <contentControls:DescriptionControl DescriptionKey="Hides the colonization progress when the In-Game UI is set to Minimal mode (with the flight hud disabled)">
+            <contentControls:DescriptionControl.Content>
+                <Grid ColumnDefinitions="1*,15,516" Margin="{StaticResource Margin-Medium}">
+                    <TextBlock HorizontalAlignment="Right" Classes="OptionSubTitle">Hide Colonization Progress</TextBlock>
+                    <Grid Grid.Column="2" ColumnDefinitions="*">
+                        <ToggleSwitch Classes="Large ui-revamp-template-switch" HorizontalAlignment="Stretch"
+                                      Name="PART_HideColonizationProgress"
+                                      IsChecked="{Binding HideColonizationProgress, Mode=TwoWay}" />
+                    </Grid>
+                </Grid>
+            </contentControls:DescriptionControl.Content>
+        </contentControls:DescriptionControl>
+
+        <contentControls:DescriptionControl DescriptionKey="Hides the current mission objective when the In-Game UI is set to Minimal mode (with the flight hud disabled)">
+            <contentControls:DescriptionControl.Content>
+                <Grid ColumnDefinitions="1*,15,516" Margin="{StaticResource Margin-Medium}">
+                    <TextBlock HorizontalAlignment="Right" Classes="OptionSubTitle">Hide Mission Objective</TextBlock>
+                    <Grid Grid.Column="2" ColumnDefinitions="*">
+                        <ToggleSwitch Classes="Large ui-revamp-template-switch" HorizontalAlignment="Stretch"
+                                      Name="PART_HideMissionProgress"
+                                      IsChecked="{Binding HideMissionObjective, Mode=TwoWay}" />
+                    </Grid>
+                </Grid>
+            </contentControls:DescriptionControl.Content>
+        </contentControls:DescriptionControl>
+
+        <contentControls:DescriptionControl DescriptionKey="Hides '+123 Item' popup when the In-Game UI is set to Minimal mode (with the flight hud disabled)">
+            <contentControls:DescriptionControl.Content>
+                <Grid ColumnDefinitions="1*,15,516" Margin="{StaticResource Margin-Medium}">
+                    <TextBlock HorizontalAlignment="Right" Classes="OptionSubTitle">Hide Collected Items</TextBlock>
+                    <Grid Grid.Column="2" ColumnDefinitions="*">
+                        <ToggleSwitch Classes="Large ui-revamp-template-switch" HorizontalAlignment="Stretch"
+                                      Name="PART_HideCollectedWhenGrinding"
+                                      IsChecked="{Binding HideCollectedItems, Mode=TwoWay}" />
+                    </Grid>
+                </Grid>
+            </contentControls:DescriptionControl.Content>
+        </contentControls:DescriptionControl>
+
+        <contentControls:DescriptionControl DescriptionKey="Hides control tips when the In-Game UI is set to Minimal mode (with the flight hud disabled)">
+            <contentControls:DescriptionControl.Content>
+                <Grid ColumnDefinitions="1*,15,516" Margin="{StaticResource Margin-Medium}">
+                    <TextBlock HorizontalAlignment="Right" Classes="OptionSubTitle">Hide Tips</TextBlock>
+                    <Grid Grid.Column="2" ColumnDefinitions="*">
+                        <ToggleSwitch Classes="Large ui-revamp-template-switch" HorizontalAlignment="Stretch"
+                                      Name="PART_HideTipscale"
+                                      IsChecked="{Binding HideTips, Mode=TwoWay}" />
+                    </Grid>
+                </Grid>
+            </contentControls:DescriptionControl.Content>
+        </contentControls:DescriptionControl>
+
+        <contentControls:DescriptionControl DescriptionKey="Hides keyboard control hints when the In-Game UI is set to Minimal mode (with the flight hud disabled)">
+            <contentControls:DescriptionControl.Content>
+                <Grid ColumnDefinitions="1*,15,516" Margin="{StaticResource Margin-Medium}">
+                    <TextBlock HorizontalAlignment="Right" Classes="OptionSubTitle">Hide Control Hints</TextBlock>
+                    <Grid Grid.Column="2" ColumnDefinitions="*">
+                        <ToggleSwitch Classes="Large ui-revamp-template-switch" HorizontalAlignment="Stretch"
+                                      Name="PART_HideControlHints"
+                                      IsChecked="{Binding HideControlHints, Mode=TwoWay}" />
+                    </Grid>
+                </Grid>
+            </contentControls:DescriptionControl.Content>
+        </contentControls:DescriptionControl>
+
+        <contentControls:DescriptionControl DescriptionKey="Changes the Global UI Scale">
+            <contentControls:DescriptionControl.Content>
+                <Grid ColumnDefinitions="1*,15,516" Margin="{StaticResource Margin-Medium}">
+                    <TextBlock HorizontalAlignment="Right" Classes="OptionSubTitle">UI Scale</TextBlock>
+                    <Grid Grid.Column="2" ColumnDefinitions="*">
+                        <contentControls:SliderControl Classes="OptionSubTitle ui-revamp-percentage-slider" HorizontalAlignment="Stretch"
+                                                       Name="PART_UIScale"
+                                                       Minimum="0.25"
+                                                       Maximum="1"
+                                                       Rounding="2"
+                                                       Value="{Binding UiScale, Mode=TwoWay}" />
+                    </Grid>
+                </Grid>
+            </contentControls:DescriptionControl.Content>
+        </contentControls:DescriptionControl>
+
+        <contentControls:DescriptionControl DescriptionKey="Uses a compact layout for the Flight Hud">
+            <contentControls:DescriptionControl.Content>
+                <Grid ColumnDefinitions="1*,15,516" Margin="{StaticResource Margin-Medium}">
+                    <TextBlock HorizontalAlignment="Right" Classes="OptionSubTitle">Compact Flight Hud</TextBlock>
+                    <Grid Grid.Column="2" ColumnDefinitions="*">
+                        <ToggleSwitch Classes="Large ui-revamp-template-switch" HorizontalAlignment="Stretch"
+                                      Name="PART_CompactFlightHud"
+                                      IsChecked="{Binding CompactFlightHud, Mode=TwoWay}" />
+                    </Grid>
+                </Grid>
+            </contentControls:DescriptionControl.Content>
+        </contentControls:DescriptionControl>
+
+        <contentControls:DescriptionControl DescriptionKey="Controls how much the flight HUD shifts based on player acceleration">
+            <contentControls:DescriptionControl.Content>
+                <Grid ColumnDefinitions="1*,15,516" Margin="{StaticResource Margin-Medium}">
+                    <TextBlock HorizontalAlignment="Right" Classes="OptionSubTitle">HUD Wobble</TextBlock>
+                    <Grid Grid.Column="2" ColumnDefinitions="*">
+                        <contentControls:SliderControl Classes="OptionSubTitle ui-revamp-percentage-slider" HorizontalAlignment="Stretch"
+                                                       Name="PART_HudWobbleMultiplier"
+                                                       Minimum="0"
+                                                       Maximum="2"
+                                                       Rounding="2"
+                                                       Value="{Binding HudWobbleMultiplier, Mode=TwoWay}" />
+                    </Grid>
+                </Grid>
+            </contentControls:DescriptionControl.Content>
+        </contentControls:DescriptionControl>
+
+        <contentControls:DescriptionControl DescriptionKey="Replaces the Paint Tool quick color menu with an advanced HSV color picker">
+            <contentControls:DescriptionControl.Content>
+                <Grid ColumnDefinitions="1*,15,516" Margin="{StaticResource Margin-Medium}">
+                    <TextBlock HorizontalAlignment="Right" Classes="OptionSubTitle">Advanced Color Picker</TextBlock>
+                    <Grid Grid.Column="2" ColumnDefinitions="*">
+                        <ToggleSwitch Classes="Large ui-revamp-template-switch" HorizontalAlignment="Stretch"
+                                      Name="PART_AdvancedColorPicker"
+                                      IsChecked="{Binding AdvancedColorPicker, Mode=TwoWay}" />
+                    </Grid>
+                </Grid>
+            </contentControls:DescriptionControl.Content>
+        </contentControls:DescriptionControl>
+    </StackPanel>
+</UserControl>

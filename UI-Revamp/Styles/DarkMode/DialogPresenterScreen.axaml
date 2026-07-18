@@ -1,0 +1,19 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:beveledBorder="clr-namespace:Keen.VRage.UI.Shared.Controls.BeveledBorder;assembly=VRage.UI.Shared"
+        xmlns:dialogs="clr-namespace:Keen.Game2.Client.UI.Library.Dialogs;assembly=Game2.Client"
+        x:CompileBindings="False">
+    <Styles.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="avares://UI-Revamp/Resources/SharedResources.axaml" />
+                <ResourceInclude Source="avares://UI-Revamp/Styles/DarkMode/Palette.axaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Styles.Resources>
+
+    <Style Selector="dialogs|DialogPresenterScreen ContentPresenter#PART_ContentPresenter > Grid > beveledBorder|BeveledBorder">
+        <Setter Property="Background" Value="{StaticResource Border-Background}" />
+        <Setter Property="BorderBrush" Value="{StaticResource Decorative-Border-Brush}" />
+    </Style>
+</Styles>

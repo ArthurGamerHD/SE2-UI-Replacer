@@ -1,0 +1,126 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:localization="clr-namespace:Keen.VRage.UI.Localization;assembly=VRage.UI"
+        xmlns:colorPicker="clr-namespace:UI_Revamp.Controls.ColorPicker">
+    <Style Selector="colorPicker|AdvancedColorPickerControl">
+        <Setter Property="HorizontalAlignment" Value="Right" />
+        <Setter Property="Width" Value="774" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Padding="{DynamicResource Margin-Medium}" Width="{TemplateBinding Width}" BorderThickness="3">
+                    <Grid RowDefinitions="Auto Auto" Margin="-3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition SharedSizeGroup="LabelledControlValue" Width="Auto" MinWidth="425" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Name="PART_TextBlock"
+                                   Classes="SubTitle"
+                                   HorizontalAlignment="Right"
+                                   VerticalAlignment="Center"
+                                   Margin="{DynamicResource Margin-Large-Horizontal}"
+                                   Text="{TemplateBinding Label}" />
+                        <Grid Grid.Row="1"
+                              ColumnSpan="2"
+                              Grid.Column="0"
+                              Name="PART_Value"
+                              Height="190"
+                              ColumnDefinitions="* 2*">
+                            <Border HorizontalAlignment="Left"
+                                    VerticalAlignment="Bottom"
+                                    Margin="{DynamicResource Margin-Medium}">
+                                <Grid Name="PART_Wheel">
+                                    <Rectangle Fill="Transparent" />
+                                    <Ellipse Fill="Black" Width="180" Height="180" />
+                                    <Border Name="PART_WheelColor"
+                                            BoxShadow="0 0 10 0 Black"
+                                            Width="180"
+                                            Height="180"
+                                            ClipToBounds="True"
+                                            CornerRadius="90">
+                                        <Border.Background>
+                                            <ImageBrush Source="{DynamicResource TerminalAvaloniaConfiguration_ColorPicker}" />
+                                        </Border.Background>
+                                    </Border>
+                                    <Ellipse Name="PART_WheelSelector"
+                                             Stroke="Black"
+                                             StrokeThickness="1"
+                                             Width="5"
+                                             Height="5" />
+                                </Grid>
+                            </Border>
+
+                            <Grid Column="1" RowDefinitions="Auto, Auto, Auto, Auto, Auto">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="ColorProperty" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Classes="SubTitle"
+                                           Margin="5,0"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Right"
+                                           Grid.Row="1"
+                                           Grid.Column="0">
+                                    <TextBlock.Text>
+                                        <localization:Loc TextKey="ColorPickerHue" />
+                                    </TextBlock.Text>
+                                </TextBlock>
+                                <Panel Grid.Row="1" Grid.Column="1" Margin="5,0">
+                                    <Slider Name="PART_SliderH" Maximum="360" />
+                                </Panel>
+
+                                <TextBlock Classes="SubTitle"
+                                           Margin="5,0"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Right"
+                                           Grid.Row="2"
+                                           Grid.Column="0">
+                                    <TextBlock.Text>
+                                        <localization:Loc TextKey="ColorPickerSaturation" />
+                                    </TextBlock.Text>
+                                </TextBlock>
+                                <Panel Grid.Row="2" Grid.Column="1" Margin="5,0">
+                                    <Slider Name="PART_SliderS" Maximum="100" />
+                                </Panel>
+
+                                <TextBlock Classes="SubTitle"
+                                           Margin="5,0"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Right"
+                                           Grid.Row="3"
+                                           Grid.Column="0">
+                                    <TextBlock.Text>
+                                        <localization:Loc TextKey="ColorPickerValue" />
+                                    </TextBlock.Text>
+                                </TextBlock>
+                                <Panel Grid.Row="3" Grid.Column="1" Margin="5,0">
+                                    <Slider Name="PART_SliderV" Maximum="100" />
+                                </Panel>
+
+                                <TextBlock Classes="SubTitle"
+                                           Margin="5,0"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Right"
+                                           Grid.Row="4"
+                                           Grid.Column="0">
+                                    <TextBlock.Text>
+                                        <localization:Loc TextKey="ColorPickerHex" />
+                                    </TextBlock.Text>
+                                </TextBlock>
+                                <Panel Grid.Row="4" Grid.Column="1" Margin="5,0">
+                                    <TextBox Text="{Binding HexColor, RelativeSource={RelativeSource TemplatedParent}}"
+                                             HorizontalContentAlignment="Center" />
+                                </Panel>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^ NumericUpDown">
+            <Setter Property="MinWidth" Value="90" />
+        </Style>
+    </Style>
+</Styles>

@@ -1,0 +1,96 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:beveledBorder="clr-namespace:Keen.VRage.UI.Shared.Controls.BeveledBorder;assembly=VRage.UI.Shared"
+        xmlns:workshop="clr-namespace:Keen.Game2.Client.UI.Menu.Workshop;assembly=Game2.Client"
+        x:CompileBindings="False">
+    <Styles.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="avares://UI-Revamp/Resources/SharedResources.axaml" />
+                <ResourceInclude Source="avares://UI-Revamp/Styles/DarkMode/Palette.axaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Styles.Resources>
+
+    <Style Selector="workshop|WorkshopScreen StackPanel#PART_StackPanel">
+        <Setter Property="Margin" Value="20,0,0,0" />
+    </Style>
+
+    <Style Selector="RadioButton.Tier1Menu">
+        <Setter Property="Background" Value="{StaticResource Menu-Button-Background}" />
+        <Setter Property="BorderBrush" Value="{StaticResource Button-Stroke}" />
+        <Setter Property="Foreground" Value="{StaticResource Button-Text}" />
+        <Setter Property="CornerRadius" Value="{StaticResource Radius-Medium}" />
+        <Setter Property="BorderThickness" Value="1" />
+
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch"
+                      Width="{TemplateBinding Width}"
+                      Height="{TemplateBinding Height}">
+                    <beveledBorder:BeveledBorder Name="PART_Border"
+                                                 MinHeight="50"
+                                                 HorizontalAlignment="Stretch"
+                                                 VerticalAlignment="Stretch"
+                                                 ClampDirection="Horizontal"
+                                                 BorderThickness="{TemplateBinding BorderThickness}"
+                                                 Background="{TemplateBinding Background}"
+                                                 BorderBrush="{TemplateBinding BorderBrush}"
+                                                 Bevel="{TemplateBinding CornerRadius}">
+                        <Viewbox Stretch="Uniform"
+                                 MaxWidth="190"
+                                 StretchDirection="DownOnly"
+                                 HorizontalAlignment="Stretch"
+                                 VerticalAlignment="Stretch">
+                            <ContentPresenter Name="PART_ContentPresenter"
+                                              Foreground="{TemplateBinding Foreground}"
+                                              FontSize="{TemplateBinding FontSize}"
+                                              Content="{TemplateBinding Content}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              Padding="{TemplateBinding Padding}"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              RecognizesAccessKey="True"
+                                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+                        </Viewbox>
+                    </beveledBorder:BeveledBorder>
+                    <beveledBorder:BeveledBorder Name="PART_SelectionPipe"
+                                                 Height="5"
+                                                 HorizontalAlignment="Stretch"
+                                                 VerticalAlignment="Bottom"
+                                                 Background="{StaticResource Menu-Button-Background-Active}"
+                                                 BorderBrush="{StaticResource Menu-Button-Background-Active}"
+                                                 BorderThickness="0"
+                                                 Bevel="2"
+                                                 IsVisible="False" />
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^:focus, ^:pointerover">
+            <Style Selector="^ /template/ beveledBorder|BeveledBorder#PART_Border">
+                <Setter Property="Background" Value="{StaticResource Menu-Button-Background-Focus}" />
+            </Style>
+        </Style>
+
+        <Style Selector="^:checked">
+            <Style Selector="^ /template/ beveledBorder|BeveledBorder#PART_Border">
+                <Setter Property="Background" Value="{StaticResource Menu-Button-Background}" />
+            </Style>
+            <Style Selector="^ /template/ beveledBorder|BeveledBorder#PART_SelectionPipe">
+                <Setter Property="IsVisible" Value="True" />
+            </Style>
+        </Style>
+
+        <Style Selector="^:disabled">
+            <Style Selector="^ /template/ beveledBorder|BeveledBorder#PART_Border">
+                <Setter Property="Background" Value="{StaticResource Menu-Button-Background-Disabled}" />
+            </Style>
+            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Foreground" Value="{StaticResource Button-Text-Disabled}" />
+            </Style>
+        </Style>
+    </Style>
+</Styles>

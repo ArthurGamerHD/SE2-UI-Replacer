@@ -1,12 +1,16 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:beveledBorder="clr-namespace:Keen.VRage.UI.Shared.Controls.BeveledBorder;assembly=VRage.UI.Shared"
-        xmlns:utilities="clr-namespace:Keen.VRage.UI.AvaloniaInterface.Utilities;assembly=VRage.UI"
         x:CompileBindings="False">
-    <Design.PreviewWith>
-        <Button Margin="20" Classes="Menu" />
-    </Design.PreviewWith>
-    
+    <Styles.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="avares://UI-Revamp/Resources/SharedResources.axaml" />
+                <ResourceInclude Source="avares://UI-Revamp/Styles/DarkMode/Palette.axaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Styles.Resources>
+
     <Style Selector="Button.Menu">
         <Setter Property="Width" Value="320" />
         <Setter Property="Height" Value="67" />
@@ -59,16 +63,13 @@
                 </beveledBorder:BeveledBorder>
             </ControlTemplate>
         </Setter>
-        
-        
-        <!-- Focus -->
+
         <Style Selector="^:focus, ^:pointerover, ^:flyout-open">
             <Style Selector="^ /template/ beveledBorder|BeveledBorder#PART_Border">
                 <Setter Property="Background" Value="{StaticResource Menu-Button-Background-Focus}" />
             </Style>
         </Style>
 
-        <!-- Active -->
         <Style Selector="^:pressed">
             <Style Selector="^ /template/ beveledBorder|BeveledBorder#PART_Border">
                 <Setter Property="Background" Value="{StaticResource Menu-Button-Background-Active}" />
@@ -78,18 +79,32 @@
             </Style>
         </Style>
 
-        <!-- Disabled -->
         <Style Selector="^:disabled">
             <Style Selector="^ /template/ beveledBorder|BeveledBorder#PART_Border">
                 <Setter Property="Background" Value="{StaticResource Menu-Button-Background-Disabled}" />
             </Style>
         </Style>
-        
-        <!-- Disabled via Tag -->
+
         <Style Selector="^[Tag=disabled]">
             <Style Selector="^ /template/ beveledBorder|BeveledBorder#PART_Border">
                 <Setter Property="Background" Value="{StaticResource Menu-Button-Background-Disabled}" />
             </Style>
+        </Style>
+    </Style>
+
+    <Style Selector="Button.Menu.SmallButton.LargeIconButton">
+        <Setter Property="Width" Value="50" />
+        <Setter Property="Height" Value="50" />
+        <Setter Property="MinWidth" Value="50" />
+        <Setter Property="MinHeight" Value="50" />
+
+        <Style Selector="^ /template/ beveledBorder|BeveledBorder#PART_Border">
+            <Setter Property="MinHeight" Value="0" />
+        </Style>
+
+        <Style Selector="^ /template/ Viewbox">
+            <Setter Property="MaxWidth" Value="32" />
+            <Setter Property="MaxHeight" Value="32" />
         </Style>
     </Style>
 </Styles>

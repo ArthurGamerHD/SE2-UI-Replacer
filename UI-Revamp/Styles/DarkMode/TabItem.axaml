@@ -1,0 +1,88 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:beveledBorder="clr-namespace:Keen.VRage.UI.Shared.Controls.BeveledBorder;assembly=VRage.UI.Shared"
+        x:CompileBindings="False">
+    <Styles.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="avares://UI-Revamp/Resources/SharedResources.axaml" />
+                <ResourceInclude Source="avares://UI-Revamp/Styles/DarkMode/Palette.axaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Styles.Resources>
+
+    <Style Selector="TabControl.TabOnly TabItem">
+        <Setter Property="Background" Value="{StaticResource Menu-Button-Background}" />
+        <Setter Property="Foreground" Value="{StaticResource Button-Text}" />
+
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch"
+                      Width="{TemplateBinding Width}"
+                      Height="{TemplateBinding Height}">
+                    <beveledBorder:BeveledBorder Name="PART_Border"
+                                                 MinHeight="50"
+                                                 HorizontalAlignment="Stretch"
+                                                 VerticalAlignment="Stretch"
+                                                 ClampDirection="Horizontal"
+                                                 BorderThickness="1"
+                                                 Background="{StaticResource Menu-Button-Background}"
+                                                 BorderBrush="{StaticResource Button-Stroke}"
+                                                 Bevel="{StaticResource Radius-Medium}">
+                        <Viewbox Stretch="Uniform"
+                                 MaxWidth="190"
+                                 StretchDirection="DownOnly"
+                                 HorizontalAlignment="Stretch"
+                                 VerticalAlignment="Stretch">
+                            <ContentPresenter Name="PART_ContentPresenter"
+                                              Foreground="{TemplateBinding Foreground}"
+                                              FontSize="{TemplateBinding FontSize}"
+                                              Content="{TemplateBinding Header}"
+                                              ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                              Padding="{TemplateBinding Padding}"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              RecognizesAccessKey="True"
+                                              HorizontalContentAlignment="Center"
+                                              VerticalContentAlignment="Center" />
+                        </Viewbox>
+                    </beveledBorder:BeveledBorder>
+                    <beveledBorder:BeveledBorder Name="UIRevamp_SelectionPipe"
+                                                 Height="5"
+                                                 HorizontalAlignment="Stretch"
+                                                 VerticalAlignment="Bottom"
+                                                 Background="{StaticResource Menu-Button-Background-Active}"
+                                                 BorderBrush="{StaticResource Menu-Button-Background-Active}"
+                                                 BorderThickness="0"
+                                                 Bevel="0,0,5,5"
+                                                 IsVisible="False" />
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^:focus, ^:pointerover">
+            <Style Selector="^ /template/ beveledBorder|BeveledBorder#PART_Border">
+                <Setter Property="Background" Value="{StaticResource Menu-Button-Background-Focus}" />
+            </Style>
+        </Style>
+
+        <Style Selector="^:selected">
+            <Style Selector="^ /template/ beveledBorder|BeveledBorder#PART_Border">
+                <Setter Property="Background" Value="{StaticResource Menu-Button-Background}" />
+            </Style>
+            <Style Selector="^ /template/ beveledBorder|BeveledBorder#UIRevamp_SelectionPipe">
+                <Setter Property="IsVisible" Value="True" />
+            </Style>
+        </Style>
+
+        <Style Selector="^:disabled">
+            <Style Selector="^ /template/ beveledBorder|BeveledBorder#PART_Border">
+                <Setter Property="Background" Value="{StaticResource Menu-Button-Background-Disabled}" />
+            </Style>
+            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Foreground" Value="{StaticResource Button-Text-Disabled}" />
+            </Style>
+        </Style>
+    </Style>
+</Styles>

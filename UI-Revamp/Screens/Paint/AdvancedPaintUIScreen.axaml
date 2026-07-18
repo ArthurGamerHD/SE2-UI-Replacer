@@ -1,0 +1,103 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:colorPicker="clr-namespace:UI_Revamp.Controls.ColorPicker"
+             xmlns:paint="clr-namespace:UI_Revamp.Screens.Paint"
+             xmlns:mathematics="clr-namespace:Keen.VRage.Library.Mathematics;assembly=VRage.Library"
+             mc:Ignorable="d"
+             d:DesignWidth="1920"
+             d:DesignHeight="1080"
+             x:DataType="paint:AdvancedPaintUIViewModel"
+             x:Class="UI_Revamp.Screens.Paint.AdvancedPaintUIScreen"
+             x:CompileBindings="True">
+    <UserControl.Styles>
+        <StyleInclude Source="/Controls/ColorPicker/AdvancedColorPickerControl.axaml" />
+        <Style Selector="Button Border.ColorFrame">
+            <Setter Property="BorderBrush" Value="#161616" />
+        </Style>
+        <Style Selector="Button.Active Border.ColorFrame">
+            <Setter Property="BorderBrush" Value="#E08B0E" />
+        </Style>
+    </UserControl.Styles>
+    <UserControl.Resources>
+        <paint:HsvToBrushConverter x:Key="_HSVtoBrushConverter" />
+    </UserControl.Resources>
+
+    <Grid ColumnDefinitions="* 1920 *" RowDefinitions="*">
+        <Canvas Name="PART_Canvas"
+                Grid.Column="1"
+                Width="1920"
+                Height="1080"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch">
+            <Line StartPoint="970 530"
+                  EndPoint="1060 497"
+                  Stroke="#E08B0E"
+                  StrokeThickness="2" />
+
+            <Grid x:Name="PART_Content"
+                  RowDefinitions="Auto,Auto"
+                  ColumnDefinitions="5,Auto,10"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top"
+                  Canvas.Top="215"
+                  Canvas.Left="1060"
+                  IsVisible="True">
+                <Rectangle Grid.Column="1"
+                           Grid.Row="0"
+                           Grid.RowSpan="2"
+                           Fill="{StaticResource Black}"
+                           Opacity="{DynamicResource HUDOpacity}" />
+
+                <colorPicker:AdvancedColorPickerControl Name="PART_Picker"
+                                                        Color="{Binding Color, Mode=TwoWay}"
+                                                        Grid.Row="0"
+                                                        Grid.Column="1" />
+
+                <StackPanel Orientation="Horizontal"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            HorizontalAlignment="Center">
+                    <ItemsRepeater Name="PART_ItemsRepeater"
+                                   ItemsSource="{Binding Palette}">
+                        <ItemsRepeater.Layout>
+                            <UniformGridLayout />
+                        </ItemsRepeater.Layout>
+                        <ItemsRepeater.ItemTemplate>
+                            <DataTemplate x:DataType="mathematics:ColorHSV">
+                                <Button Click="Button_OnClick" PointerPressed="Button_Pressed">
+                                    <Button.Template>
+                                        <ControlTemplate>
+                                            <Border Classes="ColorFrame"
+                                                    Margin="8"
+                                                    Width="32"
+                                                    Height="32"
+                                                    BorderThickness="1"
+                                                    Background="{Binding Converter={StaticResource _HSVtoBrushConverter}}" />
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </DataTemplate>
+                        </ItemsRepeater.ItemTemplate>
+                    </ItemsRepeater>
+                </StackPanel>
+
+                <Rectangle Grid.Row="0"
+                           Grid.RowSpan="2"
+                           Grid.Column="0"
+                           Width="5"
+                           VerticalAlignment="Stretch"
+                           HorizontalAlignment="Left"
+                           Fill="{Binding #PART_Picker.ColorPreview}" />
+
+                <Polygon Grid.Column="2"
+                         Grid.Row="0"
+                         Grid.RowSpan="2"
+                         Points="0,6 7,16 7,268 0,278 0,284"
+                         Fill="{StaticResource Black}"
+                         Opacity="{DynamicResource HUDOpacity}" />
+            </Grid>
+        </Canvas>
+    </Grid>
+</UserControl>

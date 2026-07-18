@@ -1,11 +1,21 @@
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Reflection;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Diagnostics;
 using Avalonia.Input;
+using Avalonia.Markup.Xaml.Styling;
+using Avalonia.VisualTree;
 using HarmonyLib;
+using Keen.VRage.Core;
+using Keen.VRage.Library.Diagnostics;
+using Keen.VRage.Library.Utils;
 using Keen.VRage.UI.Screens;
 
 namespace UI_Revamp.Patches;
@@ -14,6 +24,7 @@ namespace UI_Revamp.Patches;
 public class MainWindowPatches
 {
     private const string MainWindowTypeName = "Keen.VRage.UI.AvaloniaInterface.Main.MainWindow";
+    private static readonly Uri MainWindowWobbleStyleUri = new("avares://UI-Revamp/Styles/MainWindowWobble.axaml");
 
     public static MethodBase TargetMethod()
     {
@@ -23,10 +34,31 @@ public class MainWindowPatches
     [HarmonyPostfix]
     public static void Postfix(TopLevel __instance)
     {
+        Plugin.MainWindow = __instance;
+        AddMainWindowWobbleStyle(__instance);
+        Plugin.UpdateHudResources();
+        DarkModeStyleController.Reload();
+        CompactFlightHudStyleController.Reload();
+        Plugin.ApplyUiScale(Plugin.Settings.UiScale);
+
+#if DEBUG
+        VisualTreeDump.SetRoot(__instance);
+        DumpHotkeyInputPatch.Install();
+#endif
         __instance.AttachDevTools(new KeyGesture(Key.F12, KeyModifiers.Shift));
 #if DEBUG
         __instance.KeyDown += (_, e) =>
         {
+            Log.Default.Info($"[{Plugin.PluginId}] KeyDown: {e.Key}");
+            
+            if (e.Key == Key.F10)
+            {
+                Log.Default.Error($"[{Plugin.PluginId}] Starting to dump visual tree");
+                e.Handled = true;
+                VisualTreeDump.Write(__instance);
+                return;
+            }
+
             if (e.Key != Key.F12 || e.KeyModifiers != (KeyModifiers.Control | KeyModifiers.Shift))
             {
                 return;
@@ -40,9 +72,137 @@ public class MainWindowPatches
         };
 #endif
     }
+
+    private static void AddMainWindowWobbleStyle(TopLevel mainWindow)
+    {
+        if (mainWindow.Styles.OfType<StyleInclude>().Any(style => style.Source == MainWindowWobbleStyleUri))
+        {
+            return;
+        }
+
+        mainWindow.Styles.Add(new StyleInclude(MainWindowWobbleStyleUri)
+        {
+            Source = MainWindowWobbleStyleUri
+        });
+    }
 }
 
 #if DEBUG
+internal static class VisualTreeDump
+{
+    private const int MaxVisualTreeDepth = 256;
+
+    private static TopLevel? _root;
+
+    private static readonly JsonSerializerOptions JsonOptions = new()
+    {
+        WriteIndented = true,
+        MaxDepth = MaxVisualTreeDepth * 4,
+        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+    };
+
+    public static void SetRoot(TopLevel root)
+    {
+        _root = root;
+    }
+
+    public static void WriteCurrent()
+    {
+        if (_root == null)
+        {
+            Log.Default.Error($"[{Plugin.PluginId}] Failed to dump visual tree: no main window has been captured.");
+            return;
+        }
+
+        Write(_root);
+    }
+
+    public static void Write(TopLevel root)
+    {
+        try
+        {
+            var dumpDirectory = Plugin.OptionsDirectory;
+
+            Directory.CreateDirectory(dumpDirectory);
+
+            var dumpPath = Path.Combine(
+                dumpDirectory,
+                $"UI-Revamp.visual-tree-{DateTime.Now:yyyyMMdd-HHmmss}.json");
+
+            var visited = new HashSet<Visual>(ReferenceEqualityComparer.Instance);
+            File.WriteAllText(dumpPath, JsonSerializer.Serialize(CreateNode(root, visited, 0), JsonOptions));
+            Log.Default.Info($"[{Plugin.PluginId}] Visual tree dumped to {dumpPath}");
+        }
+        catch (Exception e)
+        {
+            Log.Default.Error($"[{Plugin.PluginId}] Failed to dump visual tree: {e}");
+        }
+    }
+
+    private static VisualTreeNode CreateNode(Visual visual, HashSet<Visual> visited, int depth)
+    {
+        var node = CreateShallowNode(visual);
+
+        if (depth >= MaxVisualTreeDepth)
+        {
+            node.Truncated = $"Max visual tree depth {MaxVisualTreeDepth} reached.";
+            return node;
+        }
+
+        if (!visited.Add(visual))
+        {
+            node.Truncated = "Cycle detected.";
+            return node;
+        }
+
+        try
+        {
+            var children = visual.GetVisualChildren()
+                .Select(child => CreateNode(child, visited, depth + 1))
+                .ToArray();
+
+            node.Children = children.Length > 0 ? children : null;
+            return node;
+        }
+        finally
+        {
+            visited.Remove(visual);
+        }
+    }
+
+    private static VisualTreeNode CreateShallowNode(Visual visual)
+    {
+        return new VisualTreeNode
+        {
+            Type = visual.GetType().Name,
+            Class = visual is StyledElement styledElement && styledElement.Classes.Count > 0
+                ? string.Join(" ", styledElement.Classes)
+                : null,
+            Name = visual is Control control && !string.IsNullOrWhiteSpace(control.Name)
+                ? control.Name
+                : null
+        };
+    }
+
+    private sealed class VisualTreeNode
+    {
+        [JsonPropertyName("type")]
+        public required string Type { get; init; }
+
+        [JsonPropertyName("class")]
+        public string? Class { get; init; }
+
+        [JsonPropertyName("name")]
+        public string? Name { get; init; }
+
+        [JsonPropertyName("children")]
+        public VisualTreeNode[]? Children { get; set; }
+
+        [JsonPropertyName("truncated")]
+        public string? Truncated { get; set; }
+    }
+}
+
 [HarmonyPatch]
 public class DevToolsOpenNativeWindowPatch
 {

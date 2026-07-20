@@ -13,11 +13,12 @@ namespace UI_Revamp.Patches;
 [HarmonyPatch(nameof(ScreenManager.CreateAdvancedScreen))]
 public class ScreenManagerPatches
 {
-    private static Dictionary<string, Type>? _typeCache;
-    private static readonly HashSet<SubclassOf<ScreenView>> ReplacedTypes = new();
+    static Dictionary<string, Type>? _typeCache;
+    static readonly HashSet<SubclassOf<ScreenView>> ReplacedTypes = new();
     
     [HarmonyPrefix]
-    public static bool Prefix(ref SubclassOf<ScreenView> screenType)
+    public static bool Prefix(
+        ref SubclassOf<ScreenView> screenType)
     {
         _typeCache ??= Assembly.GetExecutingAssembly().GetTypes().Where(t => t.IsClass && typeof(ScreenView).IsAssignableFrom(t)).ToDictionary(a => a.Name);
 
@@ -28,7 +29,6 @@ public class ScreenManagerPatches
                 
             screenType = type;
         }
-            
 
         return true;
     }

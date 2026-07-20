@@ -15,10 +15,11 @@ namespace UI_Revamp.Patches.ControlPatches;
 [HarmonyPatch(MethodType.Constructor)]
 public static class DialogPresenterScreenPatch
 {
-    private static readonly Uri PaletteUri = new("avares://UI-Revamp/Styles/DarkMode/Palette.axaml");
-    private static ResourceDictionary? PaletteResources;
+    static readonly Uri PaletteUri = new("avares://UI-Revamp/Styles/DarkMode/Palette.axaml");
+    static ResourceDictionary? PaletteResources;
 
     [HarmonyPostfix]
+    // ReSharper disable once InconsistentNaming
     public static void Postfix(DialogPresenterScreen __instance)
     {
         if (!Plugin.Settings.UseDarkMode)
@@ -45,7 +46,7 @@ public static class DialogPresenterScreenPatch
         }
     }
 
-    private static IBrush ResolveBrush(string key, string fallbackColor)
+    static IBrush ResolveBrush(string key, string fallbackColor)
     {
         if (TryFindPaletteResource(key, out var value) && value is IBrush brush)
         {
@@ -56,7 +57,7 @@ public static class DialogPresenterScreenPatch
         return new SolidColorBrush(Color.Parse(fallbackColor));
     }
 
-    private static bool TryFindPaletteResource(string key, out object? value)
+    static bool TryFindPaletteResource(string key, out object? value)
     {
         value = null;
 

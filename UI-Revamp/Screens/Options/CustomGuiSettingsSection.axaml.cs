@@ -21,7 +21,7 @@ public partial class CustomGuiSettingsSection : UserControl
         PART_UIScale.ValueChangedByButton += ApplyUiScale;
     }
 
-    private static void ApplyUiScale()
+    static void ApplyUiScale()
     {
         Plugin.ApplyUiScale(Plugin.Settings.UiScale);
     }

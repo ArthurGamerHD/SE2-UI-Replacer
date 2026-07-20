@@ -10,7 +10,6 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Diagnostics;
 using Avalonia.Input;
-using Avalonia.Markup.Xaml.Styling;
 using Avalonia.VisualTree;
 using HarmonyLib;
 using Keen.VRage.Core;
@@ -23,8 +22,7 @@ namespace UI_Revamp.Patches;
 [HarmonyPatch]
 public class MainWindowPatches
 {
-    private const string MainWindowTypeName = "Keen.VRage.UI.AvaloniaInterface.Main.MainWindow";
-    private static readonly Uri MainWindowWobbleStyleUri = new("avares://UI-Revamp/Styles/MainWindowWobble.axaml");
+    const string MainWindowTypeName = "Keen.VRage.UI.AvaloniaInterface.Main.MainWindow";
 
     public static MethodBase TargetMethod()
     {
@@ -32,10 +30,10 @@ public class MainWindowPatches
     }
 
     [HarmonyPostfix]
+    // ReSharper disable once InconsistentNaming
     public static void Postfix(TopLevel __instance)
     {
         Plugin.MainWindow = __instance;
-        AddMainWindowWobbleStyle(__instance);
         Plugin.UpdateHudResources();
         DarkModeStyleController.Reload();
         CompactFlightHudStyleController.Reload();
@@ -72,29 +70,16 @@ public class MainWindowPatches
         };
 #endif
     }
-
-    private static void AddMainWindowWobbleStyle(TopLevel mainWindow)
-    {
-        if (mainWindow.Styles.OfType<StyleInclude>().Any(style => style.Source == MainWindowWobbleStyleUri))
-        {
-            return;
-        }
-
-        mainWindow.Styles.Add(new StyleInclude(MainWindowWobbleStyleUri)
-        {
-            Source = MainWindowWobbleStyleUri
-        });
-    }
 }
 
 #if DEBUG
 internal static class VisualTreeDump
 {
-    private const int MaxVisualTreeDepth = 256;
+    const int MaxVisualTreeDepth = 256;
 
-    private static TopLevel? _root;
+    static TopLevel? _root;
 
-    private static readonly JsonSerializerOptions JsonOptions = new()
+    static readonly JsonSerializerOptions JsonOptions = new()
     {
         WriteIndented = true,
         MaxDepth = MaxVisualTreeDepth * 4,
@@ -139,7 +124,7 @@ internal static class VisualTreeDump
         }
     }
 
-    private static VisualTreeNode CreateNode(Visual visual, HashSet<Visual> visited, int depth)
+    static VisualTreeNode CreateNode(Visual visual, HashSet<Visual> visited, int depth)
     {
         var node = CreateShallowNode(visual);
 
@@ -170,7 +155,7 @@ internal static class VisualTreeDump
         }
     }
 
-    private static VisualTreeNode CreateShallowNode(Visual visual)
+    static VisualTreeNode CreateShallowNode(Visual visual)
     {
         return new VisualTreeNode
         {
@@ -184,7 +169,7 @@ internal static class VisualTreeDump
         };
     }
 
-    private sealed class VisualTreeNode
+    sealed class VisualTreeNode
     {
         [JsonPropertyName("type")]
         public required string Type { get; init; }
@@ -206,7 +191,7 @@ internal static class VisualTreeDump
 [HarmonyPatch]
 public class DevToolsOpenNativeWindowPatch
 {
-    private static int _forceVrageWindowDepth;
+    static int _forceVrageWindowDepth;
 
     public static MethodBase TargetMethod()
     {
@@ -216,6 +201,7 @@ public class DevToolsOpenNativeWindowPatch
             new[] { typeof(TopLevel), typeof(DevToolsOptions) });
     }
 
+    // ReSharper disable once InconsistentNaming
     public static void Prefix(out IDisposable __state)
     {
         if (Volatile.Read(ref _forceVrageWindowDepth) > 0)
@@ -227,6 +213,7 @@ public class DevToolsOpenNativeWindowPatch
         __state = NativeDevToolsWindowContext.Enter();
     }
 
+    // ReSharper disable once InconsistentNaming
     public static Exception? Finalizer(IDisposable __state, Exception? __exception)
     {
         __state.Dispose();
@@ -245,9 +232,9 @@ public class DevToolsOpenNativeWindowPatch
         TargetMethod().Invoke(null, new object[] { root, options });
     }
 
-    private sealed class ForceVrageWindowLease : IDisposable
+    sealed class ForceVrageWindowLease : IDisposable
     {
-        private int _disposed;
+        int _disposed;
 
         public void Dispose()
         {
@@ -258,11 +245,11 @@ public class DevToolsOpenNativeWindowPatch
         }
     }
 
-    private sealed class NoopDisposable : IDisposable
+    sealed class NoopDisposable : IDisposable
     {
         public static readonly NoopDisposable Instance = new();
 
-        private NoopDisposable()
+        NoopDisposable()
         {
         }
 

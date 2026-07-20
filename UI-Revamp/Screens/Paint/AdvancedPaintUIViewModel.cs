@@ -12,7 +12,7 @@ namespace UI_Revamp.Screens.Paint;
 
 public sealed class AdvancedPaintUIViewModel : ScreenViewModel
 {
-    private readonly PaintToolControllableComponent _paintToolControllable;
+    readonly PaintToolControllableComponent _paintToolControllable;
 
     public AdvancedPaintUIViewModel(PaintToolControllableComponent paintToolControllable)
     {
@@ -70,7 +70,7 @@ public sealed class AdvancedPaintUIViewModel : ScreenViewModel
         base.OnDispose();
     }
 
-    private void OnPaintDataPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    void OnPaintDataPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
         InvokePropertyChanged(nameof(Palette));
         InvokePropertyChanged(nameof(Color));

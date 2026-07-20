@@ -20,26 +20,26 @@ namespace UI_Revamp.Patches;
 
 internal static class NativeDevToolsWindowContext
 {
-    private static int _openDepth;
-    private static IDisposable? _nativeScope;
-    private static bool _nativeWindowCreated;
-    private static bool _patchedWin32CreateWindowOverride;
-    private static bool _patchedWin32FullInvalidation;
-    private static bool _patchedNativeFullRenderDirtyRect;
-    private static bool _patchedSkiaGlyphRunFallback;
-    private static bool _patchedSkiaGeometryFallback;
-    private static int _nativeRenderDepth;
-    private static int _nativeResizeMoveDepth;
-    private static int _pumpLogCount;
-    private static int _wrongThreadPumpLogCount;
-    private static int _renderPumpLogCount;
-    private static uint _nativeWindowOwnerThreadId;
-    private static IntPtr _nativeWindowHwnd;
-    private static object? _win32CompositorServer;
-    private static MethodInfo? _win32CompositorServerRender;
-    private static object? _nativeRenderInterface;
-    private static object? _nativeFontManager;
-    private static object? _nativeTextShaper;
+    static int _openDepth;
+    static IDisposable? _nativeScope;
+    static bool _nativeWindowCreated;
+    static bool _patchedWin32CreateWindowOverride;
+    static bool _patchedWin32FullInvalidation;
+    static bool _patchedNativeFullRenderDirtyRect;
+    static bool _patchedSkiaGlyphRunFallback;
+    static bool _patchedSkiaGeometryFallback;
+    static int _nativeRenderDepth;
+    static int _nativeResizeMoveDepth;
+    static int _pumpLogCount;
+    static int _wrongThreadPumpLogCount;
+    static int _renderPumpLogCount;
+    static uint _nativeWindowOwnerThreadId;
+    static IntPtr _nativeWindowHwnd;
+    static object? _win32CompositorServer;
+    static MethodInfo? _win32CompositorServerRender;
+    static object? _nativeRenderInterface;
+    static object? _nativeFontManager;
+    static object? _nativeTextShaper;
 
     public static bool IsOpening => Volatile.Read(ref _openDepth) > 0;
     public static bool IsRenderingNative => Volatile.Read(ref _nativeRenderDepth) > 0;
@@ -211,7 +211,7 @@ internal static class NativeDevToolsWindowContext
             $"HWND=0x{hwnd.ToInt64():X}, thread={_nativeWindowOwnerThreadId}.");
     }
 
-    private static void PumpNativeRender(uint currentThreadId)
+    static void PumpNativeRender(uint currentThreadId)
     {
         IDisposable? scope = null;
         try
@@ -241,7 +241,7 @@ internal static class NativeDevToolsWindowContext
         }
     }
 
-    private static void RenderWin32Compositor()
+    static void RenderWin32Compositor()
     {
         var server = _win32CompositorServer;
         var render = _win32CompositorServerRender;
@@ -271,7 +271,7 @@ internal static class NativeDevToolsWindowContext
         }
     }
 
-    private static void CaptureNativeRenderServices()
+    static void CaptureNativeRenderServices()
     {
         _nativeRenderInterface = CreateNativeSkiaService("Avalonia.Skia.PlatformRenderInterface", typeof(IPlatformRenderInterface), new object?[] { null });
         _nativeFontManager = CreateNativeSkiaService("Avalonia.Skia.FontManagerImpl", typeof(IFontManagerImpl), null);
@@ -281,7 +281,7 @@ internal static class NativeDevToolsWindowContext
             $"{_nativeRenderInterface.GetType().FullName}, {_nativeFontManager.GetType().FullName}, {_nativeTextShaper.GetType().FullName}.");
     }
 
-    private static void BindCachedNativeRenderServices()
+    static void BindCachedNativeRenderServices()
     {
         if (_nativeRenderInterface == null || _nativeFontManager == null || _nativeTextShaper == null)
         {
@@ -294,7 +294,7 @@ internal static class NativeDevToolsWindowContext
         BindAvaloniaService(typeof(ITextShaperImpl), _nativeTextShaper!);
     }
 
-    private static object CreateNativeSkiaService(string typeName, Type serviceType, object?[]? args)
+    static object CreateNativeSkiaService(string typeName, Type serviceType, object?[]? args)
     {
         var type = Type.GetType($"{typeName}, Avalonia.Skia", throwOnError: true)!;
         var service = Activator.CreateInstance(type, args ?? Array.Empty<object>())
@@ -334,7 +334,7 @@ internal static class NativeDevToolsWindowContext
         }
     }
 
-    private static void BindAvaloniaService(Type serviceType, object service)
+    static void BindAvaloniaService(Type serviceType, object service)
     {
         var currentMutable = typeof(AvaloniaLocator).GetProperty("CurrentMutable", BindingFlags.Public | BindingFlags.Static)?
             .GetValue(null)
@@ -348,7 +348,7 @@ internal static class NativeDevToolsWindowContext
             .Invoke(bind, new[] { service });
     }
 
-    private static void OnNativeWindowClosed()
+    static void OnNativeWindowClosed()
     {
         _nativeWindowCreated = false;
         _nativeWindowHwnd = IntPtr.Zero;
@@ -356,7 +356,7 @@ internal static class NativeDevToolsWindowContext
         RestoreGameAvaloniaServices("native DevTools window closed");
     }
 
-    private static void RestoreGameAvaloniaServices(string reason)
+    static void RestoreGameAvaloniaServices(string reason)
     {
         var scope = Interlocked.Exchange(ref _nativeScope, null);
         if (scope == null)
@@ -368,7 +368,7 @@ internal static class NativeDevToolsWindowContext
         Log.Default.Info($"[{Plugin.PluginId}] Restored VRage Avalonia platform services ({reason}).");
     }
 
-    private static void LoadDesktopAssemblies()
+    static void LoadDesktopAssemblies()
     {
         var pluginDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         if (string.IsNullOrWhiteSpace(pluginDirectory))
@@ -388,7 +388,7 @@ internal static class NativeDevToolsWindowContext
         PatchSkiaGeometryFallback();
     }
 
-    private static void LoadAssembly(string directory, string fileName)
+    static void LoadAssembly(string directory, string fileName)
     {
         if (AppDomain.CurrentDomain.GetAssemblies().Any(a =>
                 string.Equals(a.GetName().Name, Path.GetFileNameWithoutExtension(fileName), StringComparison.OrdinalIgnoreCase)))
@@ -406,14 +406,14 @@ internal static class NativeDevToolsWindowContext
         Log.Default.Info($"[{Plugin.PluginId}] Loaded native DevTools assembly: {path}");
     }
 
-    private static IDisposable EnterAvaloniaScope()
+    static IDisposable EnterAvaloniaScope()
     {
         var enterScope = typeof(AvaloniaLocator).GetMethod("EnterScope", BindingFlags.Public | BindingFlags.Static)
             ?? throw new MissingMethodException(typeof(AvaloniaLocator).FullName, "EnterScope");
         return (IDisposable)enterScope.Invoke(null, null)!;
     }
 
-    private static object GetCurrentWindowingPlatform()
+    static object GetCurrentWindowingPlatform()
     {
         var current = typeof(AvaloniaLocator).GetProperty("Current", BindingFlags.Public | BindingFlags.Static)?
             .GetValue(null)
@@ -424,14 +424,14 @@ internal static class NativeDevToolsWindowContext
             ?? throw new InvalidOperationException("Current Avalonia locator returned no IWindowingPlatform.");
     }
 
-    private static IWindowImpl CreateWindowImpl(object platform)
+    static IWindowImpl CreateWindowImpl(object platform)
     {
         var createWindow = platform.GetType().GetMethod("CreateWindow", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
             ?? throw new MissingMethodException(platform.GetType().FullName, "CreateWindow");
         return (IWindowImpl)createWindow.Invoke(platform, null)!;
     }
 
-    private static void AddClosedHandler(IWindowImpl windowImpl, Action handler)
+    static void AddClosedHandler(IWindowImpl windowImpl, Action handler)
     {
         var closed = windowImpl.GetType().GetProperty("Closed", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
             ?? throw new MissingMemberException(windowImpl.GetType().FullName, "Closed");
@@ -439,7 +439,7 @@ internal static class NativeDevToolsWindowContext
         closed.SetValue(windowImpl, (Action?)Delegate.Combine(previous, handler));
     }
 
-    private static void InitializeSkia(bool log = true)
+    static void InitializeSkia(bool log = true)
     {
         var skiaPlatform = Type.GetType("Avalonia.Skia.SkiaPlatform, Avalonia.Skia", throwOnError: true)!;
         skiaPlatform.GetMethod("Initialize", BindingFlags.Public | BindingFlags.Static, Type.EmptyTypes)!
@@ -450,7 +450,7 @@ internal static class NativeDevToolsWindowContext
         }
     }
 
-    private static void InitializeWin32()
+    static void InitializeWin32()
     {
         var win32Platform = Type.GetType("Avalonia.Win32.Win32Platform, Avalonia.Win32", throwOnError: true)!;
         var options = CreateWin32PlatformOptions();
@@ -459,7 +459,7 @@ internal static class NativeDevToolsWindowContext
         Log.Default.Info($"[{Plugin.PluginId}] Initialized Avalonia Win32 platform services for native DevTools window with software/redirection options.");
     }
 
-    private static object CreateWin32PlatformOptions()
+    static object CreateWin32PlatformOptions()
     {
         var optionsType = Type.GetType("Avalonia.Win32PlatformOptions, Avalonia.Win32", throwOnError: true)!;
         var renderingModeType = Type.GetType("Avalonia.Win32RenderingMode, Avalonia.Win32", throwOnError: true)!;
@@ -472,14 +472,14 @@ internal static class NativeDevToolsWindowContext
         return options;
     }
 
-    private static Array CreateEnumArray(Type enumType, string value)
+    static Array CreateEnumArray(Type enumType, string value)
     {
         var array = Array.CreateInstance(enumType, 1);
         array.SetValue(Enum.Parse(enumType, value), 0);
         return array;
     }
 
-    private static void PatchWin32CreateWindowOverride()
+    static void PatchWin32CreateWindowOverride()
     {
         if (_patchedWin32CreateWindowOverride)
         {
@@ -506,7 +506,7 @@ internal static class NativeDevToolsWindowContext
         Log.Default.Info($"[{Plugin.PluginId}] Patched Avalonia.Win32 WindowImpl.CreateWindowOverride and WndProc for native DevTools window.");
     }
 
-    private static void PatchWin32FullInvalidation()
+    static void PatchWin32FullInvalidation()
     {
         if (_patchedWin32FullInvalidation)
         {
@@ -523,7 +523,7 @@ internal static class NativeDevToolsWindowContext
         Log.Default.Info($"[{Plugin.PluginId}] Patched Avalonia.Win32 WindowImpl.Invalidate for full native DevTools repaint.");
     }
 
-    private static void PatchNativeFullRenderDirtyRect()
+    static void PatchNativeFullRenderDirtyRect()
     {
         if (_patchedNativeFullRenderDirtyRect)
         {
@@ -541,7 +541,7 @@ internal static class NativeDevToolsWindowContext
         Log.Default.Info($"[{Plugin.PluginId}] Patched ServerCompositionTarget.Render for full native DevTools repaint.");
     }
 
-    private static void PatchSkiaGlyphRunFallback()
+    static void PatchSkiaGlyphRunFallback()
     {
         if (_patchedSkiaGlyphRunFallback)
         {
@@ -563,7 +563,7 @@ internal static class NativeDevToolsWindowContext
         Log.Default.Info($"[{Plugin.PluginId}] Patched Avalonia.Skia DrawingContextImpl.DrawGlyphRun for Keen glyph fallback.");
     }
 
-    private static void PatchSkiaGeometryFallback()
+    static void PatchSkiaGeometryFallback()
     {
         if (_patchedSkiaGeometryFallback)
         {
@@ -585,9 +585,9 @@ internal static class NativeDevToolsWindowContext
         Log.Default.Info($"[{Plugin.PluginId}] Patched Avalonia.Skia DrawingContextImpl.DrawGeometry for Keen geometry fallback.");
     }
 
-    private sealed class ScopeLease : IDisposable
+    sealed class ScopeLease : IDisposable
     {
-        private int _disposed;
+        int _disposed;
 
         public void Dispose()
         {
@@ -599,19 +599,19 @@ internal static class NativeDevToolsWindowContext
     }
 
     [DllImport("user32.dll", SetLastError = true)]
-    private static extern bool PeekMessageW(out Msg lpMsg, IntPtr hWnd, uint wMsgFilterMin, uint wMsgFilterMax, uint wRemoveMsg);
+    static extern bool PeekMessageW(out Msg lpMsg, IntPtr hWnd, uint wMsgFilterMin, uint wMsgFilterMax, uint wRemoveMsg);
 
     [DllImport("kernel32.dll")]
-    private static extern uint GetCurrentThreadId();
+    static extern uint GetCurrentThreadId();
 
     [DllImport("user32.dll")]
-    private static extern bool TranslateMessage(ref Msg lpMsg);
+    static extern bool TranslateMessage(ref Msg lpMsg);
 
     [DllImport("user32.dll")]
-    private static extern IntPtr DispatchMessageW(ref Msg lpMsg);
+    static extern IntPtr DispatchMessageW(ref Msg lpMsg);
 
     [StructLayout(LayoutKind.Sequential)]
-    private struct Msg
+    struct Msg
     {
         public IntPtr HWnd;
         public uint Message;
@@ -625,13 +625,14 @@ internal static class NativeDevToolsWindowContext
 
 internal static class Win32WindowCreateOverridePatch
 {
-    private const uint WsCaption = 0x00C00000;
-    private const uint WsSysMenu = 0x00080000;
-    private const uint WsMinimizeBox = 0x00020000;
-    private const uint WsClipChildren = 0x02000000;
-    private const uint NativeDevToolsWindowStyle = WsCaption | WsSysMenu | WsMinimizeBox | WsClipChildren;
-    private static int _calls;
+    const uint WsCaption = 0x00C00000;
+    const uint WsSysMenu = 0x00080000;
+    const uint WsMinimizeBox = 0x00020000;
+    const uint WsClipChildren = 0x02000000;
+    const uint NativeDevToolsWindowStyle = WsCaption | WsSysMenu | WsMinimizeBox | WsClipChildren;
+    static int _calls;
 
+    // ReSharper disable once InconsistentNaming
     public static bool Prefix(object __instance, ushort atom, ref IntPtr __result)
     {
         var call = Interlocked.Increment(ref _calls);
@@ -699,6 +700,7 @@ internal static class Win32WindowCreateOverridePatch
         NativeDevToolsWindowContext.TrackNativeWindowMessage(hWnd, msg);
     }
 
+    // ReSharper disable once InconsistentNaming
     public static Exception? WndProcFinalizer(object __instance, IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam, Exception? __exception)
     {
         if (__exception != null)
@@ -712,7 +714,7 @@ internal static class Win32WindowCreateOverridePatch
     }
 
     [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "CreateWindowExW")]
-    private static extern IntPtr CreateWindowExW(
+    static extern IntPtr CreateWindowExW(
         uint dwExStyle,
         string? lpClassName,
         string? lpWindowName,
@@ -727,7 +729,7 @@ internal static class Win32WindowCreateOverridePatch
         IntPtr lpParam);
 
     [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "CreateWindowExW")]
-    private static extern IntPtr CreateWindowExW(
+    static extern IntPtr CreateWindowExW(
         uint dwExStyle,
         IntPtr lpClassName,
         string? lpWindowName,
@@ -742,7 +744,7 @@ internal static class Win32WindowCreateOverridePatch
         IntPtr lpParam);
 
     [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
-    private static extern IntPtr GetModuleHandleW(string? lpModuleName);
+    static extern IntPtr GetModuleHandleW(string? lpModuleName);
 
 }
 
@@ -754,6 +756,7 @@ public static class PlatformManagerNativeDevToolsPatch
         return AccessTools.Method(typeof(PlatformManager), nameof(PlatformManager.CreateWindow));
     }
 
+    // ReSharper disable once InconsistentNaming
     public static bool Prefix(ref IWindowImpl __result)
     {
         if (!NativeDevToolsWindowContext.IsOpening)
@@ -790,8 +793,9 @@ public static class NativeDevToolsGameUpdateMessagePumpPatch
 
 internal static class Win32WindowFullInvalidationPatch
 {
-    private static int _loggedInvalidations;
+    static int _loggedInvalidations;
 
+    // ReSharper disable once InconsistentNaming
     public static bool Prefix(object __instance)
     {
         var hwnd = (IntPtr)(__instance.GetType()
@@ -812,13 +816,14 @@ internal static class Win32WindowFullInvalidationPatch
     }
 
     [DllImport("user32.dll", SetLastError = true)]
-    private static extern bool InvalidateRect(IntPtr hWnd, IntPtr lpRect, bool bErase);
+    static extern bool InvalidateRect(IntPtr hWnd, IntPtr lpRect, bool bErase);
 }
 
 internal static class NativeDevToolsFullRenderDirtyRectPatch
 {
-    private static int _loggedExpansions;
+    static int _loggedExpansions;
 
+    // ReSharper disable once InconsistentNaming
     public static void Prefix(object __instance)
     {
         if (!NativeDevToolsWindowContext.IsNativeCompositionTarget(__instance))
@@ -849,7 +854,7 @@ internal static class NativeDevToolsFullRenderDirtyRectPatch
 [HarmonyPatch]
 public static class NativeDevToolsServerCompositionTargetRenderPatch
 {
-    private static int _loggedExceptions;
+    static int _loggedExceptions;
 
     public static MethodBase TargetMethod()
     {
@@ -859,6 +864,7 @@ public static class NativeDevToolsServerCompositionTargetRenderPatch
             ?? throw new MissingMethodException(serverCompositionTarget.FullName, "Render");
     }
 
+    // ReSharper disable once InconsistentNaming
     public static Exception? Finalizer(object __instance, Exception? __exception)
     {
         if (__exception != null && Interlocked.Increment(ref _loggedExceptions) <= 10)
@@ -875,7 +881,7 @@ public static class NativeDevToolsServerCompositionTargetRenderPatch
 [HarmonyPatch]
 public static class NativeDevToolsFullDirtyRectPatch
 {
-    private static int _loggedExpansions;
+    static int _loggedExpansions;
 
     public static MethodBase TargetMethod()
     {
@@ -885,6 +891,7 @@ public static class NativeDevToolsFullDirtyRectPatch
             ?? throw new MissingMethodException(serverCompositionTarget.FullName, "AddDirtyRect");
     }
 
+    // ReSharper disable once InconsistentNaming
     public static void Prefix(object __instance, ref Rect rect)
     {
         if ((rect.Width == 0.0 && rect.Height == 0.0) || !NativeDevToolsWindowContext.IsNativeCompositionTarget(__instance))
@@ -920,6 +927,7 @@ public static class NativeDevToolsVrageRenderTargetRedirectPatch
             ?? throw new MissingMethodException(avaloniaApp.FullName, "CreateRenderTarget");
     }
 
+    // ReSharper disable once InconsistentNaming
     public static bool Prefix(IEnumerable<object> surfaces, ref IRenderTarget __result)
     {
         if (!NativeDevToolsWindowContext.IsRenderingNative)
@@ -939,8 +947,9 @@ public static class NativeDevToolsVrageRenderTargetRedirectPatch
 
 public static class NativeDevToolsSkiaGlyphRunFallbackPatch
 {
-    private static int _loggedFallbacks;
+    static int _loggedFallbacks;
 
+    // ReSharper disable once InconsistentNaming
     public static bool Prefix(object __instance, object[] __args)
     {
         var foreground = __args.Length > 0 ? __args[0] as IBrush : null;
@@ -997,7 +1006,7 @@ public static class NativeDevToolsSkiaGlyphRunFallbackPatch
         return false;
     }
 
-    private static double GetGlyphDouble(IGlyphRunImpl glyphRun, string propertyName, double fallback)
+    static double GetGlyphDouble(IGlyphRunImpl glyphRun, string propertyName, double fallback)
     {
         return glyphRun.GetType()
             .GetProperty(propertyName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)?
@@ -1006,7 +1015,7 @@ public static class NativeDevToolsSkiaGlyphRunFallbackPatch
             : fallback;
     }
 
-    private static Point GetGlyphPoint(IGlyphRunImpl glyphRun, string propertyName)
+    static Point GetGlyphPoint(IGlyphRunImpl glyphRun, string propertyName)
     {
         return glyphRun.GetType()
             .GetProperty(propertyName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)?
@@ -1015,7 +1024,7 @@ public static class NativeDevToolsSkiaGlyphRunFallbackPatch
             : default;
     }
 
-    private static SKColor GetTextColor(IBrush brush)
+    static SKColor GetTextColor(IBrush brush)
     {
         if (brush is ISolidColorBrush solid)
         {
@@ -1030,8 +1039,9 @@ public static class NativeDevToolsSkiaGlyphRunFallbackPatch
 
 public static class NativeDevToolsSkiaGeometryFallbackPatch
 {
-    private static int _loggedFallbacks;
+    static int _loggedFallbacks;
 
+    // ReSharper disable once InconsistentNaming
     public static bool Prefix(object __instance, object[] __args)
     {
         var brush = __args.Length > 0 ? __args[0] as IBrush : null;
@@ -1102,7 +1112,7 @@ public static class NativeDevToolsSkiaGeometryFallbackPatch
         return false;
     }
 
-    private static SKPath BuildPath(IGeometryImpl geometry)
+    static SKPath BuildPath(IGeometryImpl geometry)
     {
         var path = new SKPath();
         var mutablePath = geometry.GetType()
@@ -1137,7 +1147,7 @@ public static class NativeDevToolsSkiaGeometryFallbackPatch
         return path;
     }
 
-    private static bool TryGetPoint(object segment, string fieldName, out SKPoint point)
+    static bool TryGetPoint(object segment, string fieldName, out SKPoint point)
     {
         point = default;
         var value = segment.GetType().GetField(fieldName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)?.GetValue(segment);
@@ -1157,7 +1167,7 @@ public static class NativeDevToolsSkiaGeometryFallbackPatch
         return true;
     }
 
-    private static float DistanceSquared(SKPoint a, SKPoint b)
+    static float DistanceSquared(SKPoint a, SKPoint b)
     {
         var dx = a.X - b.X;
         var dy = a.Y - b.Y;

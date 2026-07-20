@@ -26,16 +26,16 @@ public class AdvancedColorPickerControl : TemplatedControl
         AvaloniaProperty.RegisterDirect<AdvancedColorPickerControl, ColorHSV>(nameof(Color), control => control.Color,
             (control, value) => control.Color = value);
 
-    private Border? _wheelColor;
-    private Grid? _wheel;
-    private Ellipse? _wheelSelector;
-    private Slider _sliderH = null!;
-    private Slider _sliderS = null!;
-    private Slider _sliderV = null!;
-    private ColorHSV _color;
-    private bool _isManualInput;
-    private int _internalChange;
-    private bool _hasTemplate;
+    Border? _wheelColor;
+    Grid? _wheel;
+    Ellipse? _wheelSelector;
+    Slider _sliderH = null!;
+    Slider _sliderS = null!;
+    Slider _sliderV = null!;
+    ColorHSV _color;
+    bool _isManualInput;
+    int _internalChange;
+    bool _hasTemplate;
 
     public string? Label
     {
@@ -155,7 +155,7 @@ public class AdvancedColorPickerControl : TemplatedControl
         _hasTemplate = true;
     }
 
-    private void UpdatePreview()
+    void UpdatePreview()
     {
         if (_wheelColor != null)
         {
@@ -178,7 +178,7 @@ public class AdvancedColorPickerControl : TemplatedControl
         _wheelSelector.RenderTransform = new TranslateTransform(x, y);
     }
 
-    private void OnWheelPropertyChanged(object? sender, AvaloniaPropertyChangedEventArgs e)
+    void OnWheelPropertyChanged(object? sender, AvaloniaPropertyChangedEventArgs e)
     {
         if (e.Property == BoundsProperty)
         {
@@ -186,7 +186,7 @@ public class AdvancedColorPickerControl : TemplatedControl
         }
     }
 
-    private void OnSliderVValueChanged(object? sender, RangeBaseValueChangedEventArgs args)
+    void OnSliderVValueChanged(object? sender, RangeBaseValueChangedEventArgs args)
     {
         _internalChange++;
         if (Math.Abs(Color.V - args.NewValue / 100) > 0.01)
@@ -197,7 +197,7 @@ public class AdvancedColorPickerControl : TemplatedControl
         _internalChange--;
     }
 
-    private void OnSliderSValueChanged(object? sender, RangeBaseValueChangedEventArgs args)
+    void OnSliderSValueChanged(object? sender, RangeBaseValueChangedEventArgs args)
     {
         _internalChange++;
         if (Math.Abs(Color.S - args.NewValue / 100) > 0.01)
@@ -208,7 +208,7 @@ public class AdvancedColorPickerControl : TemplatedControl
         _internalChange--;
     }
 
-    private void OnSliderHValueChanged(object? sender, RangeBaseValueChangedEventArgs args)
+    void OnSliderHValueChanged(object? sender, RangeBaseValueChangedEventArgs args)
     {
         _internalChange++;
         if (Math.Abs(Color.H - args.NewValue / 360) > 0.003)
@@ -219,19 +219,19 @@ public class AdvancedColorPickerControl : TemplatedControl
         _internalChange--;
     }
 
-    private void UpdateSliders()
+    void UpdateSliders()
     {
         _sliderH.Value = (int)(_color.H * 360);
         _sliderS.Value = (int)(_color.S * 100);
         _sliderV.Value = (int)(_color.V * 100);
     }
 
-    private void OnWheelPointerPressed(object? sender, PointerPressedEventArgs args)
+    void OnWheelPointerPressed(object? sender, PointerPressedEventArgs args)
     {
         SetColorFromWheel(args);
     }
 
-    private void OnWheelPointerMoved(object? sender, PointerEventArgs args)
+    void OnWheelPointerMoved(object? sender, PointerEventArgs args)
     {
         if (_wheel == null)
         {
@@ -244,7 +244,7 @@ public class AdvancedColorPickerControl : TemplatedControl
         }
     }
 
-    private void SetColorFromWheel(PointerEventArgs args)
+    void SetColorFromWheel(PointerEventArgs args)
     {
         if (_wheel == null || _wheelSelector == null)
         {

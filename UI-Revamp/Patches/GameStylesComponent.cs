@@ -11,8 +11,8 @@ namespace UI_Revamp.Patches;
 [HarmonyPatch("Keen.Game2.Client.UI.Library.GameStylesComponent, Game2.Client", "GetCoreStyles")]
 public class GameStylesComponentGetCoreStylesPatches
 {
-    private static readonly Uri GameSharedStyles = new("avares://Game2.Client/UI/Library/Styles/SharedStyles.axaml");
-    private static readonly Uri DarkModeSharedStyles = new("avares://UI-Revamp/Styles/DarkMode/GameSharedStyles.axaml");
+    static readonly Uri GameSharedStyles = new("avares://Game2.Client/UI/Library/Styles/SharedStyles.axaml");
+    static readonly Uri DarkModeSharedStyles = new("avares://UI-Revamp/Styles/DarkMode/GameSharedStyles.axaml");
 
     [HarmonyPostfix]
     public static void Postfix(ref BufferReference<Uri> pathOut)

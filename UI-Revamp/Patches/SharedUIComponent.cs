@@ -1,6 +1,7 @@
 using HarmonyLib;
 using Keen.Game2.Client.UI.Library;
 using Keen.VRage.Library.Diagnostics;
+using UI_Revamp.CurvedHud;
 
 namespace UI_Revamp.Patches;
 
@@ -13,5 +14,7 @@ public class SharedUiComponentPatches
     {
         Plugin.SharedUi = __instance;
         Log.Default.Info($"[{Plugin.PluginId}] SharedUI captured");
+        Log.Default.Info(
+            $"[{Plugin.PluginId}] Curved HUD startup deferred until the world-loaded transition completes.");
     }
 }

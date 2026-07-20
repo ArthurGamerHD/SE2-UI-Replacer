@@ -8,6 +8,13 @@
         <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
         <ApplicationManifest>app.manifest</ApplicationManifest>
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+        <Configurations>Debug;Release;Preview</Configurations>
+        <IsDesign Condition="'$(IsDesign)' == '' and '$(Configuration)' == 'Preview'">true</IsDesign>
+        <RuntimeIdentifier Condition="'$(Configuration)' == 'Preview' and '$(RuntimeIdentifier)' == ''">linux-x64</RuntimeIdentifier>
+        <SelfContained Condition="'$(Configuration)' == 'Preview'">false</SelfContained>
+        <DefineConstants Condition="'$(IsDesign)' == 'true'">$(DefineConstants);IS_DESIGN</DefineConstants>
+        <BuildProjectReferences Condition="'$(IsDesign)' == 'true'">true</BuildProjectReferences>
+        <GenerateRuntimeConfigurationFiles Condition="'$(IsDesign)' == 'true'">true</GenerateRuntimeConfigurationFiles>
     </PropertyGroup>
     
     <ItemGroup>
@@ -26,7 +33,11 @@
       <ProjectReference Include="..\UI-Revamp\UI-Revamp.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
+    <ItemGroup Condition="'$(IsDesign)' == 'true'">
+      <Compile Remove="PreviewPatches\**\*.cs" />
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(IsDesign)' != 'true'">
       <Reference Include="Avalonia.Controls.ColorPicker">
         <HintPath>$(SE2Game2Path)Avalonia.Controls.ColorPicker.dll</HintPath>
       </Reference>

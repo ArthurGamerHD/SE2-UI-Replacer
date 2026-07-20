@@ -12,13 +12,13 @@ namespace UI_Revamp.Patches;
 [HarmonyPatch(nameof(StandardAssetLoader.GetAssembly))]
 public class StandardAssetLoaderPatches
 {
-    private static readonly Uri GameSharedResourcesUri = new("avares://Game2.Client/UI/Library/Styles/SharedResources.axaml");
-    private static readonly Uri DarkModeSharedResourcesUri = new("avares://UI-Revamp/Styles/DarkMode/GameSharedResources.axaml");
-    private static bool _loggedRedirectDisabled;
-    private static bool _loggedGetAssemblyRedirect;
-    private static bool _loggedOpenRedirect;
-    private static readonly HashSet<string> LoggedSharedResourceUris = new();
+    static readonly Uri GameSharedResourcesUri = new("avares://Game2.Client/UI/Library/Styles/SharedResources.axaml");
+    static readonly Uri DarkModeSharedResourcesUri = new("avares://UI-Revamp/Styles/DarkMode/GameSharedResources.axaml");
+    static bool _loggedGetAssemblyRedirect;
+    static bool _loggedOpenRedirect;
+    static readonly HashSet<string> LoggedSharedResourceUris = new();
 
+    // ReSharper disable once InconsistentNaming
     public static bool Prefix(Uri uri, Uri? baseUri, ref Assembly? __result)
     {
         LogSharedResourcesUri(uri, baseUri, nameof(StandardAssetLoader.GetAssembly));
@@ -38,6 +38,7 @@ public class StandardAssetLoaderPatches
         return true;
     }
 
+    // ReSharper disable once InconsistentNaming
     public static void Postfix(Uri uri, Uri? baseUri, ref Assembly? __result)
     {
         if (__result == null && string.Equals(uri.Authority, "UI-Revamp", StringComparison.OrdinalIgnoreCase))
@@ -124,6 +125,7 @@ public class StandardAssetLoaderOpenPatches
 [HarmonyPatch(nameof(StandardAssetLoader.OpenAndGetAssembly))]
 public class StandardAssetLoaderOpenAndGetAssemblyPatches
 {
+    // ReSharper disable once InconsistentNaming
     public static bool Prefix(StandardAssetLoader __instance, Uri uri, Uri? baseUri, ref (Stream stream, Assembly assembly) __result)
     {
         StandardAssetLoaderPatches.LogSharedResourcesUri(uri, baseUri, nameof(StandardAssetLoader.OpenAndGetAssembly));

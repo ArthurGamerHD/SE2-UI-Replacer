@@ -15,6 +15,7 @@ namespace UI_Revamp.Patches;
 public class UiEngineComponentPatches  
 {
     [HarmonyPostfix]
+    // ReSharper disable once InconsistentNaming
     public static void Postfix(UIEngineComponent __instance)
     {
         Plugin.UiEngineComponent = __instance;
@@ -41,6 +42,7 @@ public class HudWobbleTickPatch
 public class ClientPlayersSetupInitialPlayerPatch
 {
     [HarmonyPostfix]
+    // ReSharper disable once InconsistentNaming
     public static void Postfix(ClientPlayersSessionComponent __instance)
     {
         Plugin.ClientPlayers = __instance;
@@ -51,6 +53,7 @@ public class ClientPlayersSetupInitialPlayerPatch
 public class ClientPlayersSetLocalPlayerPatch
 {
     [HarmonyPostfix]
+    // ReSharper disable once InconsistentNaming
     public static void Postfix(ClientPlayersSessionComponent __instance)
     {
         Plugin.ClientPlayers = __instance;
@@ -71,10 +74,10 @@ public class NativeDevToolsMessagePumpPatch
 
 public static class DumpHotkeyInputPatch
 {
-    private static readonly HashSet<InputId> ActiveInputs = new();
-    private static readonly HashSet<InputId> ChangedInputs = new();
-    private static bool _installed;
-    private static bool _loggedInputFailure;
+    static readonly HashSet<InputId> ActiveInputs = new();
+    static readonly HashSet<InputId> ChangedInputs = new();
+    static bool _installed;
+    static bool _loggedInputFailure;
 
     public static void Install()
     {
@@ -95,7 +98,7 @@ public static class DumpHotkeyInputPatch
         }
     }
 
-    private static void ProcessInput(InputDeviceManager deviceManager)
+    static void ProcessInput(InputDeviceManager deviceManager)
     {
         if (WasDumpHotkeyPressed(deviceManager))
         {
@@ -104,7 +107,7 @@ public static class DumpHotkeyInputPatch
         }
     }
 
-    private static bool WasDumpHotkeyPressed(InputDeviceManager deviceManager)
+    static bool WasDumpHotkeyPressed(InputDeviceManager deviceManager)
     {
         try
         {

@@ -13,7 +13,7 @@ namespace UI_Revamp.Screens.Paint;
 [NeedsWindowStyles]
 public partial class AdvancedPaintUIScreen : ScreenView
 {
-    private readonly AdvancedPaintUIViewModel _viewModel = null!;
+    readonly AdvancedPaintUIViewModel _viewModel = null!;
 
     public AdvancedPaintUIScreen()
     {
@@ -36,7 +36,7 @@ public partial class AdvancedPaintUIScreen : ScreenView
         _viewModel.PropertyChanged -= OnViewModelPropertyChanged;
     }
 
-    private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs args)
+    void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs args)
     {
         if (args.PropertyName == nameof(AdvancedPaintUIViewModel.SelectedIndex))
         {
@@ -44,12 +44,12 @@ public partial class AdvancedPaintUIScreen : ScreenView
         }
     }
 
-    private void OnItemsRepeaterLoaded(object? sender, RoutedEventArgs routedEventArgs)
+    void OnItemsRepeaterLoaded(object? sender, RoutedEventArgs routedEventArgs)
     {
         UpdatePalette();
     }
 
-    private void Button_OnClick(object? sender, RoutedEventArgs e)
+    void Button_OnClick(object? sender, RoutedEventArgs e)
     {
         if (sender is Button button && button.DataContext is ColorHSV color)
         {
@@ -61,7 +61,7 @@ public partial class AdvancedPaintUIScreen : ScreenView
         }
     }
 
-    private void Button_Pressed(object? sender, PointerPressedEventArgs e)
+    void Button_Pressed(object? sender, PointerPressedEventArgs e)
     {
         if (sender is not Button { DataContext: ColorHSV color } ||
             !e.GetCurrentPoint(null).Properties.IsRightButtonPressed)
@@ -82,7 +82,7 @@ public partial class AdvancedPaintUIScreen : ScreenView
         }
     }
 
-    private void UpdatePalette()
+    void UpdatePalette()
     {
         var palette = PART_ItemsRepeater.GetLogicalChildren().ToArray();
 

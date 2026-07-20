@@ -7,23 +7,27 @@ namespace UI_Revamp.Configuration;
 
 public sealed class UiRevampSettings : INotifyPropertyChanged
 {
-    public const double MinimumSliderValue = 0.25;
-    public const double DefaultSliderValue = 1.0;
-    public const double MaximumScaleValue = 1.0;
-    public const double MinimumHudWobbleMultiplier = 0.0;
-    public const double DefaultHudWobbleMultiplier = 1.0;
-    public const double MaximumHudWobbleMultiplier = 2.0;
+    public const double MINIMUM_SLIDER_VALUE = 0.25;
+    public const double DEFAULT_SLIDER_VALUE = 1.0;
+    public const double MAXIMUM_SCALE_VALUE = 1.0;
+    public const double MINIMUM_UI_OPACITY = 0.0;
+    public const double DEFAULT_UI_OPACITY = 1.0;
+    public const double MAXIMUM_UI_OPACITY = 1.0;
+    public const double MINIMUM_HUD_WOBBLE_MULTIPLIER = 0.0;
+    public const double DEFAULT_HUD_WOBBLE_MULTIPLIER = 1.0;
+    public const double MAXIMUM_HUD_WOBBLE_MULTIPLIER = 2.0;
 
-    private bool _useDarkMode = true;
-    private bool _hideColonizationProgress = true;
-    private bool _hideMissionObjective = true;
-    private bool _hideCollectedItems = true;
-    private bool _hideTips = true;
-    private bool _hideControlHints = true;
-    private bool _compactFlightHud = true;
-    private bool _advancedColorPicker;
-    private double _uiScale = DefaultSliderValue;
-    private double _hudWobbleMultiplier = DefaultHudWobbleMultiplier;
+    bool _useDarkMode = true;
+    bool _hideColonizationProgress = true;
+    bool _hideMissionObjective = true;
+    bool _hideCollectedItems = true;
+    bool _hideTips = true;
+    bool _hideControlHints = true;
+    bool _compactFlightHud = true;
+    bool _advancedColorPicker;
+    double _uiScale = DEFAULT_SLIDER_VALUE;
+    double _uiOpacity = DEFAULT_UI_OPACITY;
+    double _hudWobbleMultiplier = DEFAULT_HUD_WOBBLE_MULTIPLIER;
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -73,7 +77,14 @@ public sealed class UiRevampSettings : INotifyPropertyChanged
     public double UiScale
     {
         get => _uiScale;
-        set => SetField(ref _uiScale, Clamp(value, MinimumSliderValue, MaximumScaleValue));
+        set => SetField(ref _uiScale, Clamp(value, MINIMUM_SLIDER_VALUE, MAXIMUM_SCALE_VALUE));
+    }
+
+    [JsonPropertyName("uiOpacity")]
+    public double UiOpacity
+    {
+        get => _uiOpacity;
+        set => SetField(ref _uiOpacity, Clamp(value, MINIMUM_UI_OPACITY, MAXIMUM_UI_OPACITY));
     }
 
     [JsonPropertyName("compactFlightHud")]
@@ -94,31 +105,37 @@ public sealed class UiRevampSettings : INotifyPropertyChanged
     public double HudWobbleMultiplier
     {
         get => _hudWobbleMultiplier;
-        set => SetField(ref _hudWobbleMultiplier, Clamp(value, MinimumHudWobbleMultiplier, MaximumHudWobbleMultiplier));
+        set => SetField(ref _hudWobbleMultiplier, Clamp(value, MINIMUM_HUD_WOBBLE_MULTIPLIER, MAXIMUM_HUD_WOBBLE_MULTIPLIER));
     }
 
     public void Normalize()
     {
         UiScale = _uiScale;
+        UiOpacity = _uiOpacity;
         HudWobbleMultiplier = _hudWobbleMultiplier;
     }
 
     public static double ClampUiScale(double value)
     {
-        return Clamp(value, MinimumSliderValue, MaximumScaleValue);
+        return Clamp(value, MINIMUM_SLIDER_VALUE, MAXIMUM_SCALE_VALUE);
     }
 
-    private static double Clamp(double value, double minimum, double maximum)
+    public static double ClampUiOpacity(double value)
+    {
+        return Clamp(value, MINIMUM_UI_OPACITY, MAXIMUM_UI_OPACITY);
+    }
+
+    static double Clamp(double value, double minimum, double maximum)
     {
         if (double.IsNaN(value) || double.IsInfinity(value))
         {
-            return DefaultSliderValue;
+            return DEFAULT_SLIDER_VALUE;
         }
 
         return Math.Clamp(value, minimum, maximum);
     }
 
-    private void SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
+    void SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
     {
         if (Equals(field, value))
         {

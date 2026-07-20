@@ -7,7 +7,7 @@ namespace UI_Revamp.Patches;
 [HarmonyPatch]
 public static class PlatformDisplayInformationDesignResolutionPatch
 {
-    private const string PlatformDisplayInformationTypeName = "Keen.VRage.UI.AvaloniaInterface.Main.PlatformDisplayInformation";
+    const string PlatformDisplayInformationTypeName = "Keen.VRage.UI.AvaloniaInterface.Main.PlatformDisplayInformation";
 
     public static MethodBase TargetMethod()
     {
@@ -15,6 +15,7 @@ public static class PlatformDisplayInformationDesignResolutionPatch
     }
 
     [HarmonyPostfix]
+    // ReSharper disable once InconsistentNaming
     public static void Postfix(ref Vector2I __result)
     {
         var scale = Plugin.AppliedUiScale;
@@ -27,7 +28,7 @@ public static class PlatformDisplayInformationDesignResolutionPatch
 [HarmonyPatch]
 public static class PlatformDisplayInformationSizeRatioPatch
 {
-    private const string PlatformDisplayInformationTypeName = "Keen.VRage.UI.AvaloniaInterface.Main.PlatformDisplayInformation";
+    const string PlatformDisplayInformationTypeName = "Keen.VRage.UI.AvaloniaInterface.Main.PlatformDisplayInformation";
 
     public static MethodBase TargetMethod()
     {
@@ -35,6 +36,7 @@ public static class PlatformDisplayInformationSizeRatioPatch
     }
 
     [HarmonyPostfix]
+    // ReSharper disable once InconsistentNaming
     public static void Postfix(ref double __result)
     {
         __result *= Plugin.AppliedUiScale;

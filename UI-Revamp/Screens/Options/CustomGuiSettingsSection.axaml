@@ -135,6 +135,22 @@
             </contentControls:DescriptionControl.Content>
         </contentControls:DescriptionControl>
 
+        <contentControls:DescriptionControl DescriptionKey="Controls the final opacity of the curved HUD texture after it is rendered">
+            <contentControls:DescriptionControl.Content>
+                <Grid ColumnDefinitions="1*,15,516" Margin="{StaticResource Margin-Medium}">
+                    <TextBlock HorizontalAlignment="Right" Classes="OptionSubTitle">UI Opacity</TextBlock>
+                    <Grid Grid.Column="2" ColumnDefinitions="*">
+                        <contentControls:SliderControl Classes="OptionSubTitle ui-revamp-percentage-slider" HorizontalAlignment="Stretch"
+                                                       Name="PART_UIOpacity"
+                                                       Minimum="0"
+                                                       Maximum="1"
+                                                       Rounding="2"
+                                                       Value="{Binding UiOpacity, Mode=TwoWay}" />
+                    </Grid>
+                </Grid>
+            </contentControls:DescriptionControl.Content>
+        </contentControls:DescriptionControl>
+
         <contentControls:DescriptionControl DescriptionKey="Uses a compact layout for the Flight Hud">
             <contentControls:DescriptionControl.Content>
                 <Grid ColumnDefinitions="1*,15,516" Margin="{StaticResource Margin-Medium}">

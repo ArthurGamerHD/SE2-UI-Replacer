@@ -20,12 +20,12 @@ namespace UI_Revamp;
 
 internal static class DarkModeStyleController
 {
-    private static readonly Uri DarkModeStyleUri = new("avares://UI-Revamp/Styles/DarkMode/DarkMode.axaml");
-    private static StyleInclude? DarkModeStyle;
-    private static readonly Dictionary<string, object?> OriginalStyleRootResources = new();
-    private static readonly Dictionary<string, object?> OriginalApplicationResources = new();
+    static readonly Uri DarkModeStyleUri = new("avares://UI-Revamp/Styles/DarkMode/DarkMode.axaml");
+    static StyleInclude? DarkModeStyle;
+    static readonly Dictionary<string, object?> OriginalStyleRootResources = new();
+    static readonly Dictionary<string, object?> OriginalApplicationResources = new();
 
-    private static readonly (string Name, object Value)[] PaletteOverrides =
+    static readonly (string Name, object Value)[] PaletteOverrides =
     {
         ("Primary", C("#95B0B7")),
         ("Secondary", C("#627C83")),
@@ -139,9 +139,9 @@ internal static class DarkModeStyleController
         ("TextBlockHyperlinkActive", B("#E08B0E"))
     };
 
-    private static Color C(string text) => Color.Parse(text);
+    static Color C(string text) => Color.Parse(text);
 
-    private static SolidColorBrush B(string text) => new(C(text));
+    static SolidColorBrush B(string text) => new(C(text));
 
     public static void Reload()
     {
@@ -189,7 +189,7 @@ internal static class DarkModeStyleController
         });
     }
 
-    private static void ApplyPaletteResources(Control styleRoot)
+    static void ApplyPaletteResources(Control styleRoot)
     {
         foreach (var (name, value) in PaletteOverrides)
         {
@@ -203,7 +203,7 @@ internal static class DarkModeStyleController
         }
     }
 
-    private static void RestorePaletteResources(Control? styleRoot)
+    static void RestorePaletteResources(Control? styleRoot)
     {
         if (styleRoot != null)
         {
@@ -217,7 +217,7 @@ internal static class DarkModeStyleController
         }
     }
 
-    private static void SetResource(IResourceDictionary resources, Dictionary<string, object?> originals, string name, object value)
+    static void SetResource(IResourceDictionary resources, Dictionary<string, object?> originals, string name, object value)
     {
         if (!originals.ContainsKey(name))
         {
@@ -227,7 +227,7 @@ internal static class DarkModeStyleController
         resources[name] = value;
     }
 
-    private static void RestoreResources(IResourceDictionary resources, Dictionary<string, object?> originals)
+    static void RestoreResources(IResourceDictionary resources, Dictionary<string, object?> originals)
     {
         foreach (var (name, value) in originals)
         {
@@ -279,7 +279,7 @@ internal static class DarkModeStyleController
         });
     }
 
-    private static void RequestRestart()
+    static void RequestRestart()
     {
         var inGameUi = Plugin.InGameUi;
         if (inGameUi == null)
@@ -291,7 +291,7 @@ internal static class DarkModeStyleController
         ShowSaveBeforeRestartDialog(inGameUi);
     }
 
-    private static void ShowSaveBeforeRestartDialog(InGameUI inGameUi)
+    static void ShowSaveBeforeRestartDialog(InGameUI inGameUi)
     {
         var sharedUi = Plugin.SharedUi;
         if (sharedUi == null)
@@ -319,7 +319,7 @@ internal static class DarkModeStyleController
         });
     }
 
-    private static void RestartGame()
+    static void RestartGame()
     {
         try
         {
@@ -344,7 +344,7 @@ internal static class DarkModeStyleController
         }
     }
 
-    private static Control? GetStyleRoot()
+    static Control? GetStyleRoot()
     {
         var mainWindow = Plugin.MainWindow;
         if (mainWindow == null)
@@ -358,7 +358,7 @@ internal static class DarkModeStyleController
             ?.GetValue(mainWindow) as Control;
     }
 
-    private static void InvalidateMainWindow()
+    static void InvalidateMainWindow()
     {
         var mainWindow = Plugin.MainWindow;
         if (mainWindow == null)

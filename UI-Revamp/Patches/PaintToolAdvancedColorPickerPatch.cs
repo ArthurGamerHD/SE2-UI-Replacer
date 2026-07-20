@@ -11,13 +11,14 @@ namespace UI_Revamp.Patches;
 [HarmonyPatch(typeof(PaintToolControllableComponent), nameof(PaintToolControllableComponent.OpenQuickSelectMenu))]
 public static class PaintToolAdvancedColorPickerPatch
 {
-    private static readonly MethodInfo? OnQuickSelectMenuOpenedMethod =
+    static readonly MethodInfo? OnQuickSelectMenuOpenedMethod =
         AccessTools.Method(typeof(PaintToolControllableComponent), "OnQuickSelectMenuOpened");
 
-    private static readonly MethodInfo? OnQuickSelectMenuClosedMethod =
+    static readonly MethodInfo? OnQuickSelectMenuClosedMethod =
         AccessTools.Method(typeof(PaintToolControllableComponent), "OnQuickSelectMenuClosed");
 
     [HarmonyPrefix]
+    // ReSharper disable once InconsistentNaming
     public static bool Prefix(PaintToolControllableComponent __instance, ref IObservableDisposable? __result)
     {
         if (!Plugin.Settings.AdvancedColorPicker)

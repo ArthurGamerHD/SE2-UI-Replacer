@@ -25,27 +25,25 @@ public class Plugin : IPlugin
 {
     static Version _version = new Version(1, 0);
     public const string PluginId = "SE2-UI-Revamp";
-    private const string ShowColonizationNotificationResource = "UIRevamp_ShowColonizationNotification";
-    private const string ShowMissionObjectivesResource = "UIRevamp_ShowMissionObjectives";
-    private const string ShowTipsResource = "UIRevamp_ShowTips";
-    private const string ShowControlHintsResource = "UIRevamp_ShowControlHints";
-    private const string ShowCollectedItemsResource = "UIRevamp_ShowCollectedItems";
-    private const string CompactFlightHudResource = "UIRevamp_CompactFlightHud";
-    public const string HudWobbleXResource = "UIRevamp_HudWobbleX";
-    public const string HudWobbleYResource = "UIRevamp_HudWobbleY";
-    public const string HudWobbleZResource = "UIRevamp_HudWobbleZ";
-    private Harmony _harmony = new(PluginId);
-    private static readonly JsonSerializerOptions JsonOptions = new()
+    const string ShowColonizationNotificationResource = "UIRevamp_ShowColonizationNotification";
+    const string ShowMissionObjectivesResource = "UIRevamp_ShowMissionObjectives";
+    const string ShowTipsResource = "UIRevamp_ShowTips";
+    const string ShowControlHintsResource = "UIRevamp_ShowControlHints";
+    const string ShowCollectedItemsResource = "UIRevamp_ShowCollectedItems";
+    const string CompactFlightHudResource = "UIRevamp_CompactFlightHud";
+    Harmony _harmony = new(PluginId);
+
+    static readonly JsonSerializerOptions JsonOptions = new()
     {
         WriteIndented = true,
         DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
     };
 
     public static string OptionsDirectory => Path.Combine(Singleton<VRageCore>.Instance.AppDataPath, "PluginsOptions", "Settings");
-    private static string PluginSettings => Path.Combine(OptionsDirectory, "UI-Revamp.json");
+    static string PluginSettings => Path.Combine(OptionsDirectory, "UI-Revamp.json");
     public static UiRevampSettings Settings { get; private set; } = new();
     public static TopLevel? MainWindow { get; internal set; }
-    public static double AppliedUiScale { get; private set; } = UiRevampSettings.DefaultSliderValue;
+    public static double AppliedUiScale { get; private set; } = UiRevampSettings.DEFAULT_SLIDER_VALUE;
 
     public Plugin(PluginHost host)
     {
@@ -65,7 +63,7 @@ public class Plugin : IPlugin
         Log.Default.Info($"[{PluginId}] Initialized");
     }
 
-    private static void LoadSettings()
+    static void LoadSettings()
     {
         try
         {
@@ -128,7 +126,7 @@ public class Plugin : IPlugin
         }
     }
 
-    private static void OnSettingsPropertyChanged(object? sender, PropertyChangedEventArgs args)
+    static void OnSettingsPropertyChanged(object? sender, PropertyChangedEventArgs args)
     {
         SaveSettings();
         UpdateHudResources();
@@ -138,6 +136,9 @@ public class Plugin : IPlugin
 
         if (args.PropertyName == nameof(UiRevampSettings.CompactFlightHud)) 
             CompactFlightHudStyleController.Reload();
+
+        if (args.PropertyName == nameof(UiRevampSettings.UiOpacity))
+            CurvedHud.CurvedHudController.RefreshComposition();
 
         InvalidateMainWindow();
     }
@@ -157,17 +158,9 @@ public class Plugin : IPlugin
         SetAvaloniaResource(ShowControlHintsResource, showControlHints, typeof(bool));
         SetAvaloniaResource(ShowCollectedItemsResource, showCollectedItems, typeof(bool));
         SetAvaloniaResource(CompactFlightHudResource, compactFlightHud, typeof(bool));
-        SetAvaloniaResource(HudWobbleXResource, 0.0, typeof(double));
-        SetAvaloniaResource(HudWobbleYResource, 0.0, typeof(double));
-        SetAvaloniaResource(HudWobbleZResource, 1.0, typeof(double));
     }
 
-    internal static void SetAvaloniaDoubleResource(string name, double value)
-    {
-        SetAvaloniaResource(name, value, typeof(double));
-    }
-
-    private static void SetAvaloniaResource(string name, object value, Type targetType)
+    static void SetAvaloniaResource(string name, object value, Type targetType)
     {
         var application = Application.Current;
         if (application != null)
@@ -212,11 +205,13 @@ public class Plugin : IPlugin
                 }
             }
 
+            CurvedHud.CurvedHudController.RefreshForMainWindowMetrics();
+
             Log.Default.Info($"[{PluginId}] Applied UI scale {AppliedUiScale:P0}. RenderScaling is now {mainWindow.RenderScaling:F3}.");
         });
     }
 
-    private static void InvalidateMainWindow()
+    static void InvalidateMainWindow()
     {
         Dispatcher.UIThread.Post(() =>
         {
@@ -240,7 +235,7 @@ public class Plugin : IPlugin
         });
     }
 
-    private static Size? RefreshClientSize(TopLevel mainWindow)
+    static Size? RefreshClientSize(TopLevel mainWindow)
     {
         var platformImpl = mainWindow.PlatformImpl;
         if (platformImpl == null)
@@ -270,7 +265,7 @@ public class Plugin : IPlugin
         return clientSize;
     }
 
-    private static void NotifyScaleChanged(TopLevel mainWindow)
+    static void NotifyScaleChanged(TopLevel mainWindow)
     {
         var platformImpl = mainWindow.PlatformImpl;
         var scalingChanged = platformImpl
@@ -281,7 +276,7 @@ public class Plugin : IPlugin
         scalingChanged?.Invoke(mainWindow.RenderScaling);
     }
 
-    private static void NotifyResized(TopLevel mainWindow)
+    static void NotifyResized(TopLevel mainWindow)
     {
         var platformImpl = mainWindow.PlatformImpl;
         if (platformImpl == null)

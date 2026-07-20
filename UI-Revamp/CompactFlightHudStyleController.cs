@@ -14,13 +14,14 @@ namespace UI_Revamp;
 
 internal static class CompactFlightHudStyleController
 {
-    private static readonly Uri CompactFlightHudStyleUri = new("avares://UI-Revamp/Styles/CompactFlightHud.axaml");
-    private const string FlightHudControlTypeName = "Keen.Game2.Client.UI.HUD.Flight.FlightHUDControl";
-    private const string HudSpeedometerTypeName = "Keen.Game2.Client.UI.HUD.Movement.HUDSpeedometer";
-    private const string HudAltimeterTypeName = "Keen.Game2.Client.UI.HUD.Flight.HUDAltimeter";
-    private const string HudHorizonIndicatorTypeName = "Keen.Game2.Client.UI.HUD.Flight.HUDHorizonIndicator";
-    private static StyleInclude? CompactFlightHudStyle;
-    private static readonly MethodInfo? InvalidateStylesMethod = typeof(StyledElement).GetMethod(
+    static readonly Uri CompactFlightHudStyleUri = new("avares://UI-Revamp/Styles/CompactFlightHud.axaml");
+    const string FlightHudControlTypeName = "Keen.Game2.Client.UI.HUD.Flight.FlightHUDControl";
+    const string HudSpeedometerTypeName = "Keen.Game2.Client.UI.HUD.Movement.HUDSpeedometer";
+    const string HudAltimeterTypeName = "Keen.Game2.Client.UI.HUD.Flight.HUDAltimeter";
+    const string HudHorizonIndicatorTypeName = "Keen.Game2.Client.UI.HUD.Flight.HUDHorizonIndicator";
+    static StyleInclude? CompactFlightHudStyle;
+
+    static readonly MethodInfo? InvalidateStylesMethod = typeof(StyledElement).GetMethod(
         "InvalidateStyles",
         BindingFlags.Instance | BindingFlags.NonPublic);
 
@@ -66,7 +67,7 @@ internal static class CompactFlightHudStyleController
         });
     }
 
-    private static Control? GetStyleRoot()
+    static Control? GetStyleRoot()
     {
         var mainWindow = Plugin.MainWindow;
         if (mainWindow == null)
@@ -80,7 +81,7 @@ internal static class CompactFlightHudStyleController
             ?.GetValue(mainWindow) as Control;
     }
 
-    private static void RefreshExistingFlightHudControls(Control styleRoot, bool compact)
+    static void RefreshExistingFlightHudControls(Control styleRoot, bool compact)
     {
         var controls = EnumerateControls(styleRoot).ToArray();
         foreach (var flightHud in controls.Where(IsFlightHudControl))
@@ -114,7 +115,7 @@ internal static class CompactFlightHudStyleController
         styleRoot.InvalidateVisual();
     }
 
-    private static IEnumerable<Control> EnumerateControls(Control root)
+    static IEnumerable<Control> EnumerateControls(Control root)
     {
         yield return root;
 
@@ -124,17 +125,17 @@ internal static class CompactFlightHudStyleController
         }
     }
 
-    private static bool IsFlightHudControl(Control control)
+    static bool IsFlightHudControl(Control control)
     {
         return control.GetType().FullName == FlightHudControlTypeName;
     }
 
-    private static bool IsHudHorizonIndicator(Control control)
+    static bool IsHudHorizonIndicator(Control control)
     {
         return control.GetType().FullName == HudHorizonIndicatorTypeName;
     }
 
-    private static bool IsFlightSideIndicator(Control control)
+    static bool IsFlightSideIndicator(Control control)
     {
         var typeName = control.GetType().FullName;
         if (typeName == HudAltimeterTypeName)
@@ -145,7 +146,7 @@ internal static class CompactFlightHudStyleController
         return typeName == HudSpeedometerTypeName && control.Classes.Contains("Flight");
     }
 
-    private static void InvalidateStyles(StyledElement element, bool recurse)
+    static void InvalidateStyles(StyledElement element, bool recurse)
     {
         InvalidateStylesMethod?.Invoke(element, new object[] { recurse });
     }

@@ -19,10 +19,11 @@ namespace UI_Revamp.Patches;
 [HarmonyPatch]
 public static class OptionsGuiViewPatch
 {
-    private const int PatchAttempts = 8;
-    private const string GuiViewTypeName = "Keen.Game2.Client.UI.Menu.Options.GUIView";
-    private const string ScrollableGuiClass = "ui-revamp-scrollable-gui";
-    private static readonly FuncControlTemplate<ContentControl> ScrollableGuiTemplate = new((control, _) => new ScrollViewer
+    const int PatchAttempts = 8;
+    const string GuiViewTypeName = "Keen.Game2.Client.UI.Menu.Options.GUIView";
+    const string ScrollableGuiClass = "ui-revamp-scrollable-gui";
+
+    static readonly FuncControlTemplate<ContentControl> ScrollableGuiTemplate = new((control, _) => new ScrollViewer
     {
         HorizontalAlignment = HorizontalAlignment.Stretch,
         HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled,
@@ -46,6 +47,7 @@ public static class OptionsGuiViewPatch
     }
 
     [HarmonyPostfix]
+    // ReSharper disable once InconsistentNaming
     public static void Postfix(OptionsScreen __instance)
     {
         try
@@ -58,7 +60,7 @@ public static class OptionsGuiViewPatch
         }
     }
 
-    private static void SchedulePatch(OptionsScreen screen, int attemptsLeft)
+    static void SchedulePatch(OptionsScreen screen, int attemptsLeft)
     {
         Dispatcher.UIThread.Post(() =>
         {
@@ -74,7 +76,7 @@ public static class OptionsGuiViewPatch
         });
     }
 
-    private static bool PatchGuiView(OptionsScreen screen, int attemptsLeft)
+    static bool PatchGuiView(OptionsScreen screen, int attemptsLeft)
     {
         try
         {
@@ -129,7 +131,7 @@ public static class OptionsGuiViewPatch
         }
     }
 
-    private static bool EnsureScrollableGuiTemplate(ContentControl guiView)
+    static bool EnsureScrollableGuiTemplate(ContentControl guiView)
     {
         var stackPanel = GetGuiContentStackPanel(guiView);
         if (stackPanel == null)
@@ -153,7 +155,7 @@ public static class OptionsGuiViewPatch
         return true;
     }
 
-    private static StackPanel? GetGuiContentStackPanel(ContentControl guiView)
+    static StackPanel? GetGuiContentStackPanel(ContentControl guiView)
     {
         return guiView.Content switch
         {

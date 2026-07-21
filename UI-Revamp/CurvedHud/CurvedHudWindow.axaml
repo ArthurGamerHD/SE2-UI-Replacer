@@ -2,6 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:curvedHud="clr-namespace:UI_Revamp.CurvedHud"
         x:Class="UI_Revamp.CurvedHud.CurvedHudWindow"
         mc:Ignorable="d"
         d:DesignWidth="1280"
@@ -11,8 +12,66 @@
         ShowActivated="False"
         SystemDecorations="None"
         Background="Transparent">
+    <Window.Resources>
+        <Color x:Key="CurvedHudPrimaryColor">#71CFEB</Color>
+        <SolidColorBrush x:Key="CurvedHudPrimaryBrush" Color="{StaticResource CurvedHudPrimaryColor}" />
+        <SolidColorBrush x:Key="CurvedHudPrimaryTrackBrush" Color="#4D71CFEB" />
+        <SolidColorBrush x:Key="CurvedHudPrimaryFillBrush" Color="#8071CFEB" />
+        <SolidColorBrush x:Key="CurvedHudWarningTrackBrush" Color="#4DFF5D63" />
+        <SolidColorBrush x:Key="CurvedHudWarningFillBrush" Color="#80FF5D63" />
+        <SolidColorBrush x:Key="WhiteTextBrush" Color="#FFFFFF" />
+    </Window.Resources>
+    <Window.Styles>
+        <Style Selector="ProgressBar.curved-hud-vertical-progress">
+            <Setter Property="Orientation" Value="Vertical" />
+            <Setter Property="Width" Value="28" />
+            <Setter Property="Height" Value="200" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <Border BorderBrush="{StaticResource CurvedHudPrimaryBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Padding="{TemplateBinding Padding}"
+                            CornerRadius="3"
+                            ClipToBounds="True">
+                        <Panel ClipToBounds="True">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="4*" />
+                                </Grid.RowDefinitions>
+                                <Border Grid.Row="0"
+                                        Background="{DynamicResource CurvedHudWarningTrackBrush}"
+                                        CornerRadius="3,3,0,0" />
+                                <Border Grid.Row="1" Background="{DynamicResource CurvedHudPrimaryTrackBrush}" />
+                            </Grid>
+                            <Border Name="PART_Indicator"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Bottom"
+                                    CornerRadius="3, 3,0,0"
+                                    ClipToBounds="True">
+                                <Grid Height="{Binding $parent[ProgressBar].Bounds.Height}"
+                                      VerticalAlignment="Bottom">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="4*" />
+                                    </Grid.RowDefinitions>
+                                    <Border Grid.Row="0"
+                                            Background="{StaticResource CurvedHudWarningFillBrush}"
+                                            CornerRadius="3, 3,0,0" />
+                                    <Border Grid.Row="1" Background="{StaticResource CurvedHudPrimaryFillBrush}" />
+                                </Grid>
+                            </Border>
+                        </Panel>
+                    </Border>
+                </ControlTemplate>
+            </Setter>
+        </Style>
+    </Window.Styles>
     <Border Name="PART_SafeArea">
         <Grid Background="Transparent"
+              Name="PART_ContentGrid"
               ClipToBounds="True">
             <Grid Name="PART_DesignPreview"
                   IsVisible="False"
@@ -25,6 +84,138 @@
                   ClipToBounds="True"
                   HorizontalAlignment="Stretch"
                   VerticalAlignment="Stretch" />
+            <curvedHud:ArtificialHorizon Name="PART_ArtificialHorizon"
+                                          HorizontalAlignment="Stretch"
+                                          VerticalAlignment="Stretch"
+                                          IsHitTestVisible="False"
+                                          LineBrush="{StaticResource CurvedHudPrimaryBrush}" />
+            <Grid Name="PART_SpaceReticle"
+                  Width="480"
+                  Height="260"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  ClipToBounds="True"
+                  IsHitTestVisible="False"
+                  IsVisible="False">
+                <Canvas Width="48"
+                        Height="260"
+                        HorizontalAlignment="Left"
+                        ClipToBounds="True">
+                    <Path Canvas.Left="0"
+                          Canvas.Top="-110"
+                          Data="M 240 0 A 240 240 0 1 0 240 480 A 240 240 0 1 0 240 0"
+                          Stroke="{StaticResource CurvedHudPrimaryBrush}"
+                          StrokeThickness="2"
+                          StrokeLineCap="Round"
+                          Fill="{x:Null}" />
+                </Canvas>
+                <Canvas Width="48"
+                        Height="260"
+                        HorizontalAlignment="Right"
+                        ClipToBounds="True">
+                    <Path Canvas.Left="-432"
+                          Canvas.Top="-110"
+                          Data="M 240 0 A 240 240 0 1 0 240 480 A 240 240 0 1 0 240 0"
+                          Stroke="{StaticResource CurvedHudPrimaryBrush}"
+                          StrokeThickness="2"
+                          StrokeLineCap="Round"
+                          Fill="{x:Null}" />
+                </Canvas>
+            </Grid>
+            <Grid Name="PART_CenterProgressBars"
+                  Width="572"
+                  Height="248"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  ClipToBounds="False"
+                  IsHitTestVisible="False">
+                <Grid Width="32"
+                      Height="248"
+                      HorizontalAlignment="Left"
+                      ClipToBounds="False">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="200" />
+                        <RowDefinition Height="48" />
+                    </Grid.RowDefinitions>
+                    <ProgressBar Name="PART_LeftProgressBar"
+                                 Classes="curved-hud-vertical-progress"
+                                 Minimum="0"
+                                 Maximum="100"
+                                 Value="0" />
+                    <StackPanel Grid.Row="1"
+                                Width="88"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Spacing="0">
+                        <TextBlock Name="PART_SpeedValueText"
+                                   Text="{ReflectionBinding SpeedValueText}"
+                                   d:Text="0.0"
+                                   Width="88"
+                                   Foreground="{StaticResource WhiteTextBrush}"
+                                   FontSize="18"
+                                   FontWeight="Black"
+                                   FontStyle="Italic"
+                                   TextAlignment="Center" />
+                        <TextBlock Name="PART_SpeedUnitText"
+                                   Text="{ReflectionBinding SpeedUnitText}"
+                                   d:Text="m/s"
+                                   Width="88"
+                                   Foreground="{StaticResource WhiteTextBrush}"
+                                   FontSize="10"
+                                   FontWeight="Bold"
+                                   FontStyle="Italic"
+                                   TextAlignment="Center" />
+                    </StackPanel>
+                </Grid>
+                <Grid Name="PART_AltitudeProgressColumn"
+                      Width="32"
+                      Height="248"
+                      HorizontalAlignment="Right"
+                      ClipToBounds="False">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="200" />
+                        <RowDefinition Height="48" />
+                    </Grid.RowDefinitions>
+                    <ProgressBar Name="PART_RightProgressBar"
+                                 Classes="curved-hud-vertical-progress"
+                                 Minimum="0"
+                                 Maximum="100"
+                                 Value="0">
+                        <ProgressBar.Resources>
+                            <SolidColorBrush x:Key="CurvedHudPrimaryTrackBrush" Color="#00000000" />
+                            <SolidColorBrush x:Key="CurvedHudWarningTrackBrush" Color="#00000000" />
+                        </ProgressBar.Resources>
+                    </ProgressBar>
+                    <StackPanel Grid.Row="1"
+                                Width="88"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Spacing="2">
+                        <TextBlock Name="PART_AltitudeValueText"
+                                   Text="0m"
+                                   Width="88"
+                                   Foreground="{StaticResource WhiteTextBrush}"
+                                   FontSize="16"
+                                   FontWeight="Black"
+                                   FontStyle="Italic"
+                                   TextAlignment="Center" />
+                        <Image Name="PART_AltitudeIcon"
+                               Width="20"
+                               Height="18"
+                               HorizontalAlignment="Center"
+                               Stretch="Uniform" />
+                    </StackPanel>
+                </Grid>
+            </Grid>
+            <curvedHud:Compass Name="PART_Compass"
+                                Margin="0 58 0 0"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Top"
+                                IsHitTestVisible="False"
+                                FrameBrush="{StaticResource CurvedHudPrimaryBrush}"
+                                TickBrush="{StaticResource CurvedHudPrimaryBrush}"
+                                TextBrush="{StaticResource CurvedHudPrimaryBrush}"
+                                Bearing="90" />
         </Grid>
     </Border>
 </Window>

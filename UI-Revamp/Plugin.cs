@@ -18,6 +18,7 @@ using Keen.VRage.Library.Diagnostics;
 using Keen.VRage.Library.Utils;
 using Keen.VRage.UI.EngineComponents;
 using UI_Revamp.Configuration;
+using UI_Revamp.CurvedHud;
 
 namespace UI_Revamp;
 
@@ -134,8 +135,11 @@ public class Plugin : IPlugin
         if (args.PropertyName == nameof(UiRevampSettings.UseDarkMode))
             DarkModeStyleController.ShowRestartRequiredDialog();
 
-        if (args.PropertyName == nameof(UiRevampSettings.CompactFlightHud)) 
-            CompactFlightHudStyleController.Reload();
+        if (args.PropertyName == nameof(UiRevampSettings.CompactFlightHud))
+        {
+            CurvedHudController.ApplySettings();
+            NativeFlightHudController.Refresh();
+        }
 
         if (args.PropertyName == nameof(UiRevampSettings.UiOpacity))
             CurvedHud.CurvedHudController.RefreshComposition();

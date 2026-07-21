@@ -12,6 +12,7 @@
         <IsDesign Condition="'$(IsDesign)' == '' and '$(Configuration)' == 'Preview'">true</IsDesign>
         <RuntimeIdentifier Condition="'$(Configuration)' == 'Preview' and '$(RuntimeIdentifier)' == ''">linux-x64</RuntimeIdentifier>
         <SelfContained Condition="'$(Configuration)' == 'Preview'">false</SelfContained>
+        <DefineConstants Condition="'$(Configuration)' == 'Preview'">$(DefineConstants);PREVIEW</DefineConstants>
         <DefineConstants Condition="'$(IsDesign)' == 'true'">$(DefineConstants);IS_DESIGN</DefineConstants>
         <BuildProjectReferences Condition="'$(IsDesign)' == 'true'">true</BuildProjectReferences>
         <GenerateRuntimeConfigurationFiles Condition="'$(IsDesign)' == 'true'">true</GenerateRuntimeConfigurationFiles>

@@ -36,7 +36,7 @@ public class MainWindowPatches
         Plugin.MainWindow = __instance;
         Plugin.UpdateHudResources();
         DarkModeStyleController.Reload();
-        CompactFlightHudStyleController.Reload();
+        NativeFlightHudController.Refresh();
         Plugin.ApplyUiScale(Plugin.Settings.UiScale);
 
 #if DEBUG

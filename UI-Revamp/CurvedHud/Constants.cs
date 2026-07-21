@@ -23,6 +23,10 @@ internal static class Constants
         internal const double OpticalCenterY = 0.5;
         internal const double HeadOffsetX = 0.0;
         internal const double HeadOffsetY = 0.0;
+        internal const double DropShadowOffsetX = 3.0;
+        internal const double DropShadowOffsetY = 3.0;
+        internal const double DropShadowBlurRadius = 2.0;
+        internal const double DropShadowOpacity = 0.55;
 
         internal static string CurvatureXHlsl => FormatHlslFloat(CurvatureX);
         internal static string CurvatureYHlsl => FormatHlslFloat(CurvatureY);
@@ -30,6 +34,10 @@ internal static class Constants
         internal static string OpticalCenterYHlsl => FormatHlslFloat(OpticalCenterY);
         internal static string HeadOffsetXHlsl => FormatHlslFloat(HeadOffsetX);
         internal static string HeadOffsetYHlsl => FormatHlslFloat(HeadOffsetY);
+        internal static string DropShadowOffsetXHlsl => FormatHlslFloat(DropShadowOffsetX);
+        internal static string DropShadowOffsetYHlsl => FormatHlslFloat(DropShadowOffsetY);
+        internal static string DropShadowBlurRadiusHlsl => FormatHlslFloat(DropShadowBlurRadius);
+        internal static string DropShadowOpacityHlsl => FormatHlslFloat(DropShadowOpacity);
     }
 
     internal static class Wobble

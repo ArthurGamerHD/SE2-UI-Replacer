@@ -18,13 +18,15 @@
         <IsDesign Condition="'$(IsDesign)' == '' and '$(Configuration)' == 'Preview'">true</IsDesign>
         <RuntimeIdentifier Condition="'$(Configuration)' == 'Preview' and '$(RuntimeIdentifier)' == ''">linux-x64</RuntimeIdentifier>
         <SelfContained Condition="'$(Configuration)' == 'Preview'">false</SelfContained>
+        <DefineConstants Condition="'$(Configuration)' == 'Preview'">$(DefineConstants);PREVIEW</DefineConstants>
         <DefineConstants Condition="'$(IsDesign)' == 'true'">$(DefineConstants);IS_DESIGN</DefineConstants>
         <GenerateRuntimeConfigurationFiles Condition="'$(IsDesign)' == 'true'">true</GenerateRuntimeConfigurationFiles>
         <CopyLocalLockFileAssemblies Condition="'$(IsDesign)' == 'true'">true</CopyLocalLockFileAssemblies>
     </PropertyGroup>
 
     <ItemGroup>
-        <AvaloniaResource Include="Assets\**"/>
+        <AvaloniaResource Include="Assets\**" Exclude="Assets\Preview\**"/>
+        <AvaloniaResource Include="Assets\Preview\**" Condition="'$(IsDesign)' == 'true'"/>
     </ItemGroup>
 
 
@@ -39,6 +41,10 @@
 
     <ItemGroup Condition="'$(IsDesign)' == 'true'">
         <Compile Remove="**\*.cs" />
+        <Compile Include="CurvedHud\ArtificialHorizon.cs" />
+        <Compile Include="CurvedHud\Compass.cs" />
+        <Compile Include="CurvedHud\HudPreviewUtility.cs" />
+        <Compile Include="CurvedHud\HudPreviewViewModel.cs" />
         <Compile Include="CurvedHud\CurvedHudWindow.axaml.cs" />
         <Compile Include="Styles\CoreStyles.axaml.cs" />
         <AvaloniaXaml Remove="**\*.axaml" />

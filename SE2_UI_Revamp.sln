@@ -9,24 +9,29 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		ExportPlugin|Any CPU = ExportPlugin|Any CPU
 		Preview|Any CPU = Preview|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{FF2E1C82-6478-42F9-90BA-9429BAD0743E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FF2E1C82-6478-42F9-90BA-9429BAD0743E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF2E1C82-6478-42F9-90BA-9429BAD0743E}.ExportPlugin|Any CPU.ActiveCfg = ExportPlugin|Any CPU
+		{FF2E1C82-6478-42F9-90BA-9429BAD0743E}.ExportPlugin|Any CPU.Build.0 = ExportPlugin|Any CPU
 		{FF2E1C82-6478-42F9-90BA-9429BAD0743E}.Preview|Any CPU.ActiveCfg = Preview|Any CPU
 		{FF2E1C82-6478-42F9-90BA-9429BAD0743E}.Preview|Any CPU.Build.0 = Preview|Any CPU
 		{FF2E1C82-6478-42F9-90BA-9429BAD0743E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF2E1C82-6478-42F9-90BA-9429BAD0743E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4C0BDB60-5258-41FA-8D3C-3170999B4314}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4C0BDB60-5258-41FA-8D3C-3170999B4314}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C0BDB60-5258-41FA-8D3C-3170999B4314}.ExportPlugin|Any CPU.ActiveCfg = Release|Any CPU
 		{4C0BDB60-5258-41FA-8D3C-3170999B4314}.Preview|Any CPU.ActiveCfg = Preview|Any CPU
 		{4C0BDB60-5258-41FA-8D3C-3170999B4314}.Preview|Any CPU.Build.0 = Preview|Any CPU
 		{4C0BDB60-5258-41FA-8D3C-3170999B4314}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C0BDB60-5258-41FA-8D3C-3170999B4314}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E9BFED6F-830E-4C3B-8459-B7490C4B1BD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E9BFED6F-830E-4C3B-8459-B7490C4B1BD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9BFED6F-830E-4C3B-8459-B7490C4B1BD6}.ExportPlugin|Any CPU.ActiveCfg = Release|Any CPU
 		{E9BFED6F-830E-4C3B-8459-B7490C4B1BD6}.Preview|Any CPU.ActiveCfg = Debug|Any CPU
 		{E9BFED6F-830E-4C3B-8459-B7490C4B1BD6}.Preview|Any CPU.Build.0 = Debug|Any CPU
 		{E9BFED6F-830E-4C3B-8459-B7490C4B1BD6}.Release|Any CPU.ActiveCfg = Release|Any CPU

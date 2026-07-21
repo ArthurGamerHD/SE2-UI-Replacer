@@ -39,9 +39,11 @@ internal static class CurvedHudController
     static int _offscreenSubmitSeen;
     static int _offscreenRenderSeen;
     static int _loggedWaitingForSubmit;
+    static int _loggedViewModelFailure;
     static bool _compositionStartRequested;
     static bool _captureSubscribed;
     static int _sessionActive;
+    static CurvedHudViewModel? _viewModel;
     static Size _logicalWindowSize;
     static Vector2I _textureResolution;
     static Vector2I _mainViewportResolution;
@@ -51,6 +53,9 @@ internal static class CurvedHudController
     static double _wobbleScale = 1.0;
     static uint _submittedWobbleColor;
     static int _loggedRejectedMainWindowCapture;
+    static int _flightHudVisible;
+
+    internal static bool IsFlightHudVisible => Volatile.Read(ref _flightHudVisible) != 0;
 
     internal static void StartAfterSessionLoaded()
     {
@@ -58,15 +63,29 @@ internal static class CurvedHudController
         if (firstRequest)
         {
             Log.Default.Info(
-                $"[{Plugin.PluginId}] World-loaded transition completed; starting the curved HUD.");
+                $"[{Plugin.PluginId}] World-loaded transition completed; curved HUD session is active.");
         }
 
         Dispatcher.UIThread.Post(() =>
         {
             // A return-to-menu transition may overtake this queued callback.
             if (Volatile.Read(ref _sessionActive) != 0)
+            {
                 StartOnUiThread();
+            }
         }, DispatcherPriority.Loaded);
+    }
+
+    internal static void ApplySettings()
+    {
+        if (Dispatcher.UIThread.CheckAccess())
+        {
+            ApplySettingsOnUiThread();
+        }
+        else
+        {
+            Dispatcher.UIThread.Post(ApplySettingsOnUiThread, DispatcherPriority.Loaded);
+        }
     }
 
     internal static void Stop()
@@ -79,7 +98,7 @@ internal static class CurvedHudController
         }
         else
         {
-            Dispatcher.UIThread.Post(StopOnUiThread, DispatcherPriority.Loaded);
+            Dispatcher.UIThread.Post(() => StopOnUiThread(), DispatcherPriority.Loaded);
         }
     }
 
@@ -107,6 +126,23 @@ internal static class CurvedHudController
             return;
 
         CreateCompositionBatch();
+    }
+
+    internal static void UiFrame()
+    {
+        if (Volatile.Read(ref _sessionActive) == 0)
+            return;
+
+        if (Dispatcher.UIThread.CheckAccess())
+        {
+            UpdateViewModelOnUiThread();
+        }
+        else
+        {
+            Dispatcher.UIThread.Post(
+                UpdateViewModelOnUiThread,
+                DispatcherPriority.Background);
+        }
     }
 
     internal static void RefreshForMainWindowMetrics()
@@ -142,7 +178,8 @@ internal static class CurvedHudController
 
     static void RefreshForMainWindowMetricsOnUiThread()
     {
-        if (Volatile.Read(ref _sessionActive) == 0 || _window == null)
+        if (Volatile.Read(ref _sessionActive) == 0 ||
+            _window == null)
             return;
 
         SurfaceMetrics metrics = ResolveMainWindowSurfaceMetrics();
@@ -196,13 +233,15 @@ internal static class CurvedHudController
 
     static void StartOnUiThread()
     {
-        if (Volatile.Read(ref _sessionActive) == 0 || _window != null)
+        if (Volatile.Read(ref _sessionActive) == 0 ||
+            _window != null)
             return;
 
         CurvedHudDiagnostics.LogConfiguration();
         Volatile.Write(ref _offscreenSubmitSeen, 0);
         Volatile.Write(ref _offscreenRenderSeen, 0);
         Volatile.Write(ref _loggedWaitingForSubmit, 0);
+        Volatile.Write(ref _loggedViewModelFailure, 0);
         _compositionStartRequested = false;
         _submittedWobbleColor = 0;
 
@@ -230,6 +269,8 @@ internal static class CurvedHudController
             Width = _logicalWindowSize.Width,
             Height = _logicalWindowSize.Height
         };
+        _viewModel = new CurvedHudViewModel();
+        _window.DataContext = _viewModel;
 
         // Showing the window creates its Avalonia/VRage platform implementation.
         // The DrawingContext patch redirects only this window into Target.
@@ -251,6 +292,7 @@ internal static class CurvedHudController
                 $"[{Plugin.PluginId}] Could not resolve the VRage WindowImpl for CurvedHudWindow after Show().");
             _window.Close();
             _window = null;
+            _viewModel = null;
             Target.Dispose();
             HasValidTarget = false;
             return;
@@ -262,12 +304,63 @@ internal static class CurvedHudController
         CreateVisibleProbes();
 
         _window.InvalidateVisual();
+        UpdateViewModelOnUiThread();
         BeginDeferredComposition();
         ScheduleOffscreenCapture();
     }
 
-    static void StopOnUiThread()
+    static void ApplySettingsOnUiThread()
     {
+        if (Volatile.Read(ref _sessionActive) == 0)
+            return;
+
+        StartOnUiThread();
+        UpdateViewModelOnUiThread();
+        NativeFlightHudController.Refresh();
+    }
+
+    static void UpdateViewModelOnUiThread()
+    {
+        CurvedHudWindow? window = _window;
+        CurvedHudViewModel? viewModel = _viewModel;
+        if (window == null || viewModel == null)
+            return;
+
+        try
+        {
+            viewModel.UpdateFromGame();
+
+            bool showFlightHud = viewModel.ShowFlightHud;
+            bool visibilityChanged = SetFlightHudVisible(showFlightHud);
+            bool showPlanetHud = viewModel.ShowPlanetHud;
+            window.PART_HudPanelHost.IsVisible = showFlightHud;
+            window.PART_CenterProgressBars.IsVisible = showFlightHud;
+            window.PART_Compass.IsVisible = showPlanetHud;
+            window.PART_ArtificialHorizon.IsVisible = showPlanetHud;
+            window.PART_SpaceReticle.IsVisible = viewModel.ShowSpaceReticle;
+            window.PART_Compass.Bearing = viewModel.Bearing;
+            window.PART_Compass.VisibleDegrees = viewModel.CompassVisibleDegrees;
+            window.PART_ArtificialHorizon.Pitch = viewModel.Pitch;
+            window.PART_ArtificialHorizon.Roll = viewModel.Roll;
+
+            if (visibilityChanged || showFlightHud)
+                NativeFlightHudController.Refresh();
+        }
+        catch (Exception exception)
+        {
+            if (Interlocked.Exchange(ref _loggedViewModelFailure, 1) == 0)
+            {
+                Log.Default.Error(
+                    $"[{Plugin.PluginId}] Failed to update the curved HUD view model: {exception}");
+            }
+        }
+    }
+
+    static void StopOnUiThread(string reason = "before transition to the main menu.")
+    {
+        if (SetFlightHudVisible(false))
+            NativeFlightHudController.Refresh();
+
         bool hadResources =
             _window != null ||
             _compositionBatch != null ||
@@ -303,6 +396,7 @@ internal static class CurvedHudController
 
         CurvedHudWindow? window = _window;
         _window = null;
+        _viewModel = null;
         if (window != null)
         {
             try
@@ -348,8 +442,14 @@ internal static class CurvedHudController
         if (hadResources)
         {
             Log.Default.Info(
-                $"[{Plugin.PluginId}] Curved HUD stopped before transition to the main menu.");
+                $"[{Plugin.PluginId}] Curved HUD stopped {reason}");
         }
+    }
+
+    static bool SetFlightHudVisible(bool visible)
+    {
+        return Interlocked.Exchange(ref _flightHudVisible, visible ? 1 : 0) !=
+               (visible ? 1 : 0);
     }
 
     internal static bool TryCapturePlatformWindow(object renderingWindow)

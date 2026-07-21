@@ -153,13 +153,6 @@ internal static class CurvedHudShaderPatch
         string uvAccess = function.UvAccess;
         string colorAccess = function.ColorAccess;
 
-        string stockArguments = BuildCallArguments(
-            function,
-            "UIRevamp_WarpedInput",
-            function.ResultParameter?.Name ?? string.Empty);
-
-        string stockCall = BuildStockCall(function, stockArguments);
-
         CurvedHudDiagnostics.ShaderMode mode = CurvedHudDiagnostics.Mode;
         string shaderBody = mode switch
         {
@@ -173,21 +166,27 @@ internal static class CurvedHudShaderPatch
     UIRevamp_WarpedInput{{colorAccess}} =
         (ColorLinearPremultiplied)float4(1.0, 1.0, 1.0, 1.0);
 
-{{stockCall}}
+{{BuildStockCall(function, "UIRevamp_WarpedInput", includeDropShadow: false)}}
 """,
             CurvedHudDiagnostics.ShaderMode.WarpClamp => BuildWarpBody(
                 inputType,
                 inputName,
                 uvAccess,
                 colorAccess,
-                stockCall,
+                BuildStockCall(
+                    function,
+                    "UIRevamp_WarpedInput",
+                    includeDropShadow: true),
                 "    UIRevamp_Uv = saturate(UIRevamp_Uv);"),
             CurvedHudDiagnostics.ShaderMode.WarpDiscard => BuildWarpBody(
                 inputType,
                 inputName,
                 uvAccess,
                 colorAccess,
-                stockCall,
+                BuildStockCall(
+                    function,
+                    "UIRevamp_WarpedInput",
+                    includeDropShadow: true),
                 """
     if (UIRevamp_Uv.x < 0.0 || UIRevamp_Uv.y < 0.0 ||
         UIRevamp_Uv.x > 1.0 || UIRevamp_Uv.y > 1.0)
@@ -336,24 +335,146 @@ internal static class CurvedHudShaderPatch
 
     static string BuildStockCall(
         PixelFunction function,
-        string stockArguments)
+        string inputName,
+        bool includeDropShadow)
+    {
+        string mainOutputName = "UIRevamp_Output";
+        string mainSample = BuildStockSample(
+            function,
+            inputName,
+            mainOutputName,
+            "    ");
+        string dropShadow = includeDropShadow
+            ? BuildDropShadow(function, inputName, mainOutputName)
+            : string.Empty;
+
+        string complete = function.ResultParameter == null
+            ? $"    return {mainOutputName};"
+            : $"    {function.ResultParameter.Name} = {mainOutputName};";
+
+        return $$"""
+{{mainSample}}
+    {{mainOutputName}}.Values *= UIRevamp_TextureOpacity;
+{{dropShadow}}
+{{complete}}
+""";
+    }
+
+    static string BuildDropShadow(
+        PixelFunction function,
+        string inputName,
+        string mainOutputName)
+    {
+        string shadowSamples = string.Join(
+            Environment.NewLine,
+            new[]
+            {
+                BuildDropShadowSample(function, inputName, 0, "float2(0.0, 0.0)", "0.24"),
+                BuildDropShadowSample(function, inputName, 1, "UIRevamp_ShadowRadiusUvX", "0.14"),
+                BuildDropShadowSample(function, inputName, 2, "-UIRevamp_ShadowRadiusUvX", "0.14"),
+                BuildDropShadowSample(function, inputName, 3, "UIRevamp_ShadowRadiusUvY", "0.14"),
+                BuildDropShadowSample(function, inputName, 4, "-UIRevamp_ShadowRadiusUvY", "0.14"),
+                BuildDropShadowSample(function, inputName, 5, "UIRevamp_ShadowRadiusUvX + UIRevamp_ShadowRadiusUvY", "0.05"),
+                BuildDropShadowSample(function, inputName, 6, "UIRevamp_ShadowRadiusUvX - UIRevamp_ShadowRadiusUvY", "0.05"),
+                BuildDropShadowSample(function, inputName, 7, "-UIRevamp_ShadowRadiusUvX + UIRevamp_ShadowRadiusUvY", "0.05"),
+                BuildDropShadowSample(function, inputName, 8, "-UIRevamp_ShadowRadiusUvX - UIRevamp_ShadowRadiusUvY", "0.05")
+            });
+
+        return $$"""
+
+    static const float2 UIRevamp_DropShadowOffsetPixels = float2(
+        {{Constants.Shader.DropShadowOffsetXHlsl}},
+        {{Constants.Shader.DropShadowOffsetYHlsl}});
+    static const float UIRevamp_DropShadowBlurRadiusPixels =
+        {{Constants.Shader.DropShadowBlurRadiusHlsl}};
+    static const float UIRevamp_DropShadowOpacity =
+        {{Constants.Shader.DropShadowOpacityHlsl}};
+
+    float2 UIRevamp_ShadowOffsetUv =
+        UIRevamp_DropShadowOffsetPixels.x * UIRevamp_UvPerPixelX +
+        UIRevamp_DropShadowOffsetPixels.y * UIRevamp_UvPerPixelY;
+    float2 UIRevamp_ShadowRadiusUvX =
+        UIRevamp_DropShadowBlurRadiusPixels * UIRevamp_UvPerPixelX;
+    float2 UIRevamp_ShadowRadiusUvY =
+        UIRevamp_DropShadowBlurRadiusPixels * UIRevamp_UvPerPixelY;
+
+    float UIRevamp_ShadowAlpha = 0.0;
+{{shadowSamples}}
+
+    UIRevamp_ShadowAlpha = saturate(
+        UIRevamp_ShadowAlpha *
+        UIRevamp_DropShadowOpacity *
+        UIRevamp_TextureOpacity);
+    {{mainOutputName}}.Values +=
+        float4(0.0, 0.0, 0.0, UIRevamp_ShadowAlpha) *
+        (1.0 - {{mainOutputName}}.Values.a);
+    {{mainOutputName}}.Values.a = saturate({{mainOutputName}}.Values.a);
+""";
+    }
+
+    static string BuildDropShadowSample(
+        PixelFunction function,
+        string inputName,
+        int index,
+        string kernelOffset,
+        string weight)
+    {
+        string sampleInputName = $"UIRevamp_ShadowInput{index}";
+        string sampleOutputName = $"UIRevamp_ShadowSample{index}";
+        string sample = BuildStockSample(
+            function,
+            sampleInputName,
+            sampleOutputName,
+            "    ");
+
+        return $$"""
+    float2 UIRevamp_ShadowUv{{index}} =
+        UIRevamp_Uv - UIRevamp_ShadowOffsetUv + {{kernelOffset}};
+    float UIRevamp_ShadowInside{{index}} =
+        step(0.0, UIRevamp_ShadowUv{{index}}.x) *
+        step(0.0, UIRevamp_ShadowUv{{index}}.y) *
+        step(UIRevamp_ShadowUv{{index}}.x, 1.0) *
+        step(UIRevamp_ShadowUv{{index}}.y, 1.0);
+    {{GetInputType(function)}} {{sampleInputName}} = {{inputName}};
+    {{sampleInputName}}{{function.UvAccess}} = saturate(UIRevamp_ShadowUv{{index}});
+{{sample}}
+    UIRevamp_ShadowAlpha +=
+        {{sampleOutputName}}.Values.a *
+        UIRevamp_ShadowInside{{index}} *
+        {{weight}};
+""";
+    }
+
+    static string BuildStockSample(
+        PixelFunction function,
+        string inputName,
+        string outputName,
+        string indent)
     {
         if (function.ResultParameter == null)
         {
+            string returnArguments = BuildCallArguments(
+                function,
+                inputName,
+                string.Empty);
             return $$"""
-    {{function.ReturnType}} UIRevamp_Output =
-        {{StockEntryName}}({{stockArguments}});
-    UIRevamp_Output.Values *= UIRevamp_TextureOpacity;
-    return UIRevamp_Output;
+{{indent}}{{function.ReturnType}} {{outputName}} =
+{{indent}}    {{StockEntryName}}({{returnArguments}});
 """;
         }
 
-        string resultName = function.ResultParameter.Name;
+        string outputArguments = BuildCallArguments(
+            function,
+            inputName,
+            outputName);
         return $$"""
-    {{StockEntryName}}({{stockArguments}});
-    {{resultName}}.Values *= UIRevamp_TextureOpacity;
+{{indent}}{{function.ResultParameter.Type}} {{outputName}};
+{{indent}}{{StockEntryName}}({{outputArguments}});
 """;
     }
+
+    static string GetInputType(PixelFunction function) =>
+        function.UvParameter.Type;
 
     static string BuildCallArguments(
         PixelFunction function,

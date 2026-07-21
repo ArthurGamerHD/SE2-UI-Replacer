@@ -151,10 +151,10 @@
             </contentControls:DescriptionControl.Content>
         </contentControls:DescriptionControl>
 
-        <contentControls:DescriptionControl DescriptionKey="Uses a compact layout for the Flight Hud">
+        <contentControls:DescriptionControl DescriptionKey="Uses UI Revamp's compact HUD and hides the native flight HUD">
             <contentControls:DescriptionControl.Content>
                 <Grid ColumnDefinitions="1*,15,516" Margin="{StaticResource Margin-Medium}">
-                    <TextBlock HorizontalAlignment="Right" Classes="OptionSubTitle">Compact Flight Hud</TextBlock>
+                    <TextBlock HorizontalAlignment="Right" Classes="OptionSubTitle">Use Compact HUD</TextBlock>
                     <Grid Grid.Column="2" ColumnDefinitions="*">
                         <ToggleSwitch Classes="Large ui-revamp-template-switch" HorizontalAlignment="Stretch"
                                       Name="PART_CompactFlightHud"

@@ -35,6 +35,7 @@ public class HudWobbleTickPatch
     public static void Postfix()
     {
         HudWobbleController.UiFrame();
+        UI_Revamp.CurvedHud.CurvedHudController.UiFrame();
     }
 }
 
